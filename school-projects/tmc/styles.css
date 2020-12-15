@@ -1,0 +1,28 @@
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.number_picker {
+    background-color: darkseagreen;
+    margin: 10px;
+    padding: 10px;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.lesiure-time {
+    position: absolute;
+    justify-content: center;
+    height: 50px;
+    background-color: #a0b0bc;
+    right: 0px;
+}
+
+.study-time {
+    position: absolute;
+    justify-content: center;
+    height: 50px;
+    background-color: lightgreen;
+    left: 0px;
+}
+
