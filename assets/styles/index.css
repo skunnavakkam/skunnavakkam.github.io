@@ -6,7 +6,7 @@ body {
 .hero {
   /* Sizing */
   width: 100vw;
-  height: 33vw;
+  height: calc(100vh - 56px);
 
   display: flex;
   justify-content: center;
