@@ -6,7 +6,7 @@ body {
 .hero {
   /* Sizing */
   width: 100vw;
-  height: 60vh;
+  height: 33vw;
 
   display: flex;
   justify-content: center;
@@ -15,8 +15,9 @@ body {
   text-align: center;
 
   background-image: url(../img/hero-image.jpg);
+
   background-size: cover;
-  background-position: 0% 100%;
+  background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -26,7 +27,7 @@ body {
   color: white;
 
   font-size: 3em;
-  
+
   /* Margins */
   margin-top: 0;
   margin-bottom: 0.5em;
@@ -36,7 +37,7 @@ body {
   /* Positioning and sizing */
   display: block;
   width: 200px;
-  
+
   /* Padding and margins */
   padding: 10px;
   margin-top: 40px;
