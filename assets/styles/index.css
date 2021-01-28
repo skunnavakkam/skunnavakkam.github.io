@@ -49,3 +49,32 @@ body {
   color: white;
   font-size: 1.25em;
 }
+
+.scroll-down-button {
+  position: absolute; 
+  background-color: transparent;
+  border-color: transparent;
+  padding: 0px;
+  width: 30px;
+  height: 30px;
+  margin-top: 30px; 
+  right: calc((100vw/2) - 15px)
+}
+
+.marketing-container {
+  height: 100vh;
+}
+
+.marketing {
+  background-color: slategray;
+  height: 70vh;
+  width: 70vw;
+  position: absolute;
+  right: calc((100vw/2) - 35vw);
+  top: calc((300vh/2) - 35vh)
+}
+
+.scroll-down-image {
+  height: 30px;
+  width: 30px;
+}
