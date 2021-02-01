@@ -66,15 +66,36 @@ body {
 }
 
 .marketing {
-  background-color: slategray;
   height: 70vh;
   width: 70vw;
   position: absolute;
   right: calc((100vw/2) - 35vw);
-  top: calc((300vh/2) - 35vh)
+  top: calc((300vh/2) - 30vh)
 }
 
 .scroll-down-image {
   height: 30px;
   width: 30px;
+}
+
+.marketing .col-lg-4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: 400;
+}
+/* rtl:begin:ignore */
+.marketing .col-lg-4 p {
+  margin-right: .75rem;
+  margin-left: .75rem;
+}
+
+.featurette-body-dark {
+  background-color: #44474a;
+  height: 66vh;
+}
+
+.featurette-body-light {
+
 }
