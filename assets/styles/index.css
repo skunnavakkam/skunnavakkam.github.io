@@ -6,7 +6,7 @@ body {
 .hero {
   /* Sizing */
   width: 100vw;
-  height: calc(100vh - 56px);
+  height: calc(80vh - 56px);
 
   display: flex;
   justify-content: center;
@@ -61,16 +61,12 @@ body {
   right: calc((100vw/2) - 15px)
 }
 
-.marketing-container {
-  height: 100vh;
-}
-
 .marketing {
   height: 70vh;
   width: 70vw;
   position: absolute;
   right: calc((100vw/2) - 35vw);
-  top: calc((300vh/2) - 30vh)
+  top: calc((260vh/2) - 30vh)
 }
 
 .scroll-down-image {
@@ -82,20 +78,14 @@ body {
   margin-bottom: 1.5rem;
   text-align: center;
 }
+
 .marketing h2 {
   font-weight: 400;
+  margin: 10px;
 }
+
 /* rtl:begin:ignore */
 .marketing .col-lg-4 p {
   margin-right: .75rem;
   margin-left: .75rem;
-}
-
-.featurette-body-dark {
-  background-color: #44474a;
-  height: 66vh;
-}
-
-.featurette-body-light {
-
 }
