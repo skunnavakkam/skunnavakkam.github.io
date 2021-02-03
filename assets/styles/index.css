@@ -14,7 +14,7 @@ body {
 
   text-align: center;
 
-  background-image: url(../img/hero-image.jpg);
+  background-image: url(../img/index-html-hero-image.jpg);
 
   background-size: cover;
   background-position: center center;
@@ -50,17 +50,6 @@ body {
   font-size: 1.25em;
 }
 
-.scroll-down-button {
-  position: absolute; 
-  background-color: transparent;
-  border-color: transparent;
-  padding: 0px;
-  width: 30px;
-  height: 30px;
-  margin-top: 30px; 
-  right: calc((100vw/2) - 15px)
-}
-
 .marketing {
   height: 70vh;
   width: 70vw;
@@ -89,3 +78,4 @@ body {
   margin-right: .75rem;
   margin-left: .75rem;
 }
+
