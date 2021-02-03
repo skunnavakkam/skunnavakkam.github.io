@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+* {
+    padding: 0px;
+}
+
+.container li {
+    margin-left: 20px
+}
+
+.hero {
+    /* Sizing */
+    width: 100vw;
+    height: calc(80vh - 56px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background-image: url(../img/project-showcase-hero-image.jpg);
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.hero h1 {
+    /* Text styles */
+    color: white;
+
+    font-size: 3em;
+
+    /* Margins */
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+.hero .btn {
+    /* Positioning and sizing */
+    display: block;
+    width: 200px;
+
+    /* Padding and margins */
+    padding: 10px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero h4 {
+    color: white;
+    font-size: 1.25em;
+}
+
+.showcase-container {
+    justify-content: center;
+    display:flex;
+    min-height: 100vh;
+}
+
+.scroll-down-image {
+height: 30px;
+width: 30px;
+}
+
+.marketing .col-lg-4 {
+margin-bottom: 1.5rem;
+text-align: center;
+}
+
+.marketing h2 {
+font-weight: 400;
+margin: 10px;
+}
+
+/* rtl:begin:ignore */
+.marketing .col-lg-4 p {
+margin-right: .75rem;
+margin-left: .75rem;
+}
+
