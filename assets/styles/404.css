@@ -1,0 +1,17 @@
+
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.head404 {
+    font-size: 15vh;
+    font-weight: lighter;
+}
+
+.game-container {
+    position: absolute;
+    right: calc(50vh-100px);
+    top: calc(50vh - 100px);
+}
