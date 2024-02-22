@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<style>
+	body {
+		max-width: 512px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 5em;
+		padding: 0px;
+	}
+
+	.title {
+		font-family: serif;
+		font-size: xx-large;
+		font-weight: 400;
+	}
+
+	.head {
+		align-items: baseline;
+		display: flex;
+		padding: 0px;
+		justify-content: space-between;
+	}
+
+	.links {
+		list-style-type: none;
+		display: flex;
+		margin-right: 0px;
+	}
+
+	li {
+		margin-top: 10px;
+	}
+
+	.links a {
+		margin-right: 15px;
+		text-decoration: underline;
+	}
+
+	a:link {
+		color: black;
+	}
+
+	a:visited {
+		color: black;
+	}
+
+	a:hover {
+		color: green;
+	}
+</style>
+
+<html lang="en">
+	<head>
+		<title>{{ page.title }}</title>
+	</head>
+
+	<body>
+		<div class="head">
+			<h1 class="title">{{ page.title }}</h1>
+			<ul class="links">
+				{% for page in section.pages %}
+				<li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		<p>{{ page.content | safe }}</p>
+	</body>
+</html>

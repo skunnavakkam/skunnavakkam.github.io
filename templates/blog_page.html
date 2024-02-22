@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<style>
+	* {
+		padding: 0px;
+	}
+
+	.title {
+		font-family: serif;
+		font-size: xx-large;
+		font-weight: 400;
+		margin-bottom: 0px;
+	}
+
+	body {
+		max-width: 512px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 5em;
+		padding: 0px;
+	}
+
+	p {
+		line-height: 1.8;
+	}
+
+	pre {
+		padding: 15px;
+		border-radius: 5px;
+	}
+
+	h1 {
+		font-size: x-large;
+		font-weight: 400;
+	}
+
+	h2 {
+		font-size: large;
+		font-weight: 400;
+	}
+
+	.toc-header {
+		margin: 0px;
+		line-height: 0px;
+	}
+
+	.toc {
+		padding-left: 10px;
+		margin: 0px;
+		border-left-style: solid;
+	}
+
+	.toc li {
+		list-style-type: none;
+	}
+
+	.toc a {
+		color: black; /* Default link color */
+		text-decoration: none; /* No underline */
+	}
+
+	.toc a:hover {
+		color: green; /* Green color on hover for links */
+	}
+
+	.toc .h1 {
+		font-weight: 400; /* Bold for H1 items */
+		margin-bottom: 5px; /* Space between H1 items */
+		text-decoration: underline;
+	}
+
+	.toc .h2 {
+		font-weight: 400; /* Regular weight for H2 items */
+		padding-left: 30px; /* Indent H2 items to show hierarchy */
+		margin-bottom: 5px; /* Space between H2 items */
+	}
+
+	.full-toc * {
+		margin: 0px;
+	}
+</style>
+
+<html lang="en">
+	<head>
+		<title>{{ page.title }}</title>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"
+			async
+		></script>
+	</head>
+	<body>
+		<h1 class="title">{{ page.title }}</h1>
+		<p style="margin-top: 5px">
+			Published {{ page.date }}{% if page.updated %}, Updated {{ page.updated }}
+			{% endif %}
+		</p>
+		{% if page.toc %}
+		<div class="full-toc">
+			<h2 style="margin-bottom: 5px; font-weight: 500">Table of Contents</h2>
+			<div class="toc">
+				<ul>
+					{% for h1 in page.toc %}
+					<li>
+						<a class="h1" href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
+						{% if h1.children %}
+						<ul>
+							{% for h2 in h1.children %}
+							<li>
+								<a class="h2" href="{{ h2.permalink | safe }}"
+									>- {{ h2.title }}</a
+								>
+							</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		{% endif %} {{ page.content | safe}}
+	</body>
+</html>

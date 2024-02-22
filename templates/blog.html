@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<style>
+	body {
+		max-width: 512px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 5em;
+		padding: 0px;
+	}
+
+	.title {
+		font-family: serif;
+		font-size: xx-large;
+		font-weight: 400;
+	}
+
+	h1 {
+		font-size: x-large;
+		font-weight: 400;
+		display: flex;
+	}
+
+	.head {
+		align-items: baseline;
+		display: flex;
+		padding: 0px;
+		justify-content: space-between;
+		margin-bottom: 2em;
+	}
+
+	.head * {
+		margin: 0px;
+	}
+
+	.links {
+		list-style-type: none;
+		display: flex;
+		margin-right: 0px;
+	}
+
+	.links a {
+		margin-right: 15px;
+		line-height: 15px;
+		text-decoration: none;
+	}
+
+	.links li {
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+
+	a:link {
+		color: black;
+	}
+
+	a:visited {
+		color: black;
+	}
+
+	a:hover {
+		color: green;
+	}
+
+	ul li {
+		margin-top: 1em;
+		margin-bottom: 1em;
+	}
+
+	.blog-element {
+		border-bottom-width: 1px;
+		border-color: lightgray;
+		border-bottom-style: solid;
+		text-decoration: none;
+	}
+
+	.blog-element p {
+		color: gray;
+	}
+
+	.tag-list li {
+		text-decoration: none;
+		display: flex;
+		background-color: lightgray;
+		color: gray;
+		padding: 5px;
+		border-radius: 50%;
+	}
+
+	.blog-meta {
+		display: flex;
+		justify-content: baseline;
+		align-items: center;
+	}
+
+	.blog-meta * {
+		justify-content: baseline;
+		margin: 0px;
+		padding: 0px;
+	}
+</style>
+
+<html lang="en">
+	<head>
+		<title>{{ section.title }}</title>
+	</head>
+
+	<body>
+		<div class="head">
+			<h1 class="title">{{ section.title }}</h1>
+			<ul class="links">
+				<li><a href="/about">About</a></li>
+				<li><a href="/blog">Blog</a></li>
+				<li><a href="/research">Research</a></li>
+				<li><a href="/misc">Misc</a></li>
+			</ul>
+		</div>
+		<div>
+			{% for page in section.pages %}
+			<div class="blog-element">
+				<h1>
+					<a style="text-decoration: none" href="{{ page.permalink | safe }}">
+						{{ page.title }}
+					</a>
+				</h1>
+				<p style="margin-right: 20px">{{ page.date }}</p>
+			</div>
+			{% endfor %}
+		</div>
+	</body>
+</html>
