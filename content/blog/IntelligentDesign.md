@@ -62,6 +62,6 @@ module VoltageDivider:
 
 This gives 
 $$
-V_{out} = V_{in} \frac{R1}{R1+R3}
+V_{out} = V_{in} \frac{R1}{R1+R2}
 $$
 
