@@ -6,18 +6,20 @@
 		margin-left: auto;
 		margin-right: auto;
 		margin-top: 5em;
-		padding: 0px;
+		padding: 0 20px; /* Added padding for smaller screens */
 	}
 
 	.title {
 		font-family: serif;
 		font-size: xx-large;
 		font-weight: 400;
+		word-break: break-word; /* Ensure title wraps in narrow containers */
 	}
 
 	.head {
 		align-items: baseline;
 		display: flex;
+		flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 		padding: 0px;
 		justify-content: space-between;
 	}
@@ -25,7 +27,9 @@
 	.links {
 		list-style-type: none;
 		display: flex;
+		flex-wrap: wrap; /* Allow links to wrap on smaller screens */
 		margin-right: 0px;
+		padding-left: 0; /* Remove default padding */
 	}
 
 	ul li {
@@ -35,18 +39,51 @@
 	.links a {
 		margin-right: 15px;
 		text-decoration: underline;
+		white-space: nowrap; /* Prevent links from breaking into multiple lines */
 	}
 
-	a:link {
-		color: black;
-	}
-
+	a:link,
 	a:visited {
 		color: black;
 	}
 
 	a:hover {
 		color: green;
+	}
+
+	/* Media Queries */
+	@media (max-width: 768px) {
+		.body {
+			max-width: 90%; /* Use percentage for more flexibility on tablets */
+		}
+
+		.title {
+			font-size: x-large; /* Slightly smaller title for smaller screens */
+		}
+
+		.links a {
+			margin-right: 10px; /* Reduce margin for links */
+		}
+	}
+
+	@media (max-width: 480px) {
+		.body {
+			margin-top: 2em; /* Reduce top margin for mobile screens */
+		}
+
+		.title {
+			font-size: large; /* Even smaller title for mobile screens */
+		}
+
+		.head {
+			flex-direction: column; /* Stack title and links on top of each other */
+			align-items: center; /* Center align the items */
+		}
+
+		.links {
+			justify-content: center; /* Center the links */
+			margin-bottom: 20px; /* Add some space below the links */
+		}
 	}
 </style>
 
