@@ -47,20 +47,24 @@
 				border-radius: 5px;
 			}
 		</style>
+
+		<title>Compare Yourself to an LLM Drawing Bounding Boxes</title>
 	</head>
 	<body>
+		<p></p>
+
 		<img id="main-image" />
 		<canvas id="image-canvas"></canvas>
 
 		<p>
-			Click new image to start. Input x-left as a number between 0 to 1 as the
-			point for where the left of the bounding box starts as a fraction of the
-			image, and width as a number between 0 to 1 as the point for the width of
-			the bounding box as a fraction of the image. Do the same for the y-bottom
-			and height. y-top is the fraction from the bottom of the screen from which
-			the top of the image starts. Draw a bounding box around the head of the
-			dog. If there are two dogs, just regenerate :). refresh to get rid of
-			bounding boxes
+			Compare Yourself to an LLM Drawing Bounding Boxes. Click new image to
+			start. Input x-left as a number between 0 to 1 as the point for where the
+			left of the bounding box starts as a fraction of the image, and width as a
+			number between 0 to 1 as the point for the width of the bounding box as a
+			fraction of the image. Do the same for the y-bottom and height. y-top is
+			the fraction from the bottom of the screen from which the top of the image
+			starts. Draw a bounding box around the head of the dog. If there are two
+			dogs, just regenerate :). refresh to get rid of bounding boxes
 		</p>
 		<button>New Image</button>
 		<p>
@@ -147,7 +151,7 @@
 							{
 								role: "user",
 								content:
-									"Draw a bounding box around the dog's head in this image",
+									"Input x-left as a number between 0 to 1 as the point for where the left of the bounding box starts as a fraction of the image, and width as a number between 0 to 1 as the point for the width of the bounding box as a fraction of the image. Do the same for the y-bottom and height. y-top is the fraction from the bottom of the screen from which the top of the image starts. Draw a bounding box around the head of the dog.",
 							},
 							{
 								role: "user",
@@ -158,23 +162,39 @@
 							{
 								type: "function",
 								function: {
-									name: "get_bounding_box",
+									name: "create_bounding_box",
 									description:
-										"Get bounding box coordinates for the dog's head",
+										"Create bounding box coordinates for the dog's head",
 									parameters: {
 										type: "object",
 										properties: {
-											imageUrl: {
-												type: "string",
-												description: "URL of the image",
+											xLeft: {
+												type: "number",
+												description:
+													"The left of the bounding box as a fraction of the image (0 to 1)",
+											},
+											width: {
+												type: "number",
+												description:
+													"The width of the bounding box as a fraction of the image (0 to 1)",
+											},
+											yBottom: {
+												type: "number",
+												description:
+													"The bottom of the bounding box as a fraction of the image (0 to 1)",
+											},
+											height: {
+												type: "number",
+												description:
+													"The height of the bounding box as a fraction of the image (0 to 1)",
 											},
 										},
-										required: ["imageUrl"],
+										required: ["xLeft", "width", "yBottom", "height"],
 									},
 								},
 							},
 						],
-						tool_choice: "auto",
+						tool_choice: "required",
 					};
 
 					try {
@@ -199,7 +219,7 @@
 
 							if (toolCalls && toolCalls.length > 0) {
 								const boundingBox = JSON.parse(toolCalls[0].function.arguments);
-								drawBoundingBox(
+								drawYellowBoundingBox(
 									boundingBox.xLeft,
 									boundingBox.width,
 									boundingBox.yBottom,
@@ -219,7 +239,7 @@
 					}
 				});
 
-			function drawBoundingBox(xLeft, width, yBottom, height) {
+			function drawYellowBoundingBox(xLeft, width, yBottom, height) {
 				const canvas = document.getElementById("image-canvas");
 				const context = canvas.getContext("2d");
 
@@ -228,7 +248,7 @@
 				const rectWidth = width * canvas.width;
 				const rectHeight = height * canvas.height;
 
-				context.strokeStyle = "red";
+				context.strokeStyle = "yellow";
 				context.lineWidth = 2;
 				context.strokeRect(rectX, rectY, rectWidth, rectHeight);
 			}
