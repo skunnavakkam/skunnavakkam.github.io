@@ -2,8 +2,6 @@
 
 title="Supervising The Solution of Alignment"
 
-date=2024-22-05
-
 +++
 
 # Supervising The Solution of Alignment (WIP)
