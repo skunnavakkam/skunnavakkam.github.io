@@ -1,155 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>{{ section.title }}</title>
-		<style>
-			body {
-				max-width: 512px;
-				margin-left: auto;
-				margin-right: auto;
-				margin-top: 5em;
-				padding: 20px;
-				position: relative;
-			}
 
-			.title {
-				font-family: serif;
-				font-size: xx-large;
-				font-weight: 400;
-			}
+<head>
+	<title>{{ section.title }}</title>
+	<style>
+		body {
+			max-width: 512px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 5em;
+			padding: 20px;
+			position: relative;
+		}
 
-			h1 {
-				font-size: x-large;
-				font-weight: 400;
-				display: flex;
-			}
+		.title {
+			font-family: serif;
+			font-size: xx-large;
+			font-weight: 400;
+		}
 
-			.head {
-				align-items: baseline;
-				display: flex;
-				justify-content: space-between;
-				margin-bottom: 2em;
-			}
+		h1 {
+			font-size: x-large;
+			font-weight: 400;
+			display: flex;
+		}
 
-			.head * {
-				margin: 0px;
-			}
+		.head {
+			align-items: baseline;
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 2em;
+		}
 
+		.head * {
+			margin: 0px;
+		}
+
+		.links {
+			list-style-type: none;
+			display: flex;
+			margin-right: 0px;
+		}
+
+		.links a {
+			margin-right: 15px;
+			line-height: 15px;
+			text-decoration: none;
+		}
+
+		.links li {
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+
+		a:link {
+			color: black;
+		}
+
+		a:visited {
+			color: black;
+		}
+
+		a:hover {
+			color: green;
+		}
+
+		ul li {
+			margin-top: 1em;
+			margin-bottom: 1em;
+		}
+
+		p {
+			line-height: 1.4;
+		}
+
+		img {
+			width: 100%;
+			height: auto;
+		}
+
+		.hamburger {
+			display: none;
+			cursor: pointer;
+			font-size: x-large;
+		}
+
+		.close {
+			display: none;
+			cursor: pointer;
+			font-size: x-large;
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			z-index: 2;
+		}
+
+		@media (max-width: 768px) {
 			.links {
-				list-style-type: none;
+				display: none;
+				flex-direction: column;
+				width: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100vh;
+				background: white;
+				justify-content: center;
+				align-items: center;
+				z-index: 1;
+			}
+
+			.links.active {
 				display: flex;
-				margin-right: 0px;
 			}
 
 			.links a {
-				margin-right: 15px;
-				line-height: 15px;
-				text-decoration: none;
-			}
-
-			.links li {
-				margin-top: 0px;
-				margin-bottom: 0px;
-			}
-
-			a:link {
-				color: black;
-			}
-
-			a:visited {
-				color: black;
-			}
-
-			a:hover {
-				color: green;
-			}
-
-			ul li {
-				margin-top: 1em;
-				margin-bottom: 1em;
-			}
-
-			p {
-				line-height: 1.4;
-			}
-
-			img {
-				width: 100%;
-				height: auto;
+				margin: 20px 0;
+				font-size: xx-large;
 			}
 
 			.hamburger {
-				display: none;
-				cursor: pointer;
-				font-size: x-large;
+				display: block;
 			}
 
-			.close {
-				display: none;
-				cursor: pointer;
-				font-size: x-large;
-				position: absolute;
-				top: 20px;
-				right: 20px;
-				z-index: 2;
+			.close.active {
+				display: block;
 			}
+		}
+	</style>
+</head>
 
-			@media (max-width: 768px) {
-				.links {
-					display: none;
-					flex-direction: column;
-					width: 100%;
-					position: absolute;
-					top: 0;
-					left: 0;
-					height: 100vh;
-					background: white;
-					justify-content: center;
-					align-items: center;
-					z-index: 1;
-				}
-
-				.links.active {
-					display: flex;
-				}
-
-				.links a {
-					margin: 20px 0;
-					font-size: xx-large;
-				}
-
-				.hamburger {
-					display: block;
-				}
-
-				.close.active {
-					display: block;
-				}
-			}
-		</style>
-	</head>
-
-	<body>
-		<div class="head">
-			<h1 class="title">{{ section.title }}</h1>
-			<div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-			<div class="close" onclick="toggleMenu()">&#10005;</div>
-			<ul class="links" id="menu">
-				<li><a href="/about">About</a></li>
-				<li><a href="/blog">Blog</a></li>
-				<li><a href="/research">Research</a></li>
-				<li><a href="/misc">Misc</a></li>
-			</ul>
+<body>
+	<nav>
+		<div>
+			Sudarsh
 		</div>
-		{{ section.content | safe }}
 
-		<script>
-			function toggleMenu() {
-				var menu = document.getElementById("menu");
-				var closeBtn = document.querySelector(".close");
-				menu.classList.toggle("active");
-				closeBtn.classList.toggle("active");
-			}
-		</script>
-	</body>
+		<ul>
+			<li><a href="/about">About</a></li>
+			<li><a href="/blog">Blog</a></li>
+			<li><a href="/research">Research</a></li>
+			<li><a href="/misc">Misc</a></li>
+		</ul>
+	</nav>
+
+	<img src="">
+
+	{{ section.content | safe }}
+
+	<script>
+		function toggleMenu() {
+			var menu = document.getElementById("menu");
+			var closeBtn = document.querySelector(".close");
+			menu.classList.toggle("active");
+			closeBtn.classList.toggle("active");
+		}
+	</script>
+</body>
+
 </html>
