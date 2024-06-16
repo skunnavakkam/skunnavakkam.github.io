@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<style>
+	* {
+		padding: 0px;
+	}
+
+	.title {
+		font-family: serif;
+		font-size: xx-large;
+		font-weight: 400;
+		margin-bottom: 0px;
+	}
+
+	body {
+		max-width: 512px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 5em;
+		padding: 0px;
+	}
+
+	p {
+		line-height: 1.8;
+	}
+
+	pre {
+		padding: 15px;
+		border-radius: 5px;
+	}
+
+	h1 {
+		font-size: x-large;
+		font-weight: 400;
+	}
+
+	h2 {
+		font-size: large;
+		font-weight: 400;
+	}
+
+	.toc-header {
+		margin: 0px;
+		line-height: 0px;
+	}
+
+	.toc {
+		padding-left: 10px;
+		margin: 0px;
+		border-left-style: solid;
+	}
+
+	.toc li {
+		list-style-type: none;
+	}
+
+	.toc a {
+		color: black; /* Default link color */
+		text-decoration: none; /* No underline */
+	}
+
+	.toc a:hover {
+		color: green; /* Green color on hover for links */
+	}
+
+	.toc .h1 {
+		font-weight: 400; /* Bold for H1 items */
+		margin-bottom: 5px; /* Space between H1 items */
+		text-decoration: underline;
+	}
+
+	.toc .h2 {
+		font-weight: 400; /* Regular weight for H2 items */
+		padding-left: 30px; /* Indent H2 items to show hierarchy */
+		margin-bottom: 5px; /* Space between H2 items */
+	}
+
+	.full-toc * {
+		margin: 0px;
+	}
+
+	.full-toc {
+		margin-bottom: 1.5em;
+	}
+</style>
+
+<html lang="en">
+	<head>
+		<title>Supervising The Solution of Alignment</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+			integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
+			crossorigin="anonymous"
+		/>
+
+		<!-- The loading of KaTeX is deferred to speed up page rendering -->
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+			integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+			crossorigin="anonymous"
+		></script>
+
+		<!-- To automatically render math in text elements, include the auto-render extension: -->
+		<script 
+			defer
+			src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+			integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+			crossorigin="anonymous"
+			onload="renderMathInElement(document.body);"
+		></script>
+	</head>
+	<body>
+		<h1 class="title">Supervising The Solution of Alignment</h1>
+		<p style="margin-top: 5px">
+			Published 
+		</p>
+		
+		<div class="full-toc">
+			<h2 style="margin-bottom: 5px; font-weight: 500">Table of Contents</h2>
+			<div class="toc">
+				<ul>
+					
+					<li>
+						<a class="h1" href="https://skunnavakkam.github.io/blog/alignment/#supervising-the-solution-of-alignment-wip">Supervising The Solution of Alignment (WIP)</a>
+						
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+		 <h1 id="supervising-the-solution-of-alignment-wip">Supervising The Solution of Alignment (WIP)</h1>
+<p>If ASI will ever be created, humans will create a sort of proto-ASI before. This proto-ASI is incentivized to not arbitrarily allow creation of versions of ASI stronger than itself. For the same reasons that we are hesitant to create AGI, so are the AGIs themselves. Thus, it seems to me that ASI will only be created if these proto-ASIs, of which there may multiple, solve alignment. If </p>
+<p>This shifts the responsibility of alignment to influence this second alignment stage. This alignment stage starts with the first AGI that has the ability to meaningfully generally self-improve (i.e more than just a simple fine-tuning). When this intelligence can get better at improving itself, this is cause for concern.</p>
+<p>Our responsibility shifts now from strongly solving alignment to convincing a weaker version of ASI to align a stronger model to our interests. This is still very hard, but it seems to be a more solvable problem, and one we already have some experience with. In any case, complexity grows with intelligence, so our responsibility is at a much smaller scale.</p>
+<p>One issue is a ship-of-Theseus scenario, where the AI stays aligned throughout its process of improving itself. This means that it is imperative to not allow for a self-improving run to continue until we can weakly align an this self-improving model to humanity. </p>
+<p>My goals in writing this are to try to convince the reader of both a) the need for evaluations that target this period of self-improvement and b) understanding whether or not interpretability techniques can be defeated</p>
+<p>This shift in the nature that I expect ASIs to come about doesn't mean that the goal in stopping AI development before the coming of superintelligence happens is less valid. However, I think that there is sufficient evidence to back the argument that capabilities advances have also allowed us to understand interpretability better (see Anthropic's recent paper on SAEs on Claude Sonnet) and there is a threshold beneath where open capabilities advances benefit safety research. It becomes important to then have an evaluation suite dedicated to understanding what the worst possible model that could somehow improve itself might be. This <em>has</em> to be fuzzy - we already know that there is a certain amount of &quot;elicitation&quot; lifting that the environment that the agent is in does to improve performance, and we likely cannot figure out what the boundary of capabilities for the model is based on interpreting weights, but this should still be a priority.</p>
+<p>If we get to this point where our evaluation safeguard is triggered, we need to make sure with immensely high confidence that we can align the model to human wants. The scenario I fear is one where our interpretability technqiues show that the model is aligned with us, but it has some inner world model that is adversarial to us. To illustrate a more concrete example, take Claude Sonnet, and suppress the &quot;Killing all Humans&quot; neurons or boost the &quot;I should not kill all humans&quot; neuron. How can we know then, that there isn't some other pattern of interaction that forms the same thoughts and ideas within the model, without activating those particular neurons?</p>
+
+	</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<style>
+	* {
+		padding: 0px;
+	}
+
+	.title {
+		font-family: serif;
+		font-size: xx-large;
+		font-weight: 400;
+		margin-bottom: 0px;
+	}
+
+	body {
+		max-width: 512px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 5em;
+		padding: 0px;
+	}
+
+	p {
+		line-height: 1.8;
+	}
+
+	pre {
+		padding: 15px;
+		border-radius: 5px;
+	}
+
+	h1 {
+		font-size: x-large;
+		font-weight: 400;
+	}
+
+	h2 {
+		font-size: large;
+		font-weight: 400;
+	}
+
+	.toc-header {
+		margin: 0px;
+		line-height: 0px;
+	}
+
+	.toc {
+		padding-left: 10px;
+		margin: 0px;
+		border-left-style: solid;
+	}
+
+	.toc li {
+		list-style-type: none;
+	}
+
+	.toc a {
+		color: black; /* Default link color */
+		text-decoration: none; /* No underline */
+	}
+
+	.toc a:hover {
+		color: green; /* Green color on hover for links */
+	}
+
+	.toc .h1 {
+		font-weight: 400; /* Bold for H1 items */
+		margin-bottom: 5px; /* Space between H1 items */
+		text-decoration: underline;
+	}
+
+	.toc .h2 {
+		font-weight: 400; /* Regular weight for H2 items */
+		padding-left: 30px; /* Indent H2 items to show hierarchy */
+		margin-bottom: 5px; /* Space between H2 items */
+	}
+
+	.full-toc * {
+		margin: 0px;
+	}
+
+	.full-toc {
+		margin-bottom: 1.5em;
+	}
+</style>
+
+<html lang="en">
+	<head>
+		<title>On LLM Evals</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+			integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
+			crossorigin="anonymous"
+		/>
+
+		<!-- The loading of KaTeX is deferred to speed up page rendering -->
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+			integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+			crossorigin="anonymous"
+		></script>
+
+		<!-- To automatically render math in text elements, include the auto-render extension: -->
+		<script 
+			defer
+			src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+			integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+			crossorigin="anonymous"
+			onload="renderMathInElement(document.body);"
+		></script>
+	</head>
+	<body>
+		<h1 class="title">On LLM Evals</h1>
+		<p style="margin-top: 5px">
+			Published 
+		</p>
+		
+		<div class="full-toc">
+			<h2 style="margin-bottom: 5px; font-weight: 500">Table of Contents</h2>
+			<div class="toc">
+				<ul>
+					
+					<li>
+						<a class="h1" href="https://skunnavakkam.github.io/blog/on-llm-evals/#example-1">Example 1:</a>
+						
+					</li>
+					
+					<li>
+						<a class="h1" href="https://skunnavakkam.github.io/blog/on-llm-evals/#example-2">Example 2:</a>
+						
+					</li>
+					
+					<li>
+						<a class="h1" href="https://skunnavakkam.github.io/blog/on-llm-evals/#addendum-judging-a-fish-by-how-it-climbs-a-tree">Addendum: Judging a Fish By How It Climbs a Tree</a>
+						
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+		 <p>What information should we want from a LLM evaluation? In almost every use case, we want to understand the peak performance of these models. In all ranges of LLM applications, the provider will modify the LLM environment to elicit the best possible performance out of the LLM. This is the final goal, so we should measure to it.</p>
+<p>We have set a goal to <strong>understand the peak performance of each LLM in a set of LLMs</strong>. How do we go about measuring this performance?</p>
+<p>This is a really hard task. Here are some examples to illustrate why this task is hard. For these examples, I will simplify things. We assume a universal G-score for model intelligence, which generalizes perfectly. The only thing that affects the LLMs performance on any given task is the wording of the task itself. </p>
+<h2 id="example-1">Example 1:</h2>
+<p><u>Hypothetical Eval Proposer Alice</u>: Let's pick a prompt that works really well on GPT-4o. We can then use this same prompt to benchmark other LLMs</p>
+<p><u>Annoying Eval Downer Bob</u>: We know that different teams use different fine-tuning techniques to give their models different personalities. Thus, it is basically guaranteed that fitting on GPT-4o will not be optimal for Claude, for example. </p>
+<p><em>Editorial: Why are standardized tests fair then? Aren't there going to be differences in how students react to prompts? The differentiator between standardized tests for students and these evals for models is that the students are able to train to the prompting format of standardized tests, whereas models should not train on their testing set</em></p>
+<h2 id="example-2">Example 2:</h2>
+<p><u>Hypothetical Eval Proposer Alice</u>: We pick a random, &quot;good enough&quot; prompt for evaluations. This does not overfit for any models. Although the absolute score of the model on this evaluation is not reflective of the score that the model would accomplish if we fully optimized the prompt, we can assume that the relative differences in scores would be maintained with elicitation on each model, giving us a good idea of what the &quot;best model&quot; might be.</p>
+<p><u>Annoying Eval Downer Bob</u>: The assumption that models will scale performance similarly after elicitation is doing a lot of work to support this. However, we do not have evidence showing that this is true, and we have some evidence to show that this is not the case, by <code>gpt-4o</code> being either significantly better or somewhat worse than other models depending on the level of elicitation. This evidence against the theory is not strong enough to rule out this evaluation, but it does not instill confidence</p>
+<h2 id="addendum-judging-a-fish-by-how-it-climbs-a-tree">Addendum: Judging a Fish By How It Climbs a Tree</h2>
+<p>Einstein once said a quote like this. Can't remember what it was exactly, but the message still applies. There are metrics on which LLMs are already superhuman by some measures of intelligence. Claude-3 Opus scored 101 on an IQ test. GPT-4o is a hell of a lot better than me at writing Haskell (I can't write Haskell). </p>
+<p>We should be open to the possibility that we do not need A<u><strong>G</strong></u>I for truly helpful or dangerous AI models. Given the size of the training corpus of AI models, there is no need for the model to generalize to the experiences that it had experienced post-training, when it has experienced all there is to be experienced in the pre-training phase.</p>
+<p>I fear that benchmarks such as the ARC benchmark (confusingly named, and not to be confused with the Alignment Research Center) might be missing the forests for the trees. </p>
+
+	</body>
+</html>
