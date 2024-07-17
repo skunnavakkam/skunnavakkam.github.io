@@ -1,145 +1,85 @@
 <!DOCTYPE html>
-<style>
-	* {
-		padding: 0px;
-	}
-
-	.title {
-		font-family: serif;
-		font-size: xx-large;
-		font-weight: 400;
-		margin-bottom: 0px;
-	}
-
-	body {
-		max-width: 512px;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 5em;
-		padding: 0px;
-	}
-
-	p {
-		line-height: 1.8;
-	}
-
-	pre {
-		padding: 15px;
-		border-radius: 5px;
-	}
-
-	h1 {
-		font-size: x-large;
-		font-weight: 400;
-	}
-
-	h2 {
-		font-size: large;
-		font-weight: 400;
-	}
-
-	.toc-header {
-		margin: 0px;
-		line-height: 0px;
-	}
-
-	.toc {
-		padding-left: 10px;
-		margin: 0px;
-		border-left-style: solid;
-	}
-
-	.toc li {
-		list-style-type: none;
-	}
-
-	.toc a {
-		color: black; /* Default link color */
-		text-decoration: none; /* No underline */
-	}
-
-	.toc a:hover {
-		color: green; /* Green color on hover for links */
-	}
-
-	.toc .h1 {
-		font-weight: 400; /* Bold for H1 items */
-		margin-bottom: 5px; /* Space between H1 items */
-		text-decoration: underline;
-	}
-
-	.toc .h2 {
-		font-weight: 400; /* Regular weight for H2 items */
-		padding-left: 30px; /* Indent H2 items to show hierarchy */
-		margin-bottom: 5px; /* Space between H2 items */
-	}
-
-	.full-toc * {
-		margin: 0px;
-	}
-
-	.full-toc {
-		margin-bottom: 1.5em;
-	}
-</style>
-
 <html lang="en">
-	<head>
-		<title>{{ page.title }}</title>
-		<link
-			rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
-			integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
-			crossorigin="anonymous"
-		/>
 
-		<!-- The loading of KaTeX is deferred to speed up page rendering -->
-		<script
-			defer
-			src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
-			integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
-			crossorigin="anonymous"
-		></script>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ page.title }}</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+		integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+		integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+		crossorigin="anonymous"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+		integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+		onload="renderMathInElement(document.body);"></script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			line-height: 1.6;
+			color: #333;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
 
-		<!-- To automatically render math in text elements, include the auto-render extension: -->
-		<script 
-			defer
-			src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-			integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
-			crossorigin="anonymous"
-			onload="renderMathInElement(document.body);"
-		></script>
-	</head>
-	<body>
-		<h1 class="title">{{ page.title }}</h1>
-		<p style="margin-top: 5px">
-			Published {{ page.date }}{% if page.updated %}, Updated {{ page.updated }}
-			{% endif %}
-		</p>
-		{% if page.toc %}
-		<div class="full-toc">
-			<h2 style="margin-bottom: 5px; font-weight: 500">Table of Contents</h2>
-			<div class="toc">
-				<ul>
-					{% for h1 in page.toc %}
-					<li>
-						<a class="h1" href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
-						{% if h1.children %}
-						<ul>
-							{% for h2 in h1.children %}
-							<li>
-								<a class="h2" href="{{ h2.permalink | safe }}"
-									>- {{ h2.title }}</a
-								>
-							</li>
-							{% endfor %}
-						</ul>
-						{% endif %}
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-		{% endif %} {{ page.content | safe}}
-	</body>
+		.title {
+			font-size: 1.7em;
+			margin-bottom: 10px;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: #2e8b57;
+			margin-bottom: 10px;
+		}
+
+		h1 {
+			font-size: 1.5em;
+		}
+
+		h2 {
+			font-size: 1.3em;
+		}
+
+		h3 {
+			font-size: 1.1em;
+		}
+
+		a {
+			color: #2e8b57;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		.meta {
+			font-size: 0.9em;
+			color: #666;
+			margin-top: 5px;
+		}
+
+		hr {
+			border: none;
+			border-top: 1px solid #eee;
+			margin: 20px 0;
+		}
+	</style>
+</head>
+
+<body>
+	<h1 class="title">{{ page.title }}</h1>
+	<p class="meta">
+		Published {{ page.date | date(format="%B %d, %Y") }}
+	</p>
+	<hr>
+	{{ page.content | safe}}
+</body>
+
 </html>

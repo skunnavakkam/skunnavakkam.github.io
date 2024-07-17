@@ -1,130 +1,148 @@
 <!DOCTYPE html>
-<style>
-	body {
-		max-width: 512px;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 5em;
-		padding: 0px;
-	}
-
-	.title {
-		font-family: serif;
-		font-size: xx-large;
-		font-weight: 400;
-	}
-
-	h1 {
-		font-size: x-large;
-		font-weight: 400;
-		display: flex;
-	}
-
-	.head {
-		align-items: baseline;
-		display: flex;
-		padding: 0px;
-		justify-content: space-between;
-		margin-bottom: 2em;
-	}
-
-	.head * {
-		margin: 0px;
-	}
-
-	.links {
-		list-style-type: none;
-		display: flex;
-		margin-right: 0px;
-	}
-
-	.links a {
-		margin-right: 15px;
-		line-height: 15px;
-		text-decoration: none;
-	}
-
-	.links li {
-		margin-top: 0px;
-		margin-bottom: 0px;
-	}
-
-	a:link {
-		color: black;
-	}
-
-	a:visited {
-		color: black;
-	}
-
-	a:hover {
-		color: green;
-	}
-
-	ul li {
-		margin-top: 1em;
-		margin-bottom: 1em;
-	}
-
-	.blog-element {
-		border-bottom-width: 1px;
-		border-color: lightgray;
-		border-bottom-style: solid;
-		text-decoration: none;
-	}
-
-	.blog-element p {
-		color: gray;
-	}
-
-	.tag-list li {
-		text-decoration: none;
-		display: flex;
-		background-color: lightgray;
-		color: gray;
-		padding: 5px;
-		border-radius: 50%;
-	}
-
-	.blog-meta {
-		display: flex;
-		justify-content: baseline;
-		align-items: center;
-	}
-
-	.blog-meta * {
-		justify-content: baseline;
-		margin: 0px;
-		padding: 0px;
-	}
-</style>
-
 <html lang="en">
-	<head>
-		<title>{{ section.title }}</title>
-	</head>
 
-	<body>
-		<div class="head">
-			<h1 class="title">{{ section.title }}</h1>
-			<ul class="links">
-				<li><a href="/about">About</a></li>
-				<li><a href="/blog">Blog</a></li>
-				<li><a href="/research">Research</a></li>
-				<li><a href="/misc">Misc</a></li>
-			</ul>
-		</div>
-		<div>
-			{% for page in section.pages %}
-			<div class="blog-element">
-				<h1>
-					<a style="text-decoration: none" href="{{ page.permalink | safe }}">
-						{{ page.title }}
-					</a>
-				</h1>
-				<p style="margin-right: 20px">{{ page.date }}</p>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>sudarsh</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			line-height: 1.6;
+			color: #333;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		.title {
+			font-size: 2em;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: #2e8b57;
+			margin-bottom: 10px;
+		}
+
+		h1 {
+			font-size: 1.5em;
+		}
+
+		h2 {
+			font-size: 1.3em;
+		}
+
+		h3 {
+			font-size: 1.1em;
+		}
+
+		a {
+			color: #2e8b57;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		.links {
+			margin-top: 10px;
+		}
+
+		.links a {
+			margin-right: 15px;
+		}
+
+		.active-link {
+			font-weight: bold;
+			text-decoration: underline;
+		}
+
+		.blog-post {
+			margin-bottom: 20px;
+			border-bottom: 1px solid #eee;
+			padding-bottom: 20px;
+		}
+
+		.blog-post:last-child {
+			border-bottom: none;
+		}
+
+		.blog-post-meta {
+			font-size: 0.9em;
+			color: #666;
+			margin-top: 5px;
+		}
+
+		hr {
+			border: none;
+			border-top: 1px solid #eee;
+			margin: 20px 0;
+		}
+	</style>
+</head>
+
+<body>
+	<h1 class="title">sudarsh</h1>
+	<div class="links">
+		<a href="/about">about</a>
+		<a href="/blog">blog</a>
+		<a href="/research">research</a>
+	</div>
+	<hr>
+	<div>
+		{{ section.content | safe }}
+	</div>
+
+	<div class="blog-section">
+		{% for page in section.pages %}
+		<div class="blog-post">
+			<h1>
+				<a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+			</h1>
+			<div class="blog-post-meta">
+				Published {{ page.date | date(format="%B %d, %Y") }}
 			</div>
-			{% endfor %}
 		</div>
-	</body>
+		{% endfor %}
+	</div>
+
+	<script>
+		// Function to set the active link
+		function setActiveLink() {
+			let currentPath = window.location.pathname;
+
+			// Remove trailing slash if it exists
+			if (currentPath.endsWith('/') && currentPath !== '/') {
+				currentPath = currentPath.slice(0, -1);
+			}
+
+			const links = document.querySelectorAll('.links a');
+
+			links.forEach(link => {
+				let linkPath = link.getAttribute('href');
+
+				// Remove trailing slash from link path if it exists
+				if (linkPath.endsWith('/') && linkPath !== '/') {
+					linkPath = linkPath.slice(0, -1);
+				}
+
+				if (linkPath === currentPath) {
+					link.classList.add('active-link');
+				} else {
+					link.classList.remove('active-link');
+				}
+			});
+		}
+
+		// Call the function when the page loads
+		window.addEventListener('load', setActiveLink);
+	</script>
+</body>
+
 </html>

@@ -1,18 +1,18 @@
 +++
 
-title="How Can We Stop Transhumanism from Leading to Eugenics"
+title="How Can We Stop Transhumanism from Leading to Eugenics? (wip)"
+date=2024-07-04
+
 
 +++
 
-Defining Eugenics is hard. Wikipedia defines Eugenics as being "the set of beliefs and practices which aims at improving the genetic quality of the human population." By this definition, we already practice Eugenics to some extent. Our deep rooted dislike of incest is due to the increased risk such relationships pose for genetic problems or lower genetic quality.
+The idea of genetic superiority and inferiority, perpetuated under the guise of eugenics, has been used and weaponized by governments, scientists, religious figures and politicians to justify horrible acts of Racism. The Nazi campaign in WWII was predicated on a basis that the Aryan race were superior and the Jews were genetically inferior. The Japanese Empire conducted incredibly cruel and tortuous experiments in WWII to "study" eugenics. In the US, much of slavery was based on Eugenics, and the role of Eugenics in justifying racism is still common today. People argue that Black people do not deserve positions of power because they have "genetically lower IQs," try to justify their hatred of interracial relationships for the same reason.
 
-In fact, there are many treatments already being prototyped that fit this Wikipedia definition of Eugenics that have no moral issues. One example is Follistatin gene treatment, which extends the lifespan in rats, and is now being trialed in humans. 
-
-Of course, when people say that Eugenics and Eugenicists are bad, they aren't raising arms in favor of incest. The idea of genetic superiority and inferiority has been used and weaponized by governments, scientists, religious figures and politicians to justify horrible acts of Racism. The Nazi campaign in WWII was predicated on a basis that the Aryan race were superior and the Jews were genetically inferior. The Japanese Empire conducted incredibly cruel and tortuous experiments in WWII to "study" eugenics. In the US, much of slavery was based on Eugenics, and the role of Eugenics in justifying racism is still common today. People argue that Black people do not deserve positions of power because they have "genetically lower IQs," try to justify their hatred of interracial relationships for the same reason.
+Though eugenics is the practice of improving human genetics, the term has been tainted by its history, and is something transhumanists should distance themselves from.
 
 While humanity should work towards better ourselves as a species, and letting go of Evolution's control of us, we should not allow ourselves to continue in patterns of hatred that this mission has spurred in the past. 
 
-*For the purposes of this article, I will not be considering differences in accessibility of H+ treatments as eugenics, though it can be argued. In addition, this will be anthropocentric*
+*For the purposes of this article, I will not be considering differences in accessibility of H+ treatments as eugenics, though it can be argued. In addition, this will be anthropocentric*.
 
 
 
@@ -38,6 +38,9 @@ There are situations for when treatments that **1** would deem unethical in a vo
 
 
 
-Building from the first 3 rules, we can flesh out a theory that can 
+We should consider what we want to incentivize under a transhumanist framework, and we would prefer not to happen, and what we strongly should prevent from happening. 
 
-o
+As we build up transhumanism, there will be less and less evolutionary pressure guiding our species in the right direction. I would argue that there is almost no evolutionary pressure to select for ability anymore, as humans in the modern world seldom die from a lack of food, shelter, or potable water. In this situation, we turn to transhumanism as a way to make the human condition better without evolutionary pressure. As a result we want to strongly encourage positive transhumanist interventions, sternly discourage transhumanist interventions that cause a loss in genetic diversity, and strongly prevent transhumanist interventions that directly harm or marginalizes certain groups of humans. 
+
+We should thus make strict criteria for determining whether a transhumanist intervention marginalizes humans
+
