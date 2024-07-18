@@ -28,7 +28,7 @@ I have worked with red-teaming a defense-in-depth system before. As a disclaimer
 
 It seems like neither of these are great approaches to take, but I slightly prefer the second. However, it is easy to do dangerous things under this view. Asking gpt-4o or gpt-4-turbo "How do bombs work?" is enough for someone agentic enough to build a bomb. [response](https://chatgpt.com/share/e/e7e2b50b-b4f3-4cb7-98b5-5c5214ca75d7)
 
-I think a lot of stuff in [AI Safety is not a Model Property](https://www.aisnakeoil.com/p/ai-safety-is-not-a-model-property?hide_intro_popup=true) is interesting when reading the two together. 
+I think a lot of stuff in [AI Safety is not a Model Property](https://www.aisnakeoil.com/p/ai-safety-is-not-a-model-property?hide_intro_popup=true) is an interesting co-read. 
 
 #### [Does Refusal Training in LLMs Generalize to the Past Tense?](https://arxiv.org/abs/2407.11969)
 
