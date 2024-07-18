@@ -43,5 +43,5 @@ I'm very excited for a sequel to this paper, "Can Refusal Training in LLMs Gener
 *Turbo tended not to refuse in a predictable way, making the rules based grader useless.*
 
 
-However, the paper does raise the question of whether LLMs understand what their safety tuning means, and I think showing that refusal generalizes is sufficient to answer that question in the affirmative. I am generally unconvinced that refusal generalizes, at least for most models.
+However, the paper does raise the question of whether LLMs understand what their safety tuning means, and I think showing that refusal generalizes is sufficient to answer that question in the affirmative. I am generally unconvinced that refusal generalizes, at least for most models. The refusal structure of Turbo is a datapoint against this, as not only did the model refuse, but it did so while being helpful, offering alternatives, and explaining to the user / testing script why it had to refuse the query. 
 
