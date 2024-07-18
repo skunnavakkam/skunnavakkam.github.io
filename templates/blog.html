@@ -1,148 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>sudarsh</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			line-height: 1.6;
-			color: #333;
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 20px;
-		}
-
-		.title {
-			font-size: 2em;
-		}
-
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6 {
-			color: #2e8b57;
-			margin-bottom: 10px;
-		}
-
-		h1 {
-			font-size: 1.5em;
-		}
-
-		h2 {
-			font-size: 1.3em;
-		}
-
-		h3 {
-			font-size: 1.1em;
-		}
-
-		a {
-			color: #2e8b57;
-			text-decoration: none;
-		}
-
-		a:hover {
-			text-decoration: underline;
-		}
-
-		.links {
-			margin-top: 10px;
-		}
-
-		.links a {
-			margin-right: 15px;
-		}
-
-		.active-link {
-			font-weight: bold;
-			text-decoration: underline;
-		}
-
-		.blog-post {
-			margin-bottom: 20px;
-			border-bottom: 1px solid #eee;
-			padding-bottom: 20px;
-		}
-
-		.blog-post:last-child {
-			border-bottom: none;
-		}
-
-		.blog-post-meta {
-			font-size: 0.9em;
-			color: #666;
-			margin-top: 5px;
-		}
-
-		hr {
-			border: none;
-			border-top: 1px solid #eee;
-			margin: 20px 0;
-		}
-	</style>
-</head>
-
-<body>
-	<h1 class="title">sudarsh</h1>
-	<div class="links">
-		<a href="/about">about</a>
-		<a href="/blog">blog</a>
-		<a href="/research">research</a>
-	</div>
-	<hr>
-	<div>
-		{{ section.content | safe }}
-	</div>
-
-	<div class="blog-section">
-		{% for page in section.pages %}
-		<div class="blog-post">
-			<h1>
-				<a href="{{ page.permalink | safe }}">{{ page.title }}</a>
-			</h1>
-			<div class="blog-post-meta">
-				Published {{ page.date | date(format="%B %d, %Y") }}
-			</div>
+{% extends "tlbase.html" %}
+{% block content %}
+<div class="blog-section">
+	{% for page in section.pages %}
+	{% if not page.draft %}
+	<div class="blog-post">
+		<h1>
+			<a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+		</h1>
+		<div class="blog-post-meta">
+			Published {{ page.date | date(format="%B %d, %Y") }}
 		</div>
-		{% endfor %}
 	</div>
-
-	<script>
-		// Function to set the active link
-		function setActiveLink() {
-			let currentPath = window.location.pathname;
-
-			// Remove trailing slash if it exists
-			if (currentPath.endsWith('/') && currentPath !== '/') {
-				currentPath = currentPath.slice(0, -1);
-			}
-
-			const links = document.querySelectorAll('.links a');
-
-			links.forEach(link => {
-				let linkPath = link.getAttribute('href');
-
-				// Remove trailing slash from link path if it exists
-				if (linkPath.endsWith('/') && linkPath !== '/') {
-					linkPath = linkPath.slice(0, -1);
-				}
-
-				if (linkPath === currentPath) {
-					link.classList.add('active-link');
-				} else {
-					link.classList.remove('active-link');
-				}
-			});
-		}
-
-		// Call the function when the page loads
-		window.addEventListener('load', setActiveLink);
-	</script>
-</body>
-
-</html>
+	{% endif %}
+	{% endfor %}
+</div>
+{% endblock content %}

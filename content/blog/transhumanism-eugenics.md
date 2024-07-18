@@ -2,6 +2,7 @@
 
 title="How Can We Stop Transhumanism from Leading to Eugenics? (wip)"
 date=2024-07-04
+draft=true
 
 
 +++

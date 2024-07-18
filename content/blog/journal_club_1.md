@@ -1,6 +1,7 @@
 +++
 title="Journal Club: July 10 2024"
 date=2024-07-10
+draft=false
 +++
 
 This is a collection of writing that I have enjoyed this week. All the headings are clickable links to the writing. 

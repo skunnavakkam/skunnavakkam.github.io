@@ -4,100 +4,59 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ get_url(path='common.css') | safe }}">
 	<title>sudarsh</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			line-height: 1.6;
-			color: #333;
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 20px;
-		}
-
-		h1 {
-			color: #2e8b57;
-			font-size: 1.5em;
-			margin-bottom: 10px;
-		}
-
-		a {
-			color: #2e8b57;
-			text-decoration: none;
-		}
-
-		a:hover {
-			text-decoration: underline;
-		}
-
-		.links {
-			margin-top: 10px;
-		}
-
-		.links a {
-			margin-right: 15px;
-		}
-
-		.active-link {
-			font-weight: bold;
-			text-decoration: underline;
-		}
-
-		.title {
-			font-size: 2em;
-		}
-
-		hr {
-			border: none;
-			border-top: 1px solid #eee;
-			margin: 20px 0;
-		}
-	</style>
 </head>
+
+<script>
+	// Function to set the active link
+	function setActiveLink() {
+		let currentPath = window.location.pathname;
+
+		// Remove trailing slash if it exists
+		if (currentPath.endsWith('/') && currentPath !== '/') {
+			currentPath = currentPath.slice(0, -1);
+		}
+
+		const links = document.querySelectorAll('.links a');
+
+		links.forEach(link => {
+			let linkPath = link.getAttribute('href');
+
+			// Remove trailing slash from link path if it exists
+			if (linkPath.endsWith('/') && linkPath !== '/') {
+				linkPath = linkPath.slice(0, -1);
+			}
+
+			if (linkPath === currentPath) {
+				link.classList.add('active-link');
+			} else {
+				link.classList.remove('active-link');
+			}
+		});
+	}
+
+	// Call the function when the page loads
+	window.addEventListener('load', setActiveLink);
+</script>
 
 <body>
 	<h1 class="title">sudarsh</h1>
 	<div class="links">
-		<a href="/about" id="about-link">about</a>
-		<a href="/blog" id="blog-link">blog</a>
-		<a href="/research" id="research-link">research</a>
+		<a href="/about">about</a>
+		<a href="/blog">blog</a>
+		<a href="/research">research</a>
 	</div>
 	<hr>
 	<div>
 		{{ section.content | safe }}
 	</div>
 
-	<script>
-		// Function to set the active link
-		function setActiveLink() {
-			let currentPath = window.location.pathname;
+	<main>
+		{% block content %}{% endblock %}
+	</main>
 
-			// Remove trailing slash if it exists
-			if (currentPath.endsWith('/') && currentPath !== '/') {
-				currentPath = currentPath.slice(0, -1);
-			}
 
-			const links = document.querySelectorAll('.links a');
-
-			links.forEach(link => {
-				let linkPath = link.getAttribute('href');
-
-				// Remove trailing slash from link path if it exists
-				if (linkPath.endsWith('/') && linkPath !== '/') {
-					linkPath = linkPath.slice(0, -1);
-				}
-
-				if (linkPath === currentPath) {
-					link.classList.add('active-link');
-				} else {
-					link.classList.remove('active-link');
-				}
-			});
-		}
-
-		// Call the function when the page loads
-		window.addEventListener('load', setActiveLink);
-	</script>
 </body>
 
 </html>
