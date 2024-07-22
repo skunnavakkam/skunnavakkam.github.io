@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://skunnavakkam.github.io/common.css">
+	<title>sudarsh</title>
+</head>
+
+<script>
+	// Function to set the active link
+	function setActiveLink() {
+		let currentPath = window.location.pathname;
+
+		// Remove trailing slash if it exists
+		if (currentPath.endsWith('/') && currentPath !== '/') {
+			currentPath = currentPath.slice(0, -1);
+		}
+
+		const links = document.querySelectorAll('.links a');
+
+		links.forEach(link => {
+			let linkPath = link.getAttribute('href');
+
+			// Remove trailing slash from link path if it exists
+			if (linkPath.endsWith('/') && linkPath !== '/') {
+				linkPath = linkPath.slice(0, -1);
+			}
+
+			if (linkPath === currentPath) {
+				link.classList.add('active-link');
+			} else {
+				link.classList.remove('active-link');
+			}
+		});
+	}
+
+	// Call the function when the page loads
+	window.addEventListener('load', setActiveLink);
+</script>
+
+<body>
+	<h1 class="title">sudarsh</h1>
+	<div class="links">
+		<a href="/about">about</a>
+		<a href="/blog">blog</a>
+		<a href="/research">research</a>
+	</div>
+	<hr>
+	<div>
+		<p>I work at the Lee Nano-optics Lab at the University of California, Irvine. </p>
+<h1 id="conference-publications">Conference Publications</h1>
+<ul>
+<li>A. Anopchenko, Q. Dang, D. Dang, C. M. Gonzalez, S. Love, T. Chen, J. Calixto, S. Gurung, <ins>S. Kunnavakkam</ins>, and H. W. Lee, &quot;Active Epsilon-Near-Zero Photonics,&quot; in 2023 Materials Research Society (MRS) Fall Meeting, Boston, Massachusetts, USA, Dec 2023.</li>
+<li>C. J. Effarah, T. Chen, <ins>S. Kunnavakkam</ins>, C. M. Gonzalez, H. W. Lee, &quot;Liquid Metal Printed 2D ITO for Nanophotonic Applications,&quot; in California-US Government Workshop on 2D Materials, Irvine, California, USA, Sep 2023.</li>
+<li>A. Anopchenko, C. M. Gonzalez, D. Dang, Q. Dang, S. Love, L. Zhang, S. Gurung, K. Nguyen, T. Chen, J. Calixto, <ins>S. Kunnavakkam</ins>, A. Palmer, and H. W. Lee, &quot;Epsilon-Near-Zero Optics in Planar and Optical Fiber platforms,&quot; in SPIE Optics + Photonic Conference 2023, San Diego, California, USA, Aug 2023.</li>
+</ul>
+<h1 id="journal-publications">Journal Publications</h1>
+<ul>
+<li>Nothing here yet, but hopefully soon...</li>
+</ul>
+
+	</div>
+
+	<main>
+		
+	</main>
+
+
+</body>
+
+</html>

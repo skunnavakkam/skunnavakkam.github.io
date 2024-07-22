@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://skunnavakkam.github.io/common.css">
+	<title>sudarsh</title>
+</head>
+
+<script>
+	// Function to set the active link
+	function setActiveLink() {
+		let currentPath = window.location.pathname;
+
+		// Remove trailing slash if it exists
+		if (currentPath.endsWith('/') && currentPath !== '/') {
+			currentPath = currentPath.slice(0, -1);
+		}
+
+		const links = document.querySelectorAll('.links a');
+
+		links.forEach(link => {
+			let linkPath = link.getAttribute('href');
+
+			// Remove trailing slash from link path if it exists
+			if (linkPath.endsWith('/') && linkPath !== '/') {
+				linkPath = linkPath.slice(0, -1);
+			}
+
+			if (linkPath === currentPath) {
+				link.classList.add('active-link');
+			} else {
+				link.classList.remove('active-link');
+			}
+		});
+	}
+
+	// Call the function when the page loads
+	window.addEventListener('load', setActiveLink);
+</script>
+
+<body>
+	<h1 class="title">sudarsh</h1>
+	<div class="links">
+		<a href="/about">about</a>
+		<a href="/blog">blog</a>
+		<a href="/research">research</a>
+	</div>
+	<hr>
+	<div>
+		<p>I am an incoming freshman at Caltech. I poke language models at <a href="https://metr.org">METR</a>. In my free time, I do poorly in programming competitions, write, and lift.</p>
+<p>In a previous life, I got really good at chess and did Physics research. </p>
+<p>Leave me anonymous feedback <a href="https://www.admonymous.co/sudarshk">here</a>. You can reach me at kvsudarsh786 at gmail dot com :)</p>
+
+	</div>
+
+	<main>
+		
+	</main>
+
+
+</body>
+
+</html>

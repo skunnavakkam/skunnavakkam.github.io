@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://skunnavakkam.github.io/common.css">
+	<title>sudarsh</title>
+</head>
+
+<script>
+	// Function to set the active link
+	function setActiveLink() {
+		let currentPath = window.location.pathname;
+
+		// Remove trailing slash if it exists
+		if (currentPath.endsWith('/') && currentPath !== '/') {
+			currentPath = currentPath.slice(0, -1);
+		}
+
+		const links = document.querySelectorAll('.links a');
+
+		links.forEach(link => {
+			let linkPath = link.getAttribute('href');
+
+			// Remove trailing slash from link path if it exists
+			if (linkPath.endsWith('/') && linkPath !== '/') {
+				linkPath = linkPath.slice(0, -1);
+			}
+
+			if (linkPath === currentPath) {
+				link.classList.add('active-link');
+			} else {
+				link.classList.remove('active-link');
+			}
+		});
+	}
+
+	// Call the function when the page loads
+	window.addEventListener('load', setActiveLink);
+</script>
+
+<body>
+	<h1 class="title">sudarsh</h1>
+	<div class="links">
+		<a href="/about">about</a>
+		<a href="/blog">blog</a>
+		<a href="/research">research</a>
+	</div>
+	<hr>
+	<div>
+		<p>This is some of my writing. It is likely going to be a combination of academic writing, things I find interesting, and my views on the world.</p>
+<p>With regard to my own academic content, I'm going to try to publish all source code as far as confidentiality allows. Please shoot me an email if you find any discrepencies!</p>
+
+	</div>
+
+	<main>
+		
+<div class="blog-section">
+	
+	
+	<div class="blog-post">
+		<h1>
+			<a href="https://skunnavakkam.github.io/blog/reval/">reval</a>
+		</h1>
+		<div class="blog-post-meta">
+			Published July 21, 2024
+		</div>
+	</div>
+	
+	
+	
+	<div class="blog-post">
+		<h1>
+			<a href="https://skunnavakkam.github.io/blog/journal-club-2/">Journal Club: July 17 2024</a>
+		</h1>
+		<div class="blog-post-meta">
+			Published July 17, 2024
+		</div>
+	</div>
+	
+	
+	
+	<div class="blog-post">
+		<h1>
+			<a href="https://skunnavakkam.github.io/blog/journal-club-1/">Journal Club: July 10 2024</a>
+		</h1>
+		<div class="blog-post-meta">
+			Published July 10, 2024
+		</div>
+	</div>
+	
+	
+</div>
+
+	</main>
+
+
+</body>
+
+</html>

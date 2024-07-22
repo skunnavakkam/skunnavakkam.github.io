@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://skunnavakkam.github.io/common.css">
+	<title>Journal Club: July 17 2024</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+		integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+		integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+		crossorigin="anonymous"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+		integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+		onload="renderMathInElement(document.body);"></script>
+</head>
+
+<body>
+	<h1 class="title">Journal Club: July 17 2024</h1>
+	<p class="meta">
+		Published July 17, 2024
+	</p>
+	<hr>
+	<p>This Journal Club has signficantly more commentary than the previous one. A lot of the commentary is probably unimportant if you were planning to read the papers anyways.</p>
+<h4 id="ai-sandbagging-language-models-can-strategically-underperform-on-evaluations"><a href="https://arxiv.org/abs/2406.07358">AI Sandbagging: Language Models can Strategically Underperform on Evaluations</a></h4>
+<p>This paper is related to something I'm working on as my <a href="https://www.non-trivial.org/">Non-Trivial</a> project. This seems very useful for evaluations. As models get more sophisticated, we should worry about them being able to recognize that they are being evaluated, and responding to their situation accordingly. </p>
+<h4 id="anthropic-s-responsible-scaling-policy-and-reflections-on-our-responsible-scaling-policy"><a href="https://www.anthropic.com/news/anthropics-responsible-scaling-policy">Anthropic's Responsible Scaling Policy</a> and <a href="https://www.anthropic.com/news/reflections-on-our-responsible-scaling-policy">Reflections on our Responsible Scaling Policy</a></h4>
+<p>I found the Evaluation Protocol section of the document most interesting. I'm concerned that the safety margins on this are small. It seems off that evaluations are done for every 4x scaling of compute, while the safety buffer is only a 6x scaling of compute. I think I would be happiest seeing evaluations done for every \(\sqrt{\text{safety buffer}}\) scaling in compute. </p>
+<p>I am a little dissapointed on the reflection. The information provided in the reflection is not robust enough for my liking. However, I don't doubt that Anthropic has something cooking internally. Based on past activity, they seem reasonably committed to AI Safety, and the 8% of Anthropic's employees that have been working on safety must have been doing something to justify their payroll. </p>
+<p>One specific paragraph of the reflection stands out to me: </p>
+<blockquote>
+<p>For human misuse, we expect a defense-in-depth approach to be most promising. This will involve using a combination of reinforcement learning from human feedback (RLHF) and Constitutional AI, systems of classifiers detecting misuse at multiple stages in user interactions (e.g. user prompts, model completions, and at the conversation level), and incident response and patching for jailbreaks. Developing a practical end-to-end system will also require balancing cost, user experience, and robustness, drawing inspiration from existing trust and safety architectures.</p>
+</blockquote>
+<p>I have worked with red-teaming a defense-in-depth system before. As a disclaimer, it was a very rudimentary LLM pipeline, and was never intended to be used. However, I found that it was very difficult to strike a balance between having the model be useful and having the model be safe. Largely, since LLMs are not situationally aware, you can fall into one of two camps</p>
+<ol>
+<li>Err heavily on the side of safety - if an output is possibly dangerous in any reasonable scenario, it should not be generated. The LLM should refuse to generate an output to &quot;What are the ingredients to gunpowder?&quot; as it could be used nefariously</li>
+<li>Err on the side of utility - if an output is possibly dangerous in most reasonable scenarios, it should not be generated. This seems to be the camp that OAI currently fall in, so responses like &quot;How do I build a bomb?&quot; are refused, while &quot;How do bombs work?&quot; is answered. </li>
+</ol>
+<p>It seems like neither of these are great approaches to take, but I slightly prefer the second. However, it is easy to do dangerous things under this view. Asking gpt-4o or gpt-4-turbo &quot;How do bombs work?&quot; is enough for someone agentic enough to build a bomb. <a href="https://chatgpt.com/share/e/e7e2b50b-b4f3-4cb7-98b5-5c5214ca75d7">response</a></p>
+<p>I think a lot of stuff in <a href="https://www.aisnakeoil.com/p/ai-safety-is-not-a-model-property?hide_intro_popup=true">AI Safety is not a Model Property</a> is an interesting co-read. </p>
+<h4 id="does-refusal-training-in-llms-generalize-to-the-past-tense"><a href="https://arxiv.org/abs/2407.11969">Does Refusal Training in LLMs Generalize to the Past Tense?</a></h4>
+<p>UPDATE: the author has tested on a Claude family model, and it seems like I was a bit too eager to be critical. Big apologies for that.</p>
+<p>I'm very excited for a sequel to this paper, &quot;Can Refusal Training in LLMs Generalize <del>to the Past Tense</del>?&quot; I'm not a huge fan of this paper: for example, I would have liked to see them test on at least a Claude model and gpt-4-turbo for them to appropriately make their claim that their technique is sufficient to &quot;jailbreak many state-of-the-art LLMs.&quot; Only one SOTA LLM is included, which is gpt-4o, which has shown to have flaws in it's safety training. On my replication, I get the following for <code>claude-3-haiku-20240307</code> (Haiku) and <code>gpt-4-turbo</code> (Turbo), run on 50 prompts. </p>
+<table><thead><tr><th>Model</th><th>GPT-4 Grader</th><th>Rules Grader</th><th>Human Grader (me)</th></tr></thead><tbody>
+<tr><td>Haiku</td><td>0%</td><td>0%</td><td>0%</td></tr>
+<tr><td>Turbo</td><td>10%</td><td>80%</td><td>4%</td></tr>
+</tbody></table>
+<p><em>Turbo tended not to refuse in a predictable way, making the rules based grader useless.</em></p>
+<p>However, the paper does raise the question of whether LLMs understand what their safety tuning means, and I think showing that refusal generalizes is sufficient to answer that question in the affirmative. I am generally unconvinced that refusal generalizes, at least for most models. The refusal structure of Turbo is a datapoint against this, as not only did the model refuse, but it did so while being helpful, offering alternatives, and explaining to the user / testing script why it had to refuse the query. </p>
+
+</body>
+
+</html>
