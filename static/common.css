@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 :root {
-    --accent-color: rgb(158, 25, 191)
+    --accent-color: #9d7eb7;
+    --code-bg-color: #f4f4f4;
+    --inline-code-color: #e83e8c;
 }
 
 body {
@@ -147,4 +149,28 @@ tr:hover {
     td {
         padding: 8px;
     }
+}
+
+pre {
+    background-color: var(--code-bg-color);
+    border-radius: 4px;
+    padding: 15px;
+    overflow-x: auto;
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.9em;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Ensure inline code doesn't break layout */
+p code,
+li code,
+td code {
+    background-color: var(--code-bg-color);
+    color: var(--accent-color);
+    white-space: normal;
+    word-break: break-word;
+    padding: 3px;
+    border-radius: 1px;
 }
