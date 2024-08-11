@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudarsh's Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            box-sizing: border-box;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+        }
+
+        .content-wrapper {
+            max-width: 400px;
+            padding: 30px;
+            /* Corrected the box-shadow property */
+            background-color: rgba(255, 255, 255);
+        }
+
+        h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5em;
+            margin-bottom: 6px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        a {
+            color: #e1b60e;
+            /* Pastel yellow */
+            text-decoration: underline;
+            font-family: 'Space Mono', monospace;
+        }
+
+        u {
+            text-decoration: underline;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .clear {
+            font-family: 'Space Mono', monospace;
+            background-color: transparent;
+            border-width: 0px;
+            bottom: 30px;
+            left: 30px;
+            position: absolute;
+            text-decoration: underline;
+        }
+
+        /* image should go behind everything, and fill the full frame */
+        img {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+
+
+</head>
+
+
+
+<body>
+    <div class="content-wrapper">
+        <h1>Sudarsh</h1>
+
+        <div class="nav-links">
+            <a href="/about">About</a>
+            <a href="/blog">Blog</a>
+            <a href="/research">Research</a>
+            <a href="/miscellaneous">Miscellaneous</a>
+        </div>
+
+        {{ section.content | safe }}
+
+    </div>
+
+
+</body>
+
+<script>
+
+</script>
+
+</html>
