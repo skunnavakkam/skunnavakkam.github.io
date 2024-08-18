@@ -22,10 +22,34 @@
             max-width: max(60%, 600px);
         }
 
-        h1 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-family: 'Space Mono', monospace;
-            font-size: 2.5em;
             margin-bottom: 6px;
+        }
+
+        .title {
+            font-size: 2.5em;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.7em;
+        }
+
+        h3 {
+            font-size: 1.6em;
+        }
+
+        h4 {
+            font-size: 1.1em;
         }
 
         p {
@@ -73,7 +97,7 @@
 
 <body>
     <div class="content-wrapper">
-        <h1>{{ section.title }}</h1>
+        <h1 class="title">{{ section.title }}</h1>
 
         <div class="nav-links">
             <a href="/..">
@@ -81,6 +105,12 @@
         </div>
 
         {{ section.content | safe }}
+
+        <!-- content block -->
+        {% block content %}
+
+        {% endblock content %}
+
 
     </div>
 </body>

@@ -14,6 +14,9 @@
             box-sizing: border-box;
             line-height: 1.6;
             letter-spacing: 0.5px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .content-wrapper {
@@ -21,13 +24,43 @@
             padding: 30px;
             /* Corrected the box-shadow property */
             background-color: rgba(255, 255, 255);
+            flex: 1;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 6px;
+            margin-top: 0px;
+        }
+
+        .title {
+            font-size: 2.5em;
         }
 
         h1 {
-            font-family: 'Space Mono', monospace;
-            font-size: 2.5em;
-            margin-bottom: 6px;
+            font-size: 2em;
         }
+
+        h2 {
+            font-size: 1.7em;
+        }
+
+        h3 {
+            font-size: 1.4em;
+        }
+
+        h4 {
+            font-size: 1.1em;
+        }
+
+
+
+
 
         p {
             margin-bottom: 15px;
@@ -87,13 +120,13 @@
 
 <body>
     <div class="content-wrapper">
-        <h1>Sudarsh</h1>
+        <h1 class="title">Sudarsh</h1>
 
         <div class="nav-links">
             <a href="/about">About</a>
             <a href="/blog">Blog</a>
             <a href="/research">Research</a>
-            <a href="/miscellaneous">Miscellaneous</a>
+            <a href="/miscellaneous">Misc</a>
         </div>
 
         {{ section.content | safe }}

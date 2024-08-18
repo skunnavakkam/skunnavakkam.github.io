@@ -1,52 +1,39 @@
 {
   "main": {
-    "id": "1098bd916422d0f3",
+    "id": "d2592a75ad302be4",
     "type": "split",
     "children": [
       {
-        "id": "18f2b6366b1cb100",
+        "id": "1f1eeada9d3c85f9",
         "type": "tabs",
         "children": [
           {
-            "id": "c9bb5d3c8dfb368d",
+            "id": "fa98b13b0e2aa574",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "reval.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "2528dfa7d690cb38",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "brain-cognition.md",
+                "file": "control-of-cognition.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "e91d3e8ded01cae6",
+    "id": "6b6f9f6744ab0681",
     "type": "split",
     "children": [
       {
-        "id": "7168267ec711ede6",
+        "id": "7e9a80b971b3bb9e",
         "type": "tabs",
         "children": [
           {
-            "id": "01db8831949c0c18",
+            "id": "9e3ce2cd5435a999",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -56,7 +43,7 @@
             }
           },
           {
-            "id": "7d5f84a223276264",
+            "id": "7a754b8884f771d0",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -71,7 +58,7 @@
             }
           },
           {
-            "id": "61b80a64c022650a",
+            "id": "45acc0ae245838ef",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -82,23 +69,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 300
   },
   "right": {
-    "id": "0151ee4ee9d3984c",
+    "id": "d8ddb228462990a2",
     "type": "split",
     "children": [
       {
-        "id": "dbdd9b93dcc7f578",
+        "id": "086245eb7035d492",
         "type": "tabs",
         "children": [
           {
-            "id": "0e92c11c327ab687",
+            "id": "57809e0181546a45",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "brain-cognition.md",
+                "file": "control-of-cognition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,19 +97,19 @@
             }
           },
           {
-            "id": "cab08197be2383d8",
+            "id": "1d38ab3f14040297",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "brain-cognition.md",
+                "file": "control-of-cognition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "4b4ee797a6f145a2",
+            "id": "129622e804194161",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -133,37 +120,21 @@
             }
           },
           {
-            "id": "b19c6d98cac94cc0",
+            "id": "53705cdf95283e92",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "brain-cognition.md"
+                "file": "control-of-cognition.md"
               }
             }
-          },
-          {
-            "id": "a5bdecb6cfaf227d",
-            "type": "leaf",
-            "state": {
-              "type": "loom",
-              "state": {}
-            }
-          },
-          {
-            "id": "595261053e5dc2d8",
-            "type": "leaf",
-            "state": {
-              "type": "loom-siblings",
-              "state": {}
-            }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,11 +146,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2528dfa7d690cb38",
+  "active": "fa98b13b0e2aa574",
   "lastOpenFiles": [
-    "reval.md",
-    "brain-cognition.md",
     "religions_seem_to_be_convergent.md",
-    "2024-08-10.md"
+    "worm_dataset.md",
+    "transhumanism-eugenics.md",
+    "control-of-cognition.md"
   ]
 }
