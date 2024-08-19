@@ -23,6 +23,18 @@ Allowing the model to skip blocks, repeat blocks multiple times, and in multiple
 
 Consider a different mixture-of-experts algorithm that allows for control of cognition. After the embedding layer, we add to the residual stream like standard. However, instead of adding blocks to the residual stream in a standard order, we instead feed in the residual stream to a gating model, adding onto the residual stream in this way, with the Attention + MLP block picked by the gating network.
 
-*This is a work in progress, and I don't quite have a good way to measure the loss after the attention + mlp is applied, nor do I have a good idea for an exit condition*
+Here I propose one way to do this. 
+
+Take ${F_1, F_2, \cdots, F_n}$ to be the $n$ blocks in the model. Then, have some gating network $G(d,R)$ that makes a choice over the $n$ blocks, with $d$ representing the number of previous blocks, and $R$ being the residual stream at that position. Secretly, $F_n$ is the unembedding block.
+
+Given a series of tokens, perform the following operation to the residual stream.
+$$
+R := F_{\text{argmax}(G(d, R))}
+$$
+Furthermore, add a gradual bias towards the return block as $d$ increases. 
+
+Due to the variability in the structure of the final transformer, compute the backpropogation graph at inference time.
+
+*wip: implementation*
 
 
