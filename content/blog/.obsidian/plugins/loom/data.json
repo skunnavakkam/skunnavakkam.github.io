@@ -1,0 +1,99 @@
+{
+  "settings": {
+    "passageFolder": "",
+    "defaultPassageSeparator": "\\n\\n---\\n\\n",
+    "defaultPassageFrontmatter": "%r:\\n",
+    "logApiCalls": false,
+    "modelPresets": [
+      {
+        "name": "OpenRouter",
+        "provider": "ocp",
+        "model": "meta-llama/llama-3.1-405b",
+        "contextLength": 131000,
+        "apiKey": "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",
+        "organization": "",
+        "url": "https://openrouter.ai/api/v1"
+      }
+    ],
+    "modelPreset": 0,
+    "visibility": {
+      "visibility": true,
+      "modelPreset": true,
+      "maxTokens": true,
+      "n": true,
+      "bestOf": false,
+      "temperature": true,
+      "topP": false,
+      "frequencyPenalty": false,
+      "presencePenalty": false,
+      "prepend": false,
+      "systemPrompt": false,
+      "userMessage": false
+    },
+    "maxTokens": 60,
+    "temperature": 1,
+    "topP": 1,
+    "frequencyPenalty": 0,
+    "presencePenalty": 0,
+    "prepend": "<|endoftext|>",
+    "bestOf": 0,
+    "n": 5,
+    "systemPrompt": "The assistant is in CLI simulation mode, and responds to the user's CLI commands only with the output of the command.",
+    "userMessage": "<cmd>cat untitled.txt</cmd>",
+    "showSettings": false,
+    "showSearchBar": false,
+    "showNodeBorders": false,
+    "showExport": false
+  },
+  "state": {
+    "control-of-cognition.md": {
+      "current": "45ed924b-43c4-4855-9a45-ba3abf64846c",
+      "hoisted": [],
+      "searchTerm": "",
+      "nodes": {
+        "45ed924b-43c4-4855-9a45-ba3abf64846c": {
+          "text": "+++\ntitle=\"WIP: Mixture of Blocks\"\ndate=2024-08-18\n+++\n\nThe brain is different from language models in many ways, but one important difference is the ability for the brain to control its internal flow of information. At any given time, a very small portion of the brain (<20%) is actually ever active / doing computation. \n\nA nice benefit of this is that this allows the brain to be more interpretable than if the whole brain were active at any given time. For example, certain parts of the motor cortex are active when certain muscles move, allowing us to interpret these parts as being responsible for particular locomotion. \n\nFrom the perspective of energy conservation, this absolutely makes sense. Doing less things is more energy efficient, and not all tasks require the full use of the brain. Being able to reduce the amount of energy used to do tasks is undoubtedly good and evolutionary advantageous. Having the brain activate sparsely, with routing, is a way to achieve this. \n\nSome language models achieve this efficiency improvement through mixture-of-experts or mixture-of-depths methods, increasing performance per FLOP at the cost of VRAM. \n\nHowever, control of cognition not only results in an efficiency increase, but also may result in a significant capabilities increase. \n\nThere is evidence from interpretability that different layers in transformers have different functions, with early layers generally transforming the task into representations that further layers are able to chew on ([citation](https://openreview.net/pdf?id=oFC2LAqS6Z)).  However, other papers show that providing different representations of data to a transformer result in drastically different performance ([citation](https://www.alignmentforum.org/posts/4KLHJY9sPE7q8HK8N/fine-tuning-is-not-sufficient-for-capability-elicitation)). What gives?\n\nIn \"[When fine-tuning fails to elicit GPT-3.5's chess abilities](https://www.alignmentforum.org/posts/4KLHJY9sPE7q8HK8N/when-fine-tuning-fails-to-elicit-gpt-3-5-s-chess-abilities)\", the author argues that the key difference between how Language Models and Humans approach this task is that humans build a model of the task through taking in data and then running an optimizer on this model. Although I have no experiment to argue this, I would argue that building this world model and doing work on it is exactly what language models and humans both do. Instead, I think that the key difference is that language models simply do not have enough layers dedicated to this sort of \"model building.\"\n\nChain of thought probably does something similar in being able to transform data between representations. However, not only is chain of thought wasteful from a compute perspective, I have doubts about whether sufficient information that is present in the internal representation of the model is contained in the chain of thought output of the model. Chain of thought does give us important insights, namely that you can get a useful model of the task through repeating the same computation.\n\nAllowing the model to skip blocks, repeat blocks multiple times, and in multiple orders, might allow for better processing. However, how do we enable this? Backpropogation does not allow for recursion!\n\nConsider a different mixture-of-experts algorithm that allows for control of cognition. After the embedding layer, we add to the residual stream like standard. However, instead of adding blocks to the residual stream in a standard order, we instead feed in the residual stream to a gating model, adding onto the residual stream in this way, with the Attention + MLP block picked by the gating network.\n\nHere I propose one way to do this. \n\nTake ${F_1, F_2, \\cdots, F_n}$ to be the $n$ blocks in the model. Then, have some gating network $G(d,R)$ that makes a choice over the $n$ blocks, with $d$ representing the number of previous blocks, and $R$ being the residual stream at that position. Secretly, $F_n$ is the unembedding block.\n\nGiven a series of tokens, perform the following operation to the residual stream.\n$$\nR := F_{\\text{argmax}(G(d, R))}\n$$\nFurthermore, add a gradual bias towards the return block as $d$ increases. \n\nDue to the variability in the structure of the final transformer, we compute the backpropogation graph at inference time.",
+          "parentId": null,
+          "collapsed": false,
+          "unread": false,
+          "bookmarked": false,
+          "searchResultState": null,
+          "lastVisited": 1724048904792
+        }
+      },
+      "generating": null
+    },
+    "i just need to make it to friday ;-;.md": {
+      "current": "cc9843b5-713c-42b2-ad5e-b8c1d322eb7f",
+      "hoisted": [],
+      "searchTerm": "",
+      "nodes": {
+        "cc9843b5-713c-42b2-ad5e-b8c1d322eb7f": {
+          "text": "+++\ntitle=\"i just need to make it to friday ;-;\"\n+++\n\nI'm having a lot of dread about life. I was talking to a friend about this recently. I really want to work on something meaningful and",
+          "parentId": null,
+          "collapsed": false,
+          "unread": false,
+          "bookmarked": false,
+          "searchResultState": null
+        }
+      },
+      "generating": null
+    },
+    "language-models-model-more-than-language.md": {
+      "current": "d64d7265-c226-48b4-9df8-9a3821894d9e",
+      "hoisted": [],
+      "searchTerm": "",
+      "nodes": {
+        "d64d7265-c226-48b4-9df8-9a3821894d9e": {
+          "text": "+++\ntitle=\"See how the language model update its priors to minimize error? Very mindful, very demure\"\n+++\n\nSince I'm going to be talking about two different types of models, one which is a language model and the other which is the language model's model of the context, I'm going to refer to language models as LMs in this post. \n\nLMs are next token predictors. Through giving the language model a series of tasks in context, where the output of the task is a single token, we can understand the LM's predictions over all possible tokens, and understand how likely the LM thinks that a given token is the correct answer for the task.\n\nThrough this, we can also measure how much information we need to feed a LM to allow it to learn a task. If the correct answer for task $i$ is $x_i$, we give the LM \n$$\n- \\log(P_{i - 1}(x_i))\n$$\nwhere $p_i(x)$ is the probability the LM assigns to the token $x$ after the $i$th example. This is just the surprisal. Then, we can find the total amount of information given to the LM to learn the task to be\n$$\n\\sum_{i = 1}^{\\infty} -\\log(P_{i - 1}(x_i))\n$$\nPractically, the surprisal goes to zero very quickly if the LM is able to grasp the task, or the LM is never able to grasp the task, and no amount of information is sufficient.\n\nThe following is a graph of LM surprisal to learn the task $f(x) = 2x + 3$, and we can see that the surprisal quickly drops to near zero, and very little extra information is given to the LM.\n\n![[Pasted image 20240821144847.png]]\n\nIt is also interesting to understand how the language model updates it's priors. We only need to consider two cases: when the correct answer is $2x + 3$ and when the correct answer is not. We can call these two states $A$ and $B$ respectively. Initially, the model has some prior $\\theta$ over the two, such that $P(A | \\theta) + P(B | \\theta)$ = 1. To give more granularity, we can say that $\\theta_i$ is the prior after $i$ training examples.\n\nNow, we can model this using Bayesian statistics.\n\n|             | A                   | B                        |\n| ----------- | ------------------- | ------------------------ |\n| Prior       | $\\theta_A$          | $\\theta_B$               |\n| Observation | $c$                 | $1-c$                    |\n| Posterior   | $\\theta_A \\times c$ | $\\theta_B \\times (1- c)$ |\nOur final probability for $\\theta_{i +1, A}$ is\n$$\n\\frac{\\theta_{i, A} \\times c}{\\theta_{i, A} \\times c + \\theta_{i, B} \\times (1- c)}\n$$\nUsing this bayesian model to \"simulate\" the LM updating it's priors, we get a similar looking graph of surprisal over time!\n![[Pasted image 20240821143643.png]]\nWe can also look at the LM's probability of A:\n![[Pasted image 20240821144824.png]]\nand compare this to our simulated, \"bayesian\" model:\n![[Pasted image 20240821145133.png]]\nAs a side note, the value of $c$ that best approximated this distribution was $\\ln{2}$. This seems very strange!",
+          "parentId": null,
+          "collapsed": false,
+          "unread": false,
+          "bookmarked": false,
+          "searchResultState": null
+        }
+      },
+      "generating": null
+    }
+  }
+}

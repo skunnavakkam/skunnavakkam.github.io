@@ -33,8 +33,4 @@ R := F_{\text{argmax}(G(d, R))}
 $$
 Furthermore, add a gradual bias towards the return block as $d$ increases. 
 
-Due to the variability in the structure of the final transformer, compute the backpropogation graph at inference time.
-
-*wip: implementation*
-
-
+Due to the variability in the structure of the final transformer, we compute the backpropogation graph at inference time.
