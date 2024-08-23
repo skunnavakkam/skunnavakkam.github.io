@@ -1,17 +1,17 @@
 {% extends "tlbase.html" %}
 {% block content %}
 <div class="blog-section">
-	{% for page in section.pages %}
-	{% if not page.draft %}
-	<div class="blog-post">
-		<h1>
-			<a href="{{ page.permalink | safe }}">{{ page.title }}</a>
-		</h1>
-		<div class="blog-post-meta">
-			Published {{ page.date | date(format="%B %d, %Y") }}
-		</div>
-	</div>
-	{% endif %}
-	{% endfor %}
+    {% for page in section.pages %}
+    {% if not page.draft %}
+    <div class="blog-post">
+        <h3>
+            <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+        </h3>
+        <div class="blog-post-meta">
+            Published {{ page.date | date(format="%B %d, %Y") }}
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
 </div>
 {% endblock content %}

@@ -46,4 +46,28 @@ We can also look at the LM's probability of A:
 and compare this to our simulated, "bayesian" model:
 ![](../simulated-prior.png)
 
-As a side note, the value of $c$ that best approximated this distribution was $\ln{2}$. This seems very strange!
+As a side note, the value of $c$, or the sensitivity, that best approximated this distribution was $\ln{2}$. This seems very strange! I need to test more types of tasks to see if this is a constant among language models.
+
+We can also probe through the model of the task that the LM forms. Initially, we probed the correctness of the response by looking at the logits.
+
+$$
+(x_1, y_1), (x_2, y_2), \cdots, (x_n, \square
+$$
+
+With the previous examples, we see what the language model predicts for the square, and with what probability. Now, we instead look at what option the language model thinks is most likely as we vary $x_n$, while maintaining the same context.
+
+The following is the prediction after 0 examples, with the residual being $y_{true} - y_{pred}$. The model starts with the prior that $y \approx x$.
+
+![alt text](../zero-examples.png)
+
+After two examples, the LM updates, knowing that $y \approx 2x$
+
+![alt text](../two-examples.png)
+
+After three examples, the LM realizes that $y$ is always odd.
+
+![alt text](../three-examples.png)
+
+After this, the LM then tunes its model from $2x + \text{odd}$ to $2x + 3$. There are slight errors that are fixed over the course of the remaining examples, but nothing worth writing about.
+
+
