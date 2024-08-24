@@ -70,4 +70,20 @@ After three examples, the LM realizes that $y$ is always odd.
 
 After this, the LM then tunes its model from $2x + \text{odd}$ to $2x + 3$. There are slight errors that are fixed over the course of the remaining examples, but nothing worth writing about.
 
+I think that this is pretty remarkable. In order for the LM to have some idea about it's prior, it would need to know it's prior in the first place. From the original logit lens paper, the author suspects that the LM immediately converts tokens into prediction space. This gives a prior from which we can build off of. 
+
+This logit lens on the token before a y-value shows some surprising behavior! For example, even after 10 layers in the model, the network does not predict that any numerical token (shown in red), let alone the correct y-value, should be the answer. The model first predicts any integer as the topmost token on the 21st layer!
+
+![alt text](../top_tokens_10_layers_in.png)
+
+However, the model does have some really interesting behavior on how it updates its LM of what the most likely answer should be across distribution of integers.
+
+![alt text](../second_harmonic.png)
+
+When the LM starts to form a distribution over the integers that isn't uniform, two distinct peaks emerge. One corresponding approximately to $y = 2x$, and the other to $y = 4x$! In my past Physics research, these **second harmonics** were super common, but seeing them here is super unexpcted (and I'm not sure if this reproduces). As this evolves through layers, a few things happen: the uncertainty around each peak goes down, and the $y=4x$ peak shrinks to being ~0. I'm fairly sure that this is a manifestation of the LMs confidence in what "goes into" a correct answer. 
+
+
+
+
+
 
