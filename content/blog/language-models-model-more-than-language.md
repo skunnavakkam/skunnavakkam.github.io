@@ -4,7 +4,7 @@ date=2024-08-21
 draft=false
 +++
 
-Since I'm going to be talking about two different types of models, one which is a language model and the other which is the language model's model of the context, I'm going to refer to language models as LMs in this post. 
+Since I'm going to be talking about two different types of models, one which is a language model and the other which is the language model's model of the context, I'm going to refer to language models as LMs in this post. I'm also still in the process of writing this. If you don't see source code in the next few months, or you want immediate access to source code, just shoot me an email :)
 
 LMs are next token predictors. Through giving the language model a series of tasks in context, where the output of the task is a single token, we can understand the LM's predictions over all possible tokens, and understand how likely the LM thinks that a given token is the correct answer for the task.
 
@@ -80,8 +80,13 @@ However, the model does have some really interesting behavior on how it updates 
 
 ![alt text](../second_harmonic.png)
 
-When the LM starts to form a distribution over the integers that isn't uniform, two distinct peaks emerge. One corresponding approximately to $y = 2x$, and the other to $y = 4x$! In my past Physics research, these **second harmonics** were super common, but seeing them here is super unexpcted (and I'm not sure if this reproduces). As this evolves through layers, a few things happen: the uncertainty around each peak goes down, and the $y=4x$ peak shrinks to being ~0. I'm fairly sure that this is a manifestation of the LMs confidence in what "goes into" a correct answer. 
+When the LM starts to form a distribution over the integers that isn't uniform, two distinct peaks emerge. One corresponding approximately to $y = 2x$, and the other to $y = 4x$! In my past Physics research, these **second harmonics** were super common, but seeing them here is super unexpcted (and I'm not sure if this reproduces). As this evolves through layers, a few things happen: the uncertainty around each peak goes down, and the $y=4x$ peak shrinks to being ~0. I'm fairly sure that this is a manifestation of the LMs confidence in what "goes into" a correct answer increasing. 
 
+Now let's look at heads (capped to +- 3):
+![jackpot!](../heads.png)
+
+We see very strong contribution from heads in layer 21, which is also where we first start to see a number in the signal. However, more dilligence needs to be put into this. Q: when activation patching at a given layer, when do we first see a task similar to $y=2x+3$? A: layers 12, 13, 14, 15. Patching breaks after layer 15, in an interesting failure mode - the model now outputs what the correct answer is from the string we patch from, internalizing the answer instead of the rule. 
+ 
 
 
 
