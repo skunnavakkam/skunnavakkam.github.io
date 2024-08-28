@@ -1,5 +1,5 @@
 +++
-title="See how the language model updates its priors to minimize error? Very mindful, very demure"
+title="Language Models Update Based on In-Context Learning"
 date=2024-08-21
 draft=false
 +++
@@ -76,19 +76,12 @@ This logit lens on the token before a y-value shows some surprising behavior! Fo
 
 ![alt text](../top_tokens_10_layers_in.png)
 
-However, the model does have some really interesting behavior on how it updates its LM of what the most likely answer should be across distribution of integers.
+The naive approach of looking at which heads contribute the most to the final embedding (`resid_pre` at the last layer) gives this.
+![head contributions to final embedding](../heads.png)
 
-![alt text](../second_harmonic.png)
-
-When the LM starts to form a distribution over the integers that isn't uniform, two distinct peaks emerge. One corresponding approximately to $y = 2x$, and the other to $y = 4x$! In my past Physics research, these **second harmonics** were super common, but seeing them here is super unexpcted (and I'm not sure if this reproduces). As this evolves through layers, a few things happen: the uncertainty around each peak goes down, and the $y=4x$ peak shrinks to being ~0. I'm fairly sure that this is a manifestation of the LMs confidence in what "goes into" a correct answer increasing. 
-
-Now let's look at heads (capped to +- 3):
-![jackpot!](../heads.png)
-
-We see very strong contribution from heads in layer 21, which is also where we first start to see a number in the signal. However, more dilligence needs to be put into this. Q: when activation patching at a given layer, when do we first see a task similar to $y=2x+3$? A: layers 12, 13, 14, 15. Patching breaks after layer 15, in an interesting failure mode - the model now outputs what the correct answer is from the string we patch from, internalizing the answer instead of the rule. 
+We see very strong contribution from heads in layer 21, which is also where we first start to see a number in the signal. However, more dilligence needs to be put into this. Q: when activation patching at a given layer, when do we first see a task similar to $y=2x+3$? A: layers 13, 14, 15, 16. We can instead look at which attention heads contribute to the task vector (i.e the residual stream at layer 15 or so)
  
-
-
+Through this, we see very strong activations at L10H5, L10H7, L13H6, L13H27 and L14H18. L14H18 seems to not be super important. It certainly is doing some updating, but at the same time 
 
 
 

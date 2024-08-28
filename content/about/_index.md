@@ -21,4 +21,11 @@ I want to do cool, hard things. Some of the cool, hard things that I'm intereste
 
 ### Cognition
 - How do language models update their world model based on context?
-	- We can provide a language model function pairs `(x, y)` of some simple function. It should then learn to 
+- Our brains likely work through making a prediction, and updating based on prediction error. Is this due to sending information back being more expensive, and why?
+- Do neurons use backpropogation (current prior: probably not)? If not, what else do they use?
+- Why are our brains so unusually sparse? (current hypothesis: energy conservation)
+- We can use diffusion models & language models to approximate some amount of human behavior. How far can we push this?
+
+### Learning
+- How do I learn outside of the framework of university & structured education?
+- Where can we find rigor?
