@@ -32,7 +32,9 @@ I think a lot of stuff in [AI Safety is not a Model Property](https://www.aisnak
 
 #### [Does Refusal Training in LLMs Generalize to the Past Tense?](https://arxiv.org/abs/2407.11969)
 
-UPDATE: the author has tested on a Claude family model, and it seems like I was a bit too eager to be critical. Big apologies for that.
+UPDATE: the author has tested on a Claude family model, and it seems like I was a bit too eager to be critical. Big apologies for that. 
+
+UPDATE 2: I was included in this paper in the acknowledgements section (for providing an Anthropic API Key)
 
 I'm very excited for a sequel to this paper, "Can Refusal Training in LLMs Generalize ~~to the Past Tense~~?" I'm not a huge fan of this paper: for example, I would have liked to see them test on at least a Claude model and gpt-4-turbo for them to appropriately make their claim that their technique is sufficient to "jailbreak many state-of-the-art LLMs." Only one SOTA LLM is included, which is gpt-4o, which has shown to have flaws in it's safety training. On my replication, I get the following for `claude-3-haiku-20240307` (Haiku) and `gpt-4-turbo` (Turbo), run on 50 prompts. 
 

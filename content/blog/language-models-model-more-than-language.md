@@ -81,7 +81,9 @@ The naive approach of looking at which heads contribute the most to the final em
 
 We see very strong contribution from heads in layer 21, which is also where we first start to see a number in the signal. However, more dilligence needs to be put into this. Q: when activation patching at a given layer, when do we first see a task similar to $y=2x+3$? A: layers 13, 14, 15, 16. We can instead look at which attention heads contribute to the task vector (i.e the residual stream at layer 15 or so)
  
-Through this, we see very strong activations at L10H5, L10H7, L13H6, L13H27 and L14H18. L14H18 seems to not be super important. It certainly is doing some updating, but at the same time 
+Through this, we see very strong activations at L10H5, L10H7, L13H6, L13H27 and L14H18. L10H5 is particularly interesting.
 
+![alt text](../L10H5.png)
 
+The lines striping down, every 6 tokens, are transfers from the y-token to the prediction token, showing that updating is happening.What determines the value in this matrix?
 
