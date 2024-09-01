@@ -4,7 +4,9 @@ date=2024-08-31
 draft=false
 +++
 
-This is a cool result I got from working on another interpretability projects. 
+
+
+Code findable at this [link](https://github.com/skunnavakkam/redundant-attention-heads). This was also cross posted to lesswrong [here](https://www.lesswrong.com/posts/Q8KmWzbituyGCkSro/redundant-attention-heads-in-large-language-models-for-in)
 
 In this article, I claim a few things and offer some evidence for these claims. Among these things are:
 - Language models have many redundant attention heads for a given task
@@ -102,4 +104,4 @@ Broadly, the algorithm that I have in my head is roughly:
 
 3. After this, another attention head attends from the $y_i$ token to the token before $y_j$, with $j > i$. This is responsible for adding the feature that corresponds to the transformation, updating it Bayesianly. I think that the size of this update is probably only proportional to the MLPs confidence in the transformation.
 
-My evidence for this is that of the heads that were ablated to show redundancy, the heads that contributed the most in any given layer had attention patterns that looked similar to what you would expect is point 3 were true. 
+My evidence for this is that of the heads that were ablated to show redundancy, the heads that contributed the most in any given layer had attention patterns that looked similar to what you would expect if point 3 were true. 
