@@ -46,44 +46,22 @@ We can also look at the LM's probability of A:
 and compare this to our simulated, "bayesian" model:
 ![](../simulated-prior.png)
 
-As a side note, the value of $c$, or the sensitivity, that best approximated this distribution was $\ln{2}$. This seems very strange! I need to test more types of tasks to see if this is a constant among language models.
-
-We can also probe through the model of the task that the LM forms. Initially, we probed the correctness of the response by looking at the logits.
-
+Since language model outputs end up being softmaxed, we can work with logprobs.
 $$
-(x_1, y_1), (x_2, y_2), \cdots, (x_n, \square
+\log(A) := \log(A) + \log(c) + norm
 $$
 
-With the previous examples, we see what the language model predicts for the square, and with what probability. Now, we instead look at what option the language model thinks is most likely as we vary $x_n$, while maintaining the same context.
+$$
+\log(B) := \log(B) + \log(1 - c) + norm
+$$
 
-The following is the prediction after 0 examples, with the residual being $y_{true} - y_{pred}$. The model starts with the prior that $y \approx x$.
+$norm$ is some normalization constant that allows values to stay resonable. $A + B$ don't need to equal 1 since they get normalized at softmax.
 
-![alt text](../zero-examples.png)
+Since the unembedding matrix is just a linear transformation on the logits, I hypothesize that the sizes of the features corresponding to $A$ and $B$ increase by this roughly constant amount during each example. 
 
-After two examples, the LM updates, knowing that $y \approx 2x$
+Logit lens and feature patching allow some more interesting insights. From logit lens, the model only crystalizes that the output token is an integer after the 20th layer. From patching, the model learns that $y \approx 2x$ around the 10th / 11th layer. I initially hypothesized that this was the result of the first forming some internal model of the task from the 11th to 16th layer, then converting this to the actual answer after the 20th layer. I don't think that this is true anymore.
 
-![alt text](../two-examples.png)
+I think that it's inappropriate to think of the idea that $y$ is always an integer and not some other token as a form of the model crystallizing it's answer. It seems more natural to think that this is just another feature that the model learns through ICL. To really test this, we can ablate different heads in the model. Specifically, L13H6, L13H27, L10H5 and L10H7.
 
-After three examples, the LM realizes that $y$ is always odd.
-
-![alt text](../three-examples.png)
-
-After this, the LM then tunes its model from $2x + \text{odd}$ to $2x + 3$. There are slight errors that are fixed over the course of the remaining examples, but nothing worth writing about.
-
-I think that this is pretty remarkable. In order for the LM to have some idea about it's prior, it would need to know it's prior in the first place. From the original logit lens paper, the author suspects that the LM immediately converts tokens into prediction space. This gives a prior from which we can build off of. 
-
-This logit lens on the token before a y-value shows some surprising behavior! For example, even after 10 layers in the model, the network does not predict that any numerical token (shown in red), let alone the correct y-value, should be the answer. The model first predicts any integer as the topmost token on the 21st layer!
-
-![alt text](../top_tokens_10_layers_in.png)
-
-The naive approach of looking at which heads contribute the most to the final embedding (`resid_pre` at the last layer) gives this.
-![head contributions to final embedding](../heads.png)
-
-We see very strong contribution from heads in layer 21, which is also where we first start to see a number in the signal. However, more dilligence needs to be put into this. Q: when activation patching at a given layer, when do we first see a task similar to $y=2x+3$? A: layers 13, 14, 15, 16. We can instead look at which attention heads contribute to the task vector (i.e the residual stream at layer 15 or so)
- 
-Through this, we see very strong activations at L10H5, L10H7, L13H6, L13H27 and L14H18. L10H5 is particularly interesting.
-
-![alt text](../L10H5.png)
-
-The lines striping down, every 6 tokens, are transfers from the y-token to the prediction token, showing that updating is happening.What determines the value in this matrix?
+The model has induction heads that attend to previous tokens. This likely allows for the model to say "here is where I need to learn from". 
 

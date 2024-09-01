@@ -9,6 +9,11 @@ Humans do the sampling before resolving their preference to a single option. Thi
 
 Since language models output probability distributions over the next token, feeding a language model some arbitary context and soliciting a vote is viable. Furthermore, the probability distribution over this vote is also visible. As a result, simulating more complex behavior, such as real elections, is possible.
 
+One major caveat is that in reality, what the language model is predicting is the chance that each candidate would be the candidate picked by most people. As a result, we are making the assumption that given a candidate $x_j \in x$, where $x$ is a list of all candidates, 
+$$
+\sum_i P_i(x_j) \approx P(x_j \text{ gets the most votes})
+$$
+
 # Toy Scenario 1: Ranked Choice Voting
 We want to simulate ranked choice voting. This is simple. Provide the language model some context about itself, context about the election, and some context about the things that the model is voting for, and look at it's logits.
 
