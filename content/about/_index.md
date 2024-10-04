@@ -6,6 +6,8 @@ page_title="About"
 
 Hi! I'm Sudarsh. I'm an incoming freshman at Caltech, where I'm likely going to major in Computational Neuroscience, Physics, Electrical Engineering, or Applied Math. 
 
+I haven't specialized in anything so far, and I think that one of my core strengths is that I learn really quickly. I also really like learning with other people and reading textbooks with other people, and I think that this is very mutually beneficial. You should reach out if you're interested in this!
+
 You can reach me at kvsudarsh786 at gmail.com
 
 You can also read what I've been reading at [curius](https://curius.app/sudarsh-k)
@@ -29,3 +31,4 @@ I want to do cool, hard things. Some of the cool, hard things that I'm intereste
 ### Learning
 - How do I learn outside of the framework of university & structured education?
 - Where can we find rigor?
+- 
