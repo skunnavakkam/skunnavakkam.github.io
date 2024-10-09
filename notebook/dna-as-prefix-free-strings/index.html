@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    /* images should be limited to  800px, centered, and with padding 20px*/
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(800px, 100% - 40px);
+        padding: 20px;
+    }
+
+    /* center the body */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0 auto;
+        /* Center the body horizontally */
+        padding: 30px;
+        box-sizing: border-box;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+        max-width: max(60%, 600px);
+    }
+
+    .content-wrapper {
+        /* max width of either 60% or 600px, whichever is larger */
+        max-width: max(60%, 600px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Space Mono', monospace;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    h4 {
+        font-size: 1.1em;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    a {
+        color: #e1b60e;
+        /* Pastel yellow */
+        text-decoration: underline;
+        font-family: 'Space Mono', monospace;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .clear {
+        font-family: 'Space Mono', monospace;
+        background-color: transparent;
+        border-width: 0px;
+        bottom: 30px;
+        left: 30px;
+        position: absolute;
+        text-decoration: underline;
+    }
+
+    /* Brutalist Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 2px solid #000;
+    }
+
+    pre {
+        padding: 10px;
+        /* Add padding to all lines of the code block */
+        /* Optional: background color for better visibility */
+
+        /* Optional: border for better visibility */
+        overflow: auto;
+        /* Optional: add scrollbars if content overflows */
+        /* Add black shadow with no blur */
+
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 30px;
+    }
+
+    ul li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 10px;
+    }
+
+    ul li::before {
+        content: '■';
+        position: absolute;
+        left: 0;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+
+
+    /* Nested Lists */
+    ul ul,
+    ol ol,
+    ul ol,
+    ol ul {
+        margin-top: 10px;
+    }
+
+    th {
+        background-color: #000;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    /* Responsive table */
+    @media screen and (max-width: 600px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+            border: 2px solid #000;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #000;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+</style>
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <meta charset="UTF-8">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://skunnavakkam.github.io/common.css"> -->
+    <title>DNA as fixed length codings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">DNA as fixed length codings</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published September 10, 2024
+    </p>
+    <hr>
+    <p>We treat DNA as an instruction to synthesis proteins . To formalize this, we can define the program $R$ for ribosome
+$$
+R: {0, 1, 2, 3}^n \to (p_1, p_2, \cdots p_m)
+$$
+where $p_1, p_2, \cdots, p_m$ are proteins. </p>
+<p>Since proteins are of variable length, we need to encode a delimiter to seperate proteins from each other. These are equivilant to STOP codons. </p>
+<p>A length-$k$ protein $p$ is equivilant to $A^k$, where $|A| = 20$, which are the number of amino acids we humans. synthesize. This expands causes a vocabulary of $20 + 1 = 21$, including the STOP codon. </p>
+<p>We bound the number of bases needed per represented amino acid as 
+$$
+\log_4(21) &lt; 2.2
+$$</p>
+<p>If DNA were perfectly compressed, we should expect around $2.2$ bases per amino for very long proteins. This isn't the case. Each amino acid is represented by $3$ bases. This is fairly natural for any fixed length encoding scheme. </p>
+<p>However, through assigning multiple codons to the most common amino acids, DNA can save on the number of comparisions being done by the ribosome. Take a case where there are 16 possible amino acids $\in A$, codons of length $s \geq 2$</p>
+<p>Also, suppose that $A_0$ was $85$% of all manufactured amino acids, and each remaning element $A_1, \cdots A_{15}$ each were $1$%. In this case, a map between $A \to {0, 1, 2, 3}^2$ yields $2$ comparisions per amino acid. </p>
+<p>On the other hand, a map $F: A \to {0, 1, 2, 3}^3$ could be much more computationally efficient. Take the output string of this map $S$. Then, if $S_0 = 0$, then $F^{-1}(S) = A_0$. We can dedicate the remaining 8 numbers representable with the first two bits to $A_1, \cdots, A_8$ (this corresponds with the case where $S_0 \neq 0 \land S_0 \neq 3$) and use the combinations where $S_0 = 3$ to represent $A_9, \cdots, A_{15}$. This gives us $7$ computations that take $3$ comparisions each, $8$ that take $2$ each, and $1$ that takes $1$. However, taking the weighted sum </p>
+<p>$$
+0.85 * 1 + 0.01 * 8 * 2 + 0.01 * 7 * 3 = 1.22 \text{ comparisions per amino}
+$$</p>
+<p>This is a constructed scenario, but real DNA is somewhat similar! The four most common aminos each have $\geq 4$ combinations of three bases (or states) assigned to them, while the few least common have only $1$ or $2$</p>
+
+</body>
+
+</html>

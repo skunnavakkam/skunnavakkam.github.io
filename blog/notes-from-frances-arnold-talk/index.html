@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    /* images should be limited to  800px, centered, and with padding 20px*/
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(800px, 100% - 40px);
+        padding: 20px;
+    }
+
+    /* center the body */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0 auto;
+        /* Center the body horizontally */
+        padding: 30px;
+        box-sizing: border-box;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+        max-width: max(60%, 600px);
+    }
+
+    .content-wrapper {
+        /* max width of either 60% or 600px, whichever is larger */
+        max-width: max(60%, 600px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Space Mono', monospace;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    h4 {
+        font-size: 1.1em;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    a {
+        color: #e1b60e;
+        /* Pastel yellow */
+        text-decoration: underline;
+        font-family: 'Space Mono', monospace;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .clear {
+        font-family: 'Space Mono', monospace;
+        background-color: transparent;
+        border-width: 0px;
+        bottom: 30px;
+        left: 30px;
+        position: absolute;
+        text-decoration: underline;
+    }
+
+    /* Brutalist Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 2px solid #000;
+    }
+
+    pre {
+        padding: 10px;
+        /* Add padding to all lines of the code block */
+        /* Optional: background color for better visibility */
+
+        /* Optional: border for better visibility */
+        overflow: auto;
+        /* Optional: add scrollbars if content overflows */
+        /* Add black shadow with no blur */
+
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 30px;
+    }
+
+    ul li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 10px;
+    }
+
+    ul li::before {
+        content: '■';
+        position: absolute;
+        left: 0;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+
+
+    /* Nested Lists */
+    ul ul,
+    ol ol,
+    ul ol,
+    ol ul {
+        margin-top: 10px;
+    }
+
+    th {
+        background-color: #000;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    /* Responsive table */
+    @media screen and (max-width: 600px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+            border: 2px solid #000;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #000;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+</style>
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <meta charset="UTF-8">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://skunnavakkam.github.io/common.css"> -->
+    <title>Notes from a talk from Dr. Arnold</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Notes from a talk from Dr. Arnold</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published October 03, 2024
+    </p>
+    <hr>
+    <p><em>Frances Arnold is a nobel laureate in Chemistry and a professor at Caltech. I was able to attend a talk by her on evolving proteins. I thought that this was an exceptionally cool talk, and I wanted to write a little about it! Obviously, none of this is my own research, and is almost entirely paraphrased from Dr. Arnold's talk</em></p>
+<p>Humans are really bad at engineering proteins. Given that there are $20$ possible amino acids, there are $20^n$ possible proteins of length $n$. This is a huge space for scientists to search through manually, and is likely impossible. Evolution, on the other hand, is able to search through the space of proteins decently well. </p>
+<p>However, nature is bad at generating diversity. Nature usually only searches a small portion of possible proteins, because certain proteins are just not as likely to form. On the other hand, we have the power to make arbitrary synthetic DNA, allowing us to create proteins and compounds, through protein evolution, that do not have counterparts in nature. Notably, given that $20^{300}$ proteins of length $300$ exist, almost None of these have existed, ever, so there are a large space of possibilities that we can search that nobody has ever searched.</p>
+<p>$$
+20^{300} \approx 10^{400} \textrm{ proteins of length } 300
+$$</p>
+<p>$$
+\frac{10^{100} \text{ particles in universe} \cdot 4 \times 10^7 \text{ seconds since big bang} \cdot 10^{15} \text{ molecules per second}}{10^{400}} 
+$$
+$$
+\approx \frac{4 \times 10^{122}}{10^{400}} \approx 0
+$$</p>
+<p>Evolution has a nice way to do this, and we reference &quot;Natural Selection and the Concept of a Protein Space&quot; by John Maynard-Smith for this!</p>
+<blockquote>
+<p>[Salisbury] calculated that the number of possible amino-acid sequences is greater by many orders of m agnitude than the number of proteins which could have existed on Earth since the origin of life, and hence that functionally effective proteins have a vanishingly small chance of arising by mutation.</p>
+</blockquote>
+<p>This is obviously not True, since we do know that functionally effective proteins do exist. Maynard-Smith proposes a model of protein evolution as follows. There are $20$ amino acids that the body works with. Say that a protein is a string of the amino acid language $A$, where $A_1, A_2, \cdots A_{20}$ are the $20$ amino acids.</p>
+<p>Then, take some protein </p>
+<p>$$
+A_i A_j A_k A_l
+$$</p>
+<p>Maynard-Smith proposes that evolution is able to walk the path of all <em>functional</em> proteins that are Hamming distance 1 from the previous protein, where Hamming distance counts the number of locations where the two proteins differ. For example, </p>
+<p>$$
+A_i A_j A_p A_l
+$$</p>
+<p>is a valid move, but</p>
+<p>$$
+A_i A_j A_p A_q
+$$</p>
+<p>is not.</p>
+<p>Running this on PDB kinda confirms this, with code findable <a href="https://github.com/skunnavakkam/protein-evolution-experiment">here</a>. When constructing a graph, placing amino acid strings at nodes, and connecting nodes with Levenshtein distance less than 1, you find that a ton of functional proteins are only on levenshtein move away from another functional protein. </p>
+<p>We can establish the chance that any string has a levenshtein neighbour easily. It is simply the number of neighbors $(|\Sigma| - 1) \times L + (|\Sigma|) \times L + L$ divided by the number of possible strings $2 ^ {300}$. This gives</p>
+<p>$$
+\frac{12000}{2^{300}} \approx 0
+$$</p>
+<p>This means that seeing <em>any</em> connected components is really cool!</p>
+<p>However, the unfortunate things is that the loss landscape of the proteins are not great. There often isn't just a single local maxima. However, a lot of randomness and a lot of search are useful to counteract this. I believe that in Arnold's Nobel winning work, her lab searches through $10^{15}$ or so mutations in DNA per &quot;epoch&quot;. After this, these proteins are then screened in order to find useful proteins that can then be evolved. After screening, the DNA is then recovered, multiplied, and then mutated again. For the machine learning corollary, this seems to be doing machine learning but with huge batch sizes.</p>
+<p>As a test of this, Arnold uses directed <strong>evolution</strong> to synthesize organosillicates, since organosillicates are common by human processes but not found in nature, and this was done through evolving Cytochrome C enzymes to form this bond. I don't quite understand this, but have been reading through this paper in order to :) <a href="https://www.science.org/doi/epdf/10.1126/science.aah6219">link</a></p>
+<p>As a result, through this process, she was able to engineer C-Si bonds and C-B bonds, both of which are not finable in nature. She concluded this lecture by talking about things that could be achievable through AI modelling, such as making this whole process of ideation and directed evolution achieved using an ML research assistant. </p>
+
+</body>
+
+</html>
