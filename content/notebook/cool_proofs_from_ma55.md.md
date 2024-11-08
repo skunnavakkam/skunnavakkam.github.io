@@ -38,3 +38,15 @@ which implies that $x * (e_2 * e_1) = x$ and $(e_2 * e_1) * x$. Thus, the elemen
 We then should show that for $e_x, e_y \in S$, such that $x * e_x = x$ and $e_y * y = y$, $e_x = e_y$. This is trivial, using the same setup as the previous proof.
 
 Then, since the operation $*$ maps from $S \to S$, it is closed by definition, and the existence of an inverse is given. Thus, $(S, *)$ is a group.
+
+## (HW 2, Problem 9)
+
+> Given some prime $p$, let $H \subset S_p$ be a subgroup of the set of permutations of $p$ elements. Show that if $H$ contains an arbitrary transposition $(ij), i \neq j$ and the p-cycle $(12\ldots p)$, then $H = S$. Furthermore, show that this does not hold if $p$ is not prime. 
+
+*This proof was helped by Aaron Zhou at Caltech.*
+
+We first show that $H = S_p$ for prime $p$. WLOG, $j > i$. Then, let $a = j - i$ be the "size" of the transposition. It is clear that any transposition of size $a$ can be achieved by composing one transposition and as many p-cycles as needed. We now aim to show that any transposition can be achieved from a transposition of size $a$ and the cycle.
+
+Moving an element from index $t$ to index $s$ is very elementary. We can always find some $n$ such that $n \cdot a \equiv s - t \pmod{p}$. Thus, we construct the first part of the operation by applying $n$ transpositions to the element at index $t$ until it is swapped with the element at index $s$. This places the element at index $s$ at index $s - a$. We then apply $n - 1$ transpositions to this element, in the other direction, to place it at index $t$. It can be shown that this constitues a transposition $(ts)$, since the chained transpositions "touch" each element twice, once in each direction. Given all arbitrary transpositions $(ij)$, which we have shown can be achieved from a single specific transposition and a p-cycle, it is simple to show that any permutation can be achieved. 
+
+Based on this, it is simple to show that if $p$ is not prime, then this is not possible. This is because if $a | p$, then you can only move elements to $n \cdot a \pmod{p}$, but since $a | p$, this means you can only move elements to indices that are multiples of $a$. Thus, some indices are always inaccessible by this transposition.
