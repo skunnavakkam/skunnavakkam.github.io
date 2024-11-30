@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    /* images should be limited to  800px, centered, and with padding 20px*/
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(800px, 100% - 40px);
+        padding: 20px;
+    }
+
+    /* center the body */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0 auto;
+        /* Center the body horizontally */
+        padding: 30px;
+        box-sizing: border-box;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+        max-width: max(60%, 600px);
+    }
+
+    .content-wrapper {
+        /* max width of either 60% or 600px, whichever is larger */
+        max-width: max(60%, 600px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Space Mono', monospace;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    h4 {
+        font-size: 1.1em;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    a {
+        color: #e1b60e;
+        /* Pastel yellow */
+        text-decoration: underline;
+        font-family: 'Space Mono', monospace;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .clear {
+        font-family: 'Space Mono', monospace;
+        background-color: transparent;
+        border-width: 0px;
+        bottom: 30px;
+        left: 30px;
+        position: absolute;
+        text-decoration: underline;
+    }
+
+    /* Brutalist Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 2px solid #000;
+    }
+
+    pre {
+        padding: 10px;
+        /* Add padding to all lines of the code block */
+        /* Optional: background color for better visibility */
+
+        /* Optional: border for better visibility */
+        overflow: auto;
+        /* Optional: add scrollbars if content overflows */
+        /* Add black shadow with no blur */
+
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 30px;
+    }
+
+    ul li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 10px;
+    }
+
+    ul li::before {
+        content: '■';
+        position: absolute;
+        left: 0;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+
+
+    /* Nested Lists */
+    ul ul,
+    ol ol,
+    ul ol,
+    ol ul {
+        margin-top: 10px;
+    }
+
+    th {
+        background-color: #000;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    /* Responsive table */
+    @media screen and (max-width: 600px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+            border: 2px solid #000;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #000;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+</style>
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <meta charset="UTF-8">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://sudarsh.com/common.css"> -->
+    <title>reval</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">reval</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published July 21, 2024
+    </p>
+    <hr>
+    <p>Reval is a single-file evaluation framework for evaluating large language models on your own data.</p>
+<h1 id="motivation">motivation</h1>
+<p>Most benchmarks don't translate well into real world performance, on your tasks. There are multiple benchmarks where claude-3.5-sonnet scores higher than gpt-4o, and vice versa. How should you know which one of the two to use for your business?</p>
+<p>Right now, you don't, and Reval solves that. </p>
+<h1 id="usage">usage</h1>
+<p>The most simple use of Reval is</p>
+<pre data-lang="bash" style="background-color:#fafafa;color:#383a42;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#e45649;">python</span><span> reval.py</span><span style="color:#e45649;"> --task</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&quot;path/to/data.csv&quot;</span><span style="color:#e45649;"> --models</span><span style="color:#a626a4;">=[</span><span style="color:#50a14f;">&quot;model_name&quot;</span><span style="color:#a626a4;">]
+</span></code></pre>
+<p>You may have to set your <code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, and <code>TOGETHER_API_KEY</code> env variables.</p>
+<p>By default, Reval supports all OpenAI, Anthropic, and together.ai models. It also support common disambiguations (eg. <code>claude-3.5-sonnet</code> calls sonnet, instead of needing to use the internal name)</p>
+<p>Reval can be called in a few simple modes: Single and Arena. Single mode evaluates a single model against your data, while Arena mode evaluates 2 or more models on your data. Reval defaults to Single mode, and Arena mode can be enabled with the <code>--mode=&quot;arena&quot;</code> flag. In this case, <code>--models</code> should be a list &gt;2 models.</p>
+<h3 id="data-schema">data schema:</h3>
+<p>Your <code>data.csv</code> can take on a few of the following forms (please note that column names must be exact). However, column orders may be arbitrary. Columns that do not fit in the scheme will be ignored:</p>
+<h4 id="schema-1">schema 1</h4>
+<pre style="background-color:#fafafa;color:#383a42;"><code><span>| tasks |
+</span><span>| ----- |
+</span></code></pre>
+<p>In this case, Reval generates failure and success criteria for each task in tasks. This is then converted to a table like schema 3, and saved in the current directory</p>
+<h4 id="schema-2">schema 2</h4>
+<p>For more control over your data, you can either provide good and bad examples, or your own success and failure criteria (see schema 3)</p>
+<pre style="background-color:#fafafa;color:#383a42;"><code><span>| tasks | good-examples |
+</span><span>| ----- | ------------- |
+</span></code></pre>
+<pre style="background-color:#fafafa;color:#383a42;"><code><span>| tasks | bad-examples |
+</span><span>| ----- | ------------ |
+</span></code></pre>
+<pre style="background-color:#fafafa;color:#383a42;"><code><span>| tasks | good-examples | bad-examples |
+</span><span>| ----- | ------------- | ------------ |
+</span></code></pre>
+<p>are all valid schema here, and Reval will generate success and failure criteria based on it. </p>
+<h4 id="schema-3">schema 3</h4>
+<pre style="background-color:#fafafa;color:#383a42;"><code><span>| tasks | success-criteria | failure-criteria |
+</span><span>| ----- | ---------------- | ---------------- |
+</span></code></pre>
+<p>If either success critieria or failure criteria don't exist, Reval will generate a column for it. This is the jumping off point from where models are evaluated. </p>
+<h3 id="output-schema">output schema</h3>
+<p>Reval will save one <code>.csv</code> in the current directory of your <code>data.csv</code> with success and failure criteria included. If success and failure criteria already exist in <code>data.csv</code>, this will be a duplicate. </p>
+<p>In addition, a file <code>results.json</code> will be generated. The schema of this file will differ by mode. </p>
+<p>In Single mode:</p>
+<pre data-lang="json" style="background-color:#fafafa;color:#383a42;" class="language-json "><code class="language-json" data-lang="json"><span>[
+</span><span>    {
+</span><span>        </span><span style="color:#50a14f;">&quot;model&quot;</span><span>: </span><span style="background-color:#e06c75;color:#fafafa;">model_name&lt;str&gt;,</span><span> 
+</span><span>        </span><span style="color:#50a14f;">&quot;score&quot;</span><span>: </span><span style="background-color:#e06c75;color:#fafafa;">score&lt;int&gt;</span><span>
+</span><span>    }
+</span><span>]
+</span></code></pre>
+<p>In Arena mode:</p>
+<pre data-lang="json" style="background-color:#fafafa;color:#383a42;" class="language-json "><code class="language-json" data-lang="json"><span>[
+</span><span>    {
+</span><span>        </span><span style="color:#50a14f;">&quot;model&quot;</span><span>: </span><span style="background-color:#e06c75;color:#fafafa;">model_name&lt;str&gt;,</span><span> 
+</span><span>        </span><span style="color:#50a14f;">&quot;score&quot;</span><span>: </span><span style="background-color:#e06c75;color:#fafafa;">score&lt;int&gt;,</span><span> 
+</span><span>        </span><span style="color:#50a14f;">&quot;elo&quot;</span><span>: </span><span style="background-color:#e06c75;color:#fafafa;">elo&lt;int&gt;,</span><span> 
+</span><span>        </span><span style="color:#50a14f;">&quot;num_matches&quot;</span><span>: </span><span style="background-color:#e06c75;color:#fafafa;">num_matches&lt;int&gt;</span><span>
+</span><span>    }
+</span><span>]
+</span></code></pre>
+<p>A raw data file <code>raw_data.json</code> will also be created. Output schema for that will be included later.</p>
+<h3 id="parameters">Parameters</h3>
+<table><thead><tr><th>Parameter</th><th>Description</th><th>Type</th></tr></thead><tbody>
+</tbody></table>
+
+</body>
+
+</html>
