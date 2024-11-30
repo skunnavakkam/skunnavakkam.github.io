@@ -3,6 +3,8 @@ title = "Diffing Models Without Crosscoders"
 date = 2024-11-28
 +++
 
+*Despite this not working, you can still see code [here](https://github.com/skunnavakkam/sudarsh-experiments/blob/main/similarity_of_sae_features.ipynb)*
+
 I think that it should be possible to "diff" models like Anthropic does in their crosscoder paper, without training a crosscoder! 
 
 We can think of a transformer $T$ as a function from an activation vector to a piece of text in semantic space. Defining addition in this semantic space is kind of tricky, but we say that if we add together two pieces of text that are "happy", we get a piece of text that is happier.
