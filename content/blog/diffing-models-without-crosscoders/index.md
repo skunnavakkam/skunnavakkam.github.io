@@ -52,3 +52,7 @@ Furthermore, when looking at norm differences, we get something similar to what 
 ![image](image.png)
 
 This is still a work in progress. My next step is to look at the top 30 positive and negative features and see if I can make sense of them.
+
+## Updated Conclusion
+
+I got access to a dashboard for the SAE, and this doesn't work. The positive and negative features mostly fire on `<bos>` tokens, which makes sense. In addition, the feature correpsondence learnt is pretty shit. I think this may be overfitting, but I'm going to drop it now. 
