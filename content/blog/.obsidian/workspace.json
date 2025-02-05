@@ -1,0 +1,158 @@
+{
+  "main": {
+    "id": "79473bd5923e664d",
+    "type": "split",
+    "children": [
+      {
+        "id": "9d3341ca615b7b9a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "04b645c8d7e1ec89",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "second_harmonic.png"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "89525d4f4550f60c",
+    "type": "split",
+    "children": [
+      {
+        "id": "6045f9e259702095",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "81b9ac17d4e5d19e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "5779ede761476045",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "fbb436ac4cf8a535",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 299.5
+  },
+  "right": {
+    "id": "676c77fbd58783fa",
+    "type": "split",
+    "children": [
+      {
+        "id": "6a98d32dea5753da",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e20f30ab67189bb1",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "second_harmonic.png",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "7e556a26ba130215",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "second_harmonic.png",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "6df7663abc85057a",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "f4696d2f09ba3144",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "second_harmonic.png"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "04b645c8d7e1ec89",
+  "lastOpenFiles": [
+    "transhumanism-eugenics.md",
+    "religions_seem_to_be_convergent.md",
+    "diffing-models-without-crosscoders/image.png",
+    "lm-surprisal.png",
+    "three-examples.png",
+    "language-models-model-more-than-language.md",
+    "_index.md",
+    "protein_evolution/main_6_1.png"
+  ]
+}
