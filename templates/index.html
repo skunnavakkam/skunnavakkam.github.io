@@ -23,7 +23,6 @@
         .content-wrapper {
             max-width: 400px;
             padding: 30px;
-            /* Corrected the box-shadow property */
             background-color: rgba(255, 255, 255);
             flex: 1;
         }
@@ -39,8 +38,15 @@
             margin-top: 0px;
         }
 
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .title {
             font-size: 2.5em;
+            margin: 0;
         }
 
         h1 {
@@ -59,10 +65,6 @@
             font-size: 1.1em;
         }
 
-
-
-
-
         p {
             margin-bottom: 15px;
         }
@@ -73,7 +75,6 @@
 
         a {
             color: #e1b60e;
-            /* Pastel yellow */
             text-decoration: underline;
             font-family: 'Space Mono', monospace;
         }
@@ -93,6 +94,81 @@
             width: 100%;
         }
 
+        .nav-links a {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-family: 'Space Mono', monospace;
+            color: #e1b60e;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 10px;
+                height: 0;
+                overflow: hidden;
+                transition: height 0.3s ease;
+            }
+
+            .nav-links a {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            .nav-links.show {
+                height: 200px;
+                /* Adjust based on content */
+            }
+
+            .nav-links.show a {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .nav-links a:nth-child(1) {
+                transition-delay: 0.1s;
+            }
+
+            .nav-links a:nth-child(2) {
+                transition-delay: 0.2s;
+            }
+
+            .nav-links a:nth-child(3) {
+                transition-delay: 0.3s;
+            }
+
+            .nav-links a:nth-child(4) {
+                transition-delay: 0.4s;
+            }
+
+            .nav-links a:nth-child(5) {
+                transition-delay: 0.5s;
+            }
+
+            .menu-toggle.rotated {
+                transform: rotate(45deg);
+            }
+        }
+
         .clear {
             font-family: 'Space Mono', monospace;
             background-color: transparent;
@@ -103,7 +179,6 @@
             text-decoration: underline;
         }
 
-        /* image should go behind everything, and fill the full frame */
         img {
             position: fixed;
             top: 0;
@@ -114,14 +189,20 @@
         }
     </style>
 
-
+    <meta name="description" content="Welcome to Sudarsh's personal website, showcasing projects, research, and more.">
+    <meta name="keywords" content="Sudarsh, personal website, projects, research">
+    <meta property="og:title" content="Sudarsh's Website">
+    <meta property="og:description" content="Explore Sudarsh's projects and research.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sudarsh.com">
 </head>
-
-
 
 <body>
     <div class="content-wrapper">
-        <h1 class="title">Sudarsh</h1>
+        <div class="header-container">
+            <h1 class="title">Sudarsh</h1>
+            <button class="menu-toggle">+</button>
+        </div>
 
         <div class="nav-links">
             <a href="/about">About</a>
@@ -132,14 +213,14 @@
         </div>
 
         {{ section.content | safe }}
-
     </div>
-
-
 </body>
 
 <script>
-
+    document.querySelector('.menu-toggle').addEventListener('click', function () {
+        document.querySelector('.nav-links').classList.toggle('show');
+        this.classList.toggle('rotated');
+    });
 </script>
 
 </html>

@@ -21,7 +21,8 @@
         { "url": "https://v4913.blogspot.com/", "meta": "vivian is super sweet, and one of the smartest ppl i know at caltech :)" },
         { "url": "https://logangraves.com/", "meta": "incredibly fun to be around, and contains magnitudes" },
         { "url": "https://www.yudhister.me/", "meta": "extremely cracked, and always a pleasure to be around" },
-        { "url": "https://pepsi.pw/", "meta": "my first year college roommate 🎉🎉" }
+        { "url": "https://pepsi.pw/", "meta": "my first year college roommate 🎉🎉" },
+        { "url": "https://clairebookworm.com", "meta": "claire is super cool!! and very fun to talk to" }
     ]
 </script>
 
@@ -201,11 +202,14 @@
                         friendDiv.className = 'friend-item';
                         friendDiv.style.animationDelay = `${count * 0.2}s`;
 
-                        // Assign a random cat (0, 1, or 2)
-                        const catIndex = Math.floor(Math.random() * 3);
+                        // Generate deterministic cat index based on friend URL
+                        const hashCode = friend.url.split('').reduce((acc, char) => {
+                            return char.charCodeAt(0) + ((acc << 5) - acc);
+                        }, 0);
+                        const catIndex = Math.abs(hashCode) % 3; // Will always give same cat for same URL
                         friendDiv.dataset.cat = catIndex;
 
-                        // Create card HTML with a random cat image (PNG or SVG)
+                        // Create card HTML with the deterministic cat image
                         const catPath = cats[catIndex].replace('.svg', '.png');
                         friendDiv.innerHTML = `
                             <a href="${friend.url}" target="_blank">${friend.url}</a>
@@ -250,5 +254,4 @@
             }
         });
     </script>
-</body>
 </body>

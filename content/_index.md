@@ -2,9 +2,7 @@
 title="Home"
 +++
 
-Hi! I'm *Sudarsh*.
-
-I'm a freshman at Caltech! I currently poke language models at METR as a contractor, work in the [ShapiroLab@Caltech](https://shapirolab.caltech.edu/), and also work on collusion among language models for my SPAR Spring 2024 project! In the past, I worked with startups, did Nanophotonics research at UC Irvine, and got good at Chess. 
+I'm a freshman at Caltech! I currently poke language models at [METR](https://metr.org/) as a contractor, work in the [ShapiroLab@Caltech](https://shapirolab.caltech.edu/), and also work on collusion among language models for my SPAR Spring 2024 project! In the past, I worked with startups, did Nanophotonics research at [UC Irvine](https://sites.google.com/uci.edu/lee-lab/home), and got good at Chess. 
 
 If you want to learn more about me, check out my [about page](/about). 
 
