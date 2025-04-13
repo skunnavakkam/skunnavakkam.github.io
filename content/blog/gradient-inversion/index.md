@@ -27,6 +27,6 @@ Reference image:
 Reconstructed image:
 ![Reconstructed image](reconstructed.png)
 
-For some reason, there is a 3x3 tiling here, which I can't figure out.
+It seems like the 3x3 tiling here is due to the convolutional layers in the model. 
 
 
