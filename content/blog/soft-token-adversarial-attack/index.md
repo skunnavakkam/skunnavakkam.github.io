@@ -18,3 +18,5 @@ In addition, one option you could try is to use a soft token and a translation m
 Trying to use this as a semantic map is unfortunately not possible, since it seems like this local minima is fairly sensitive to the position of the soft token. Trying to use something like Orthogonal Procrustes to solve this and translate between the two spaces thus doesn't work, since even a small error after getting the soft token throws off the entire attack. However, Orthogonal Procrustes does work for translation! [source](https://arxiv.org/pdf/1912.10168)
 
 In fact, the mainstream adversarial attack GCG does something similar, by "descending" through computing discrete gradients of token substitutions, and following them greedily. However, I think this is a much more fun way to do it, although you cannot prompt a public model with soft tokens to do anything. 
+
+The attack can be found [here](https://github.com/skunnavakkam/soft-token-adversarial-attack)
