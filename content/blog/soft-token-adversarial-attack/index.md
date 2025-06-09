@@ -20,3 +20,9 @@ Trying to use this as a semantic map is unfortunately not possible, since it see
 In fact, the mainstream adversarial attack GCG does something similar, by "descending" through computing discrete gradients of token substitutions, and following them greedily. However, I think this is a much more fun way to do it, although you cannot prompt a public model with soft tokens to do anything. 
 
 The attack can be found [here](https://github.com/skunnavakkam/soft-token-adversarial-attack)
+
+On the example string: "We can backpropogate circuits (with limitations). Using a SPICE solver, which solves Kirkoff's laws, we can find voltages at nodes by solving the equation", training for 1000 steps, we get the following:
+
+`Step 650 | Corr: 10 | Max Corr: 10 | Loss: 2.8110198974609375 | We can backpropogate circuits (with limitations`
+
+This still is pretty *poor* optimization. We have $768 * 16$ bits of information in for the soft-token, and we generate about $10 * \log_2(50000) \approx 160$ bits of information, which is pretty terrible. 

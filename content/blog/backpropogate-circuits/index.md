@@ -68,6 +68,7 @@ Using these two, you can backpropogate through the linear system solver! Then, y
 
 Another addition you can do to this is to take it over time. Instead of solving for $V$ at each node, you can solve for $\frac{dV}{dt}$ at each node, using $\frac{d}{dt} b$ as the source (note that $\frac{dA}{dt}$ is zero). This is a future addition that I hope to make :)
 
+However, as it stands, this is still pretty cool! We are able to provide a circuit, and some voltage vector $V$, and then backpropogate to find suitable parameters for the circuit. I think that with modifications this may be an interesting way to inverse-design circuits. 
 
 
 
