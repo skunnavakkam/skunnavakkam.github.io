@@ -5,16 +5,35 @@ base_url = "https://sudarsh.com"
 compile_sass = false
 
 # Whether to build a search index to be used later on by a JavaScript library
-build_search_index = false
+build_search_index = true
+
+title = "Sudarsh Kunnavakkam"
+description = "Research and thoughts on machine learning, mathematics, and technology."
+
+# SEO Configuration
+taxonomies = [
+    {name = "tags", feed = true},
+    {name = "categories", feed = true}
+]
 
 [markdown]
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
 highlight_code = true
 highlight_theme = "OneHalfLight"
+smart_punctuation = true
 
 [extra]
 # Put all your custom variables here
 generate_feeds = true
-author = "Sudarsh K"
-feed_filenames="atom.xml"
+author = "Sudarsh Kunnavakkam"
+feed_filenames = "atom.xml"
+
+# Social media links for SEO
+github = "skunnavakkam"
+linkedin = "sudarshan-gopal-kunnavakkam"
+
+# Additional SEO metadata
+keywords = "machine learning, AI safety, language models, nanophotonics, Caltech, research"
+og_image = "/static/profile.jpg"  # You'll need to add a profile image
+twitter_card = "summary_large_image"

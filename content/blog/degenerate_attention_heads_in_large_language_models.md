@@ -1,10 +1,11 @@
 +++
-title="Redundant Attention Heads in Large Language Models For In Context Learning"
-date=2024-08-31
-draft=false
+title = "Redundant Attention Heads in Large Language Models For In Context Learning"
+date = 2024-08-31
+draft = false
+description = "Research on redundant attention heads in language models and their role in in-context learning through Bayesian updates."
+[extra]
+keywords = ["attention heads", "large language models", "LLaMA", "in-context learning", "machine learning", "transformers", "neural networks", "AI research", "Bayesian updates", "TransformerLens"]
 +++
-
-
 
 Code findable at this [link](https://github.com/skunnavakkam/redundant-attention-heads). This was also cross posted to lesswrong [here](https://www.lesswrong.com/posts/Q8KmWzbituyGCkSro/redundant-attention-heads-in-large-language-models-for-in)
 
