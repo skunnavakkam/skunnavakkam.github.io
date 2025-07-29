@@ -8,6 +8,12 @@
     <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
         rel="stylesheet">
+    <meta name="description" content="Welcome to Sudarsh's personal website, showcasing projects, research, and more.">
+    <meta name="keywords" content="Sudarsh, personal website, projects, research">
+    <meta property="og:title" content="Sudarsh's Website">
+    <meta property="og:description" content="Explore Sudarsh's projects and research.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sudarsh.com">
     <style>
         *,
         *::before,
@@ -24,12 +30,12 @@
 
         body {
             font-family: 'Roboto', sans-serif;
+            margin: 0;
             line-height: 1.6;
             letter-spacing: 0.5px;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            height: 100vh;
-            margin: 0;
         }
 
         h1,
@@ -42,14 +48,14 @@
             margin: 0 0 6px;
         }
 
+        p {
+            margin: 0 0 15px;
+        }
+
         a {
             color: #e1b60e;
             text-decoration: underline;
             font-family: 'Space Mono', monospace;
-        }
-
-        p {
-            margin: 0 0 15px;
         }
 
         .main-container {
@@ -59,6 +65,7 @@
 
         .content-wrapper {
             flex: 0 0 400px;
+            height: 100%;
             padding: 30px;
             background: #fff;
             overflow-y: auto;
@@ -66,14 +73,15 @@
         }
 
         #bubble-chamber {
-            flex: 1;
             position: relative;
+            flex: 1;
+            height: 100%;
             background: #fff;
             overflow: hidden;
             display: none;
         }
 
-        @media(min-width:769px) {
+        @media (min-width:769px) {
             #bubble-chamber {
                 display: block;
             }
@@ -139,10 +147,9 @@
             border: none;
             text-decoration: underline;
             font-family: 'Space Mono', monospace;
-            cursor: pointer;
         }
 
-        @media(max-width:768px) {
+        @media (max-width:768px) {
             .menu-toggle {
                 display: block;
                 font-family: 'Space Mono', monospace;
@@ -212,129 +219,107 @@
                 <a href="/misc">Misc</a>
             </div>
             {{ section.content | safe }}
-            <button class="clear">Reset Trails</button>
+            <button class="clear">Clear</button>
         </div>
         <div id="bubble-chamber"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
     <script>
         new p5(p => {
-            /* ---- CONFIG ---- */
-            const fadeLinear = 2;
-            const fadeNonLinear = 120;
-            const opacityThreshold = 200;
-
-            const rate_constant = 2;
-            const dt_constant = 0.5;
-            const baseColor = [225, 182, 14];
-
+            // maximum history frames per particle
+            const deleteLifetime = 300;
+            // exponent for nonlinear fade (1 = linear)
+            const fadeExponent = 2;
+            // simulation ticks per frame
+            const rateConstant = 2;
+            // time step factor
+            const dt = 0.5;
+            const base = [225, 182, 14];
             const counts = { muon: 400, quark: 300, hadron: 200, axion: 50 };
-            let particles = {}, θ;
 
             class Particle {
-                constructor(P, type) {
-                    this.P = P;
+                constructor(p, type) {
+                    this.p = p;
                     this.type = type;
+                    this.history = [];
                     this.reset();
                 }
                 reset() {
-                    const P = this.P;
+                    const P = this.p;
                     this.x = P.width / 2;
                     this.y = P.height / 2;
-                    this.speed = P.random(1, this.type === 'axion' ? 10 : this.type === 'muon' ? 40 : 6);
-                    this.speedD = this.type === 'muon'
-                        ? P.random(0.0005, 0.0015)
-                        : P.random(0.995, 1.002);
-                    θ = P.random(P.TWO_PI);
-                    this.θ = θ + P.random(-0.3, 0.3);
-                    this.θD = P.random(-0.002, 0.002);
-                    this.θDD = P.random(-0.02, 0.02);
+                    this.θ = p.random(p.TWO_PI);
+                    this.speed = p.random(1, this.type === 'axion' ? 10 : this.type === 'muon' ? 40 : 6);
+                    this.speedD = this.type === 'muon' ? p.random(0.0005, 0.0015) : p.random(0.995, 1.002);
+                    this.θD = p.random(-0.002, 0.002);
+                    this.θDD = p.random(-0.02, 0.02);
+                    this.history = [];
                 }
-                move() {
-                    const P = this.P;
-                    P.stroke(...baseColor, 80 / (counts[this.type] / 50));
-                    P.strokeWeight(
-                        this.type === 'muon' ? 2 :
-                            this.type === 'quark' ? 1.2 :
-                                this.type === 'hadron' ? 1 : 0.8
-                    );
-                    P.point(this.x, this.y);
-
-                    this.x += this.speed * Math.sin(this.θ) * dt_constant;
-                    this.y += this.speed * Math.cos(this.θ) * dt_constant;
+                update() {
+                    // add current point
+                    this.history.push({ x: this.x, y: this.y, age: 0 });
+                    // move
+                    this.x += this.speed * Math.sin(this.θ) * dt;
+                    this.y += this.speed * Math.cos(this.θ) * dt;
                     this.speed *= this.speedD;
                     this.θ += this.θD;
                     this.θD += this.θDD * 0.01;
-
-                    if (
-                        this.speed < 0.5 ||
-                        this.x < -50 || this.x > P.width + 50 ||
-                        this.y < -50 || this.y > P.height + 50
-                    ) {
+                    // age history
+                    this.history.forEach(pt => pt.age++);
+                    // remove old
+                    if (this.history.length > deleteLifetime) {
+                        this.history.splice(0, this.history.length - deleteLifetime);
+                    }
+                    // reset if particle too slow or went out of bounds
+                    if (this.speed < 0.5 || this.x < -50 || this.x > p.width + 50 || this.y < -50 || this.y > p.height + 50) {
                         this.reset();
+                    }
+                }
+                draw() {
+                    const P = this.p;
+                    // draw segments
+                    for (let i = 1; i < this.history.length; i++) {
+                        const curr = this.history[i];
+                        const prev = this.history[i - 1];
+                        const f = curr.age / deleteLifetime;
+                        const alpha = (1 - Math.pow(f, fadeExponent)) * 80;
+                        P.stroke(base[0], base[1], base[2], alpha);
+                        P.strokeWeight(this.type === 'muon' ? 2 : this.type === 'quark' ? 1.2 : this.type === 'hadron' ? 1 : 0.8);
+                        P.line(prev.x, prev.y, curr.x, curr.y);
                     }
                 }
             }
 
+            let particles = [];
             p.setup = () => {
                 const container = document.getElementById('bubble-chamber');
-                p.createCanvas(container.clientWidth, p.windowHeight)
-                    .parent('bubble-chamber');
+                p.createCanvas(container.clientWidth, p.windowHeight).parent('bubble-chamber');
+                p.background(255);
                 p.noFill();
-                for (const t in counts) {
-                    particles[t] = Array.from(
-                        { length: counts[t] },
-                        () => new Particle(p, t)
-                    );
+                // init particles
+                for (let type in counts) {
+                    for (let i = 0; i < counts[type]; i++) {
+                        particles.push(new Particle(p, type));
+                    }
                 }
-                clearTrails();
             };
 
             p.draw = () => {
-                p.noStroke();
-                p.fill(255, fadeLinear);
-                p.rect(0, 0, p.width, p.height);
-
-                p.loadPixels();
-                const px = p.pixels;
-                for (let i = 0; i < px.length; i += 4) {
-                    const lum = px[i];
-                    if (255 - lum < opacityThreshold) {
-                        const boost = Math.min(fadeNonLinear, 255 - lum);
-                        px[i] += boost;
-                        px[i + 1] += boost;
-                        px[i + 2] += boost;
-                    }
+                // slight fade overlay to clear artifacts
+                p.background(255, 5);
+                // update multiple times per frame
+                for (let t = 0; t < rateConstant; t++) {
+                    particles.forEach(pt => pt.update());
                 }
-                p.updatePixels();
-
-                for (let k = 0; k < rate_constant; k++) {
-                    for (const t in particles) {
-                        particles[t].forEach(pt => pt.move());
-                    }
-                }
-
-                // Pure black attribution text at same vertical level and margin as the clear button
-                p.noStroke();
-                p.fill(0);
-                p.textFont('Space Mono');
-                p.textSize(13);
-                p.textAlign(p.RIGHT, p.BOTTOM);
-                p.text('a simulation of a bubble chamber', p.width - 30, p.height - 30);
+                // draw all
+                particles.forEach(pt => pt.draw());
             };
 
             p.windowResized = () => {
                 const container = document.getElementById('bubble-chamber');
                 p.resizeCanvas(container.clientWidth, p.windowHeight);
-                clearTrails();
-            };
-
-            function clearTrails() {
                 p.background(255);
-                for (const t in particles) particles[t].forEach(pt => pt.reset());
-            }
-            document.querySelector('.clear')
-                .addEventListener('click', clearTrails);
+            };
         });
     </script>
     <script>

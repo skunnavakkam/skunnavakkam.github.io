@@ -8,12 +8,20 @@ og_title = "Sudarsh Kunnavakkam - Personal Website"
 og_description = "Explore my work in AI safety, language models, and nanophotonics research at Caltech. Connect with me to discuss technology and research!"
 +++
 
-I'm a freshman at Caltech! I currently poke language models at [METR](https://metr.org/) as a contractor, work in the [ShapiroLab@Caltech](https://shapirolab.caltech.edu/), and also work on collusion among language models for my SPAR Spring 2024 project! In the past, I worked with startups, did Nanophotonics research at [UC Irvine](https://sites.google.com/uci.edu/lee-lab/home), and got good at Chess. 
+I'm a freshman at Caltech. I spend most of my doing AI Safety work, physics, math, and biology.
 
-If you want to learn more about me, check out my [about page](/about). 
+Some things I've been affiliated with:
+- Poking models at [METR](https://metr.org/)
+- Working on ultrasound imaging at the [ShapiroLab](https://shapirolab.caltech.edu/)
+- Researching language model collusion in [SPAR](https://sparai.org/)
+- Nanophotonics research at [UCI](https://sites.google.com/uci.edu/lee-lab/home)
+- Attended ratcamps, ARENA 6.0, and other things
+- Got good at Chess
 
-You can also meet my friends [here](/friends.html) :D
+If you want more detail about me, see my [about page](/about). 
 
-I want to meet new people. Please free to reach out! I love talking to people who love things, and I would almost certainly be willing to help if you wanted my help, or just wanted to tell someone else about your work. [tips on reaching out to me and giving me feedback](/about/#reaching-out-to-me)
+You can meet some of my friends [here](/friends.html) :)
 
-You can leave me feedback (<u>strongly encouraged!!</u>) *[here](https://sudarsh.com/feedback)*. You should have a very low bar for this :) Anything, and I mean anything, helps
+I want to meet new people. Please free to reach out! I love talking to people who are passionate about the things they love, and would love to hear about you!
+
+You can leave me feedback (<u>strongly encouraged!</u>) *[here](https://sudarsh.com/feedback)*. Please have a low bar for this, since anything helps.
