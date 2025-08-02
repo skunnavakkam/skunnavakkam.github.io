@@ -15,3 +15,5 @@ I value kindness, honesty, hard work, and being real and genuine. If you'd like 
 I love my friends. You should see some of their websites [here](/friends.html)
 
 You can leave me feedback (<u>strongly encouraged!</u>) *[here](https://sudarsh.com/feedback)*. Please have a low bar for this, since anything helps.
+
+See a resume [here](/resume.pdf).
