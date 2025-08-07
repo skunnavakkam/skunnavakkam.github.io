@@ -1,6 +1,7 @@
 +++
 title="Gradient Inversion Attack"
 date="2025-03-24"
+description="A replication of the paper Deep Leakage from Gradients to reverse-engineer the training data from the gradients of a neural network in training."
 +++
 
 This is a replication of the paper [Deep Leakage from Gradients](https://arxiv.org/abs/1906.08935).

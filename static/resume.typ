@@ -66,10 +66,10 @@
   title: "Undergraduate Research Intern",
   dates: dates-helper(start-date: "Nov 2024", end-date: "Present")
 )
-- Developing novel ultrasound reporters for extracellular signal sensing (e.g. cancer markers)
-- Wrote GPU-accelerated simulators for Ca2+ dynamics across RyR cells with Connexon channels
-- Built CV algorithms for ultrasound signal processing; researching RyR gating modulation
-- Pipelines to process 10s of TBs of data per day
+- Developed ultrasound reporter cells for biochemical signal sensing
+- Wrote high throughput computer vision screens for ultrasound imaging
+- Designed custom ML pipeline for linker design using ProteinMPNN, RFDiffusion, AlphaFold, etc.
+- 
 
 #work(
   company: "Lee Nano-Optics Lab at UC Irvine",

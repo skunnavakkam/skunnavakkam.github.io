@@ -2,6 +2,7 @@
 title="Language Models Update Based on In-Context Learning"
 date=2024-08-21
 draft=false
+description="A look at how language models update their priors based on in-context examples"
 +++
 
 Since I'm going to be talking about two different types of models, one which is a language model and the other which is the language model's model of the context, I'm going to refer to language models as LMs in this post. I'm also still in the process of writing this. If you don't see source code in the next few months, or you want immediate access to source code, just shoot me an email :)

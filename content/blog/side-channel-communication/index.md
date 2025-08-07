@@ -1,6 +1,7 @@
 +++
 title = "Using Power Draw as a Side Channel for Communication"
 date = 2025-04-07
+description="A sketch of how models may be able to change their weights to communicate through power draw resulting from increased bitflips"
 +++
 
 *This project was inspired by [Gabriel Kulp] at RAND*

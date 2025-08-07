@@ -1,6 +1,7 @@
 +++
 title = "Backpropogate Circuits"
 date = 2025-05-16
+description = "Flowing gradients through the conductance matrix to optimize circuits of linear elements"
 +++
 
 Code visible [here](https://github.com/skunnavakkam/backprop-circuit-simulator).

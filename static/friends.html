@@ -1,33 +1,15 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-</head>
-
-<script>
-    const friends = [
-        { "url": "https://utilityhotbar.github.io", "meta": "met him at pair '24, he builds cool worlds" },
-        { "url": "https://neilwb.com", "meta": "french ais, does many things, of which i understand few" },
-        { "url": "https://minji0925.github.io/", "meta": "fellow ratcamper, once got stranded in a field in the UK with her" },
-        { "url": "https://selvaradov.net", "meta": "met him at eagx, he does many things" },
-        { "url": "https://mkodama.org", "meta": "talked with him about newcomb's paradox and decision theory in a train for 5 hrs" },
-        { "url": "https://tzukitchan.com", "meta": "crazy hard working, one of the few people i call a role model" },
-        { "url": "https://exr0n.com", "meta": "the first person i spoke to at caltech, one of the most interesting too!" },
-        { "url": "https://alexrandomkat.nekoweb.org", "meta": "[⚠️ Friend Requested CW, site possibly nsfw ⚠️]\n has supplied me with chemicals" },
-        { "url": "https://www.jameslian.com/", "meta": "we met bc we both love trains, extremely diverse person" },
-        { "url": "https://jasonhausenloy.com/", "meta": "the nicest person i know, and very cracked on top of it!" },
-        { "url": "https://v4913.blogspot.com/", "meta": "vivian is super sweet, and one of the smartest ppl i know at caltech :)" },
-        { "url": "https://logangraves.com/", "meta": "incredibly fun to be around, and contains magnitudes" },
-        { "url": "https://www.yudhister.me/", "meta": "extremely cracked, and always a pleasure to be around" },
-        { "url": "https://pepsi.pw/", "meta": "my first year college roommate 🎉🎉" },
-        { "url": "https://clairebookworm.com", "meta": "claire is super cool!! and very fun to talk to" }
-    ]
-</script>
-
-<body>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Drawer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
     <style>
+        /* Base Styles */
         body {
             background-color: #fff;
             color: #000;
@@ -35,6 +17,7 @@
             margin: 0;
             padding: 20px;
             text-align: center;
+            user-select: none;
         }
 
         #instruction {
@@ -43,6 +26,7 @@
             animation: blink 1s infinite;
             color: #222;
             text-shadow: 2px 2px #ddd;
+            cursor: default;
         }
 
         #friendsList {
@@ -51,7 +35,7 @@
             margin: 0 auto;
             padding: 20px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
         }
 
@@ -60,7 +44,6 @@
             padding: 15px;
             border: 3px solid #000;
             background-color: #fff;
-            /* Lighter card background */
             image-rendering: pixelated;
             box-shadow: 5px 5px 0 #000;
             transform: scale(1);
@@ -112,9 +95,10 @@
             overflow: visible;
         }
 
-        /* Ensure SVGs use their inline dimensions */
-        .cat-symbol svg {
+        .cat-symbol img {
             display: block;
+            width: 200px;
+            height: 200px;
         }
 
         .celebration {
@@ -160,98 +144,155 @@
             }
         }
 
+        /* Responsive Layout */
+        @media (max-width: 800px) {
+            #friendsList {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .friend-item {
+                padding: 12px;
+                margin: 10px 0;
+                border-width: 2px;
+                border-radius: 10px;
+            }
+
+            .friend-item a {
+                font-size: 1.4em;
+            }
+
+            .friend-item .meta {
+                font-size: 0.9em;
+            }
+
+            .cat-symbol img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            #instruction {
+                font-size: 24px;
+                margin: 10px;
+            }
+
+            #friendsList {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .friend-item a {
+                font-size: 1.2em;
+            }
+
+            .friend-item .meta {
+                font-size: 0.85em;
+            }
+
+            .cat-symbol img {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
         @font-face {
             font-family: '8bit';
             src: url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
         }
     </style>
+</head>
 
-    <div id="instruction">PRESS [SPACE] TO DRAW CARDS</div>
+<body>
+    <div id="instruction">TAP OR CLICK ANYWHERE TO DRAW CARDS</div>
     <div id="friendsList"></div>
     <div class="celebration" id="celebration"></div>
 
     <script>
-        let usedIndices = new Set();
-        let selectedCards = new Set();
-
-        // Blank array for cat SVGs. Populate with your cat SVG strings.
-        const cats = [
-            "/sprites/tile036.png",
-            "/sprites/tile043.png",
-            "/sprites/tile045.png",
+        const friends = [
+            { url: "https://utilityhotbar.github.io", meta: "met him at pair '24, he builds cool worlds" },
+            { url: "https://neilwb.com", meta: "french ais, does many things, of which i understand few" },
+            { url: "https://minji0925.github.io/", meta: "fellow ratcamper, once got stranded in a field in the UK with her" },
+            { url: "https://selvaradov.net", meta: "met him at eagx, he does many things" },
+            { url: "https://mkodama.org", meta: "talked with him about newcomb's paradox and decision theory in a train for 5 hrs" },
+            { url: "https://tzukitchan.com", meta: "crazy hard working, one of the few people i call a role model" },
+            { url: "https://exr0n.com", meta: "the first person i spoke to at caltech, one of the most interesting too!" },
+            { url: "https://alexrandomkat.nekoweb.org", meta: "[⚠️ Friend Requested CW, site possibly nsfw ⚠️] has supplied me with chemicals" },
+            { url: "https://www.jameslian.com/", meta: "we met bc we both love trains, extremely diverse person" },
+            { url: "https://jasonhausenloy.com/", meta: "the nicest person i know, and very cracked on top of it!" },
+            { url: "https://v4913.blogspot.com/", meta: "vivian is super sweet, and one of the smartest ppl i know at caltech :)" },
+            { url: "https://logangraves.com/", meta: "incredibly fun to be around, and contains magnitudes" },
+            { url: "https://www.yudhister.me/", meta: "extremely cracked, and always a pleasure to be around" },
+            { url: "https://pepsi.pw/", meta: "my first year college roommate 🎉🎉" },
+            { url: "https://clairebookworm.com", meta: "claire is super cool!! and very fun to talk to" }
         ];
+        const cats = ["/sprites/tile036.png", "/sprites/tile043.png", "/sprites/tile045.png"];
+        const usedIndices = new Set();
+        const selectedCards = new Set();
 
-        document.addEventListener('keydown', function (event) {
-            if (event.code === 'Space') {
-                const friendsList = document.getElementById('friendsList');
-                friendsList.style.display = 'grid';
-                friendsList.innerHTML = '';
-                selectedCards.clear();
+        function drawCards() {
+            const friendsList = document.getElementById('friendsList');
+            friendsList.style.display = 'grid';
+            friendsList.innerHTML = '';
+            selectedCards.clear();
 
-                if (usedIndices.size >= friends.length) {
-                    usedIndices.clear();
-                }
+            if (usedIndices.size >= friends.length) usedIndices.clear();
 
-                let count = 0;
-                while (count < 3 && usedIndices.size < friends.length) {
-                    const randomIndex = Math.floor(Math.random() * friends.length);
-                    if (!usedIndices.has(randomIndex)) {
-                        usedIndices.add(randomIndex);
-                        const friend = friends[randomIndex];
-                        const friendDiv = document.createElement('div');
-                        friendDiv.className = 'friend-item';
-                        friendDiv.style.animationDelay = `${count * 0.2}s`;
+            let count = 0;
+            while (count < 3 && usedIndices.size < friends.length) {
+                const idx = Math.floor(Math.random() * friends.length);
+                if (usedIndices.has(idx)) continue;
+                usedIndices.add(idx);
 
-                        // Generate deterministic cat index based on friend URL
-                        const hashCode = friend.url.split('').reduce((acc, char) => {
-                            return char.charCodeAt(0) + ((acc << 5) - acc);
-                        }, 0);
-                        const catIndex = Math.abs(hashCode) % 3; // Will always give same cat for same URL
-                        friendDiv.dataset.cat = catIndex;
+                const friend = friends[idx];
+                const friendDiv = document.createElement('div');
+                friendDiv.className = 'friend-item';
+                friendDiv.style.animationDelay = `${count * 0.2}s`;
 
-                        // Create card HTML with the deterministic cat image
-                        const catPath = cats[catIndex].replace('.svg', '.png');
-                        friendDiv.innerHTML = `
-                            <a href="${friend.url}" target="_blank">${friend.url}</a>
-                            <div class="cat-symbol">
-                                <img src="${catPath}" style="width: 200px; height: 200px;" />
-                            </div>
-                            ${friend.meta ? `<div class="meta">${friend.meta}</div>` : ''}
-                        `;
+                const hash = friend.url.split('').reduce((a, c) => c.charCodeAt(0) + ((a << 5) - a), 0);
+                const catIndex = Math.abs(hash) % cats.length;
+                friendDiv.dataset.cat = catIndex;
 
-                        friendDiv.addEventListener('click', () => {
-                            if (selectedCards.has(friendDiv)) {
-                                selectedCards.delete(friendDiv);
-                                friendDiv.classList.remove('selected');
-                            } else if (selectedCards.size < 3) {
-                                selectedCards.add(friendDiv);
-                                friendDiv.classList.add('selected');
+                friendDiv.innerHTML = `
+          <a href="${friend.url}" target="_blank">${friend.url}</a>
+          <div class="cat-symbol">
+            <img src="${cats[catIndex]}" alt="Cat sprite">
+          </div>
+          <div class="meta">${friend.meta}</div>
+        `;
 
-                                if (selectedCards.size === 3) {
-                                    const selectedArray = Array.from(selectedCards);
-                                    const firstCat = selectedArray[0].dataset.cat;
-                                    const allSame = selectedArray.every(card => card.dataset.cat === firstCat);
-                                    if (allSame) {
-                                        createConfetti();
-                                        setTimeout(() => {
-                                            selectedCards.forEach(card => card.classList.remove('selected'));
-                                            selectedCards.clear();
-                                        }, 1000);
-                                    } else {
-                                        setTimeout(() => {
-                                            selectedCards.forEach(card => card.classList.remove('selected'));
-                                            selectedCards.clear();
-                                        }, 500);
-                                    }
-                                }
+                friendDiv.addEventListener('click', () => {
+                    if (selectedCards.has(friendDiv)) {
+                        selectedCards.delete(friendDiv);
+                        friendDiv.classList.remove('selected');
+                    } else if (selectedCards.size < 3) {
+                        selectedCards.add(friendDiv);
+                        friendDiv.classList.add('selected');
+                        if (selectedCards.size === 3) {
+                            const first = [...selectedCards][0].dataset.cat;
+                            const allSame = [...selectedCards].every(d => d.dataset.cat === first);
+                            setTimeout(() => {
+                                selectedCards.forEach(d => d.classList.remove('selected'));
                             }
-                        });
-
-                        friendsList.appendChild(friendDiv);
-                        count++;
+                                , allSame ? 1000 : 500);
+                        }
                     }
-                }
+                });
+
+                friendsList.appendChild(friendDiv);
+                count++;
             }
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.code === 'Space') { e.preventDefault(); drawCards(); }
         });
+        document.addEventListener('click', drawCards);
+        document.addEventListener('touchstart', drawCards);
     </script>
 </body>
+
+</html>

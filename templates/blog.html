@@ -1,5 +1,17 @@
 {% extends "tlbase.html" %}
 {% block content %}
+
+<style>
+    .blog-post-date {
+        font-size: 0.9em;
+        color: #666;
+    }
+
+    .blog-post-description {
+        margin-bottom: 5px;
+    }
+</style>
+
 <div class="blog-section">
     {% for page in section.pages %}
     {% if not page.draft %}
@@ -7,7 +19,12 @@
         <h3>
             <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
         </h3>
-        <div class="blog-post-meta">
+        {% if page.description %}
+        <div class="blog-post-description">
+            {{ page.description }}
+        </div>
+        {% endif %}
+        <div class="blog-post-date">
             Published {{ page.date | date(format="%B %d, %Y") }}
         </div>
     </div>

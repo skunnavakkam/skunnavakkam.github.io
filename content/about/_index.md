@@ -15,3 +15,14 @@ Some things I've been affiliated with:
 - Attended ratcamps, ARENA 6.0, and other things
 - Got good at Chess
 
+You can contact me at
+- skunnava at caltech dot edu
+- kvsudarsh786 at gmail dot com
+- ash_webb on tgram
+- sudarshk216 on signal
+- sudarshk_ on x
+
+or anywhere else you can find me. Please reach out if you'd like! It's always refreshing to meet new people.
+
+I like to build, hike, go to concerts, listen to music, and appreciate art. I'm a big fan of programmatic art, and I'm trying to incorporate more of it onto this site. 
+

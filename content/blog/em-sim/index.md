@@ -1,6 +1,6 @@
 +++
 title = "Implementing E&M Simulators"
-description = "Implementing E&M Simulators"
+description = "Backpropogatable FDFD and FDTD simulators in Jax, and trying to use diffusion models, tiled preconditioning, and other tricks to try to make them faster"
 date = 2025-07-28
 draft = false
 +++
