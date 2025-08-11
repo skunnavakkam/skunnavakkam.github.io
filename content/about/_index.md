@@ -16,9 +16,7 @@ Some things I've been affiliated with:
 - Got good at Chess
 
 You can contact me at
-- skunnava at caltech dot edu
 - kvsudarsh786 at gmail dot com
-- ash_webb on tgram
 - sudarshk216 on signal
 - sudarshk_ on x
 
