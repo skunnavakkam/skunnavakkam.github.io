@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    /* images should be limited to  800px, centered, and with padding 20px*/
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(800px, 100% - 40px);
+        padding: 20px;
+    }
+
+    /* center the body */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0 auto;
+        /* Center the body horizontally */
+        padding: 30px;
+        box-sizing: border-box;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+        max-width: max(60%, 600px);
+    }
+
+    .content-wrapper {
+        /* max width of either 60% or 600px, whichever is larger */
+        max-width: max(60%, 600px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Space Mono', monospace;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    h4 {
+        font-size: 1.1em;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    a {
+        color: #e1b60e;
+        /* Pastel yellow */
+        text-decoration: underline;
+        font-family: 'Space Mono', monospace;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .clear {
+        font-family: 'Space Mono', monospace;
+        background-color: transparent;
+        border-width: 0px;
+        bottom: 30px;
+        left: 30px;
+        position: absolute;
+        text-decoration: underline;
+    }
+
+    /* Brutalist Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 2px solid #000;
+    }
+
+    pre {
+        padding: 10px;
+        /* Add padding to all lines of the code block */
+        /* Optional: background color for better visibility */
+
+        /* Optional: border for better visibility */
+        overflow: auto;
+        /* Optional: add scrollbars if content overflows */
+        /* Add black shadow with no blur */
+
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 30px;
+    }
+
+    ul li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 10px;
+    }
+
+    ul li::before {
+        content: '■';
+        position: absolute;
+        left: 0;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+
+
+    /* Nested Lists */
+    ul ul,
+    ol ol,
+    ul ol,
+    ol ul {
+        margin-top: 10px;
+    }
+
+    th {
+        background-color: #000;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    /* Responsive table */
+    @media screen and (max-width: 600px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+            border: 2px solid #000;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #000;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+</style>
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <meta charset="UTF-8">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://sudarsh.com/common.css"> -->
+    <title>Eigenvectors of the Graph Laplacian hold Spectral Information</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Eigenvectors of the Graph Laplacian hold Spectral Information" />
+    <meta name="twitter:description" content="I want to give (and gain) some intuition about a specific phenomenon. This is a phenomenon from Spectral Graph Theory! Namely, when we take this matrix called the graph Laplacian. We define it for a g…" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Eigenvectors of the Graph Laplacian hold Spectral Information</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published October 06, 2024
+    </p>
+    <hr>
+    <p>I want to give (and gain) some intuition about a specific phenomenon. This is a phenomenon from Spectral Graph Theory! Namely, when we take this matrix called the graph Laplacian. We define it for a graph $G = (V, E)$ as $L = D - A$, where $D$ is the degree matrix </p>
+<p>$$
+D = \begin{pmatrix}
+degree_{1} &amp; 0 &amp; 0 &amp; \cdots &amp; 0 \
+0 &amp; degree_{2} &amp; 0 &amp; \cdots &amp; 0 \
+0 &amp; 0 &amp; degree_{3} &amp; \cdots &amp; 0 \
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \
+0 &amp; 0 &amp; 0 &amp; \cdots &amp; degree_{n}
+\end{pmatrix}
+$$</p>
+<p>and $A$ is the adjacency matrix. </p>
+<p>Treat the eigenvectors of the Laplacian as a function $F: V \to \mathbb{R}$. When you color the vertices of a graph according to the value of the function at those vertices, the color follows a smooth gradient for low eigenvalues, and the coloring is not smooth for high eigenvalues. </p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a626a4;">import </span><span>networkx </span><span style="color:#a626a4;">as </span><span>nx
+</span><span style="color:#a626a4;">import </span><span>random
+</span><span style="color:#a626a4;">import </span><span>matplotlib.pyplot </span><span style="color:#a626a4;">as </span><span>plt
+</span><span>
+</span><span>n </span><span style="color:#a626a4;">= </span><span style="color:#c18401;">50  </span><span style="color:#a0a1a7;"># number of vertices
+</span><span>d </span><span style="color:#a626a4;">= </span><span style="color:#c18401;">6 </span><span style="color:#a0a1a7;"># degree of each vertex
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">generate_d_regular_graph</span><span>(</span><span style="color:#e45649;">n</span><span>, </span><span style="color:#e45649;">d</span><span>):
+</span><span>    </span><span style="color:#a0a1a7;">&quot;&quot;&quot;
+</span><span style="color:#a0a1a7;">    Generate a random d-regular graph with n vertices and no self-cycles.
+</span><span style="color:#a0a1a7;">    
+</span><span style="color:#a0a1a7;">    Parameters:
+</span><span style="color:#a0a1a7;">    n (int): Number of vertices
+</span><span style="color:#a0a1a7;">    d (int): Degree of each vertex
+</span><span style="color:#a0a1a7;">    
+</span><span style="color:#a0a1a7;">    Returns:
+</span><span style="color:#a0a1a7;">    nx.Graph: A d-regular graph
+</span><span style="color:#a0a1a7;">    &quot;&quot;&quot;
+</span><span>    </span><span style="color:#a626a4;">if </span><span>n </span><span style="color:#a626a4;">* </span><span>d </span><span style="color:#a626a4;">% </span><span style="color:#c18401;">2 </span><span style="color:#a626a4;">!= </span><span style="color:#c18401;">0 </span><span style="color:#a626a4;">or </span><span>d </span><span style="color:#a626a4;">&gt;= </span><span>n:
+</span><span>        </span><span style="color:#a626a4;">raise </span><span style="color:#e45649;">ValueError</span><span>(</span><span style="color:#50a14f;">&quot;n * d must be even and d must be less than n&quot;</span><span>)
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># Create an empty graph
+</span><span>    G </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">Graph</span><span>()
+</span><span>    G.</span><span style="color:#e45649;">add_nodes_from</span><span>(</span><span style="color:#0184bc;">range</span><span>(n))
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># Create a list of available stubs (connection points)
+</span><span>    stubs </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">list</span><span>(</span><span style="color:#0184bc;">range</span><span>(n)) </span><span style="color:#a626a4;">* </span><span>d
+</span><span>    
+</span><span>    </span><span style="color:#a626a4;">while </span><span>stubs:
+</span><span>        </span><span style="color:#a0a1a7;"># Randomly select two different stubs
+</span><span>        u, v </span><span style="color:#a626a4;">= </span><span>random.</span><span style="color:#e45649;">sample</span><span>(stubs, </span><span style="color:#c18401;">2</span><span>)
+</span><span>        
+</span><span>        </span><span style="color:#a0a1a7;"># Ensure no self-loops and no multiple edges
+</span><span>        </span><span style="color:#a626a4;">if </span><span>u </span><span style="color:#a626a4;">!= </span><span>v </span><span style="color:#a626a4;">and not </span><span>G.</span><span style="color:#e45649;">has_edge</span><span>(u </span><span style="color:#a626a4;">% </span><span>n, v </span><span style="color:#a626a4;">% </span><span>n):
+</span><span>            G.</span><span style="color:#e45649;">add_edge</span><span>(u </span><span style="color:#a626a4;">% </span><span>n, v </span><span style="color:#a626a4;">% </span><span>n)
+</span><span>            stubs.</span><span style="color:#e45649;">remove</span><span>(u)
+</span><span>            stubs.</span><span style="color:#e45649;">remove</span><span>(v)  
+</span><span>
+</span><span>        </span><span style="color:#a626a4;">import </span><span>sys
+</span><span>        sys.stdout.</span><span style="color:#e45649;">write</span><span>(</span><span style="color:#50a14f;">&quot;</span><span style="color:#0997b3;">\r</span><span style="color:#50a14f;">&quot; </span><span style="color:#a626a4;">+ </span><span style="color:#50a14f;">&quot; &quot; </span><span style="color:#a626a4;">* </span><span style="color:#c18401;">20 </span><span style="color:#a626a4;">+ </span><span style="color:#50a14f;">&quot;</span><span style="color:#0997b3;">\r</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span>        sys.stdout.</span><span style="color:#e45649;">write</span><span>(</span><span style="color:#50a14f;">&quot;</span><span style="color:#0997b3;">\r</span><span style="color:#50a14f;">&quot; </span><span style="color:#a626a4;">+ f</span><span style="color:#50a14f;">&quot;Number of stubs remaining: </span><span>{</span><span style="color:#0184bc;">len</span><span>(stubs)}</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span>        sys.stdout.</span><span style="color:#e45649;">flush</span><span>()
+</span><span>    </span><span style="color:#0184bc;">print</span><span>()
+</span><span>    </span><span style="color:#a626a4;">return </span><span>G
+</span><span>
+</span><span>graph </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">generate_d_regular_graph</span><span>(n, d)
+</span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;Generated a </span><span>{d}</span><span style="color:#50a14f;">-regular graph with </span><span>{n}</span><span style="color:#50a14f;"> vertices&quot;</span><span>)
+</span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;Number of edges: </span><span>{graph.</span><span style="color:#e45649;">number_of_edges</span><span>()}</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span>
+</span><span style="color:#a0a1a7;"># plot the graph
+</span><span>
+</span><span>plt.</span><span style="color:#e45649;">figure</span><span>(</span><span style="color:#e45649;">figsize</span><span style="color:#a626a4;">=</span><span>(</span><span style="color:#c18401;">12</span><span>, </span><span style="color:#c18401;">9</span><span>))
+</span><span>pos </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">spring_layout</span><span>(graph, </span><span style="color:#e45649;">k</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.5</span><span>, </span><span style="color:#e45649;">iterations</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">50</span><span>)
+</span><span>nx.</span><span style="color:#e45649;">draw</span><span>(graph, pos,
+</span><span>        </span><span style="color:#e45649;">node_color</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;lightblue&#39;</span><span>,
+</span><span>        </span><span style="color:#e45649;">node_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">300</span><span>,
+</span><span>        </span><span style="color:#e45649;">with_labels</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">True</span><span>,
+</span><span>        </span><span style="color:#e45649;">font_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">8</span><span>,
+</span><span>        </span><span style="color:#e45649;">edge_color</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;gray&#39;</span><span>,
+</span><span>        </span><span style="color:#e45649;">width</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.6</span><span>,
+</span><span>        </span><span style="color:#e45649;">alpha</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.7</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">title</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&#39;Random </span><span>{d}</span><span style="color:#50a14f;">-Regular Graph with </span><span>{n}</span><span style="color:#50a14f;"> Vertices&#39;</span><span>, </span><span style="color:#e45649;">fontsize</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">16</span><span>, </span><span style="color:#e45649;">fontweight</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;bold&#39;</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">axis</span><span>(</span><span style="color:#50a14f;">&#39;off&#39;</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">show</span><span>()
+</span><span>
+</span><span style="color:#a626a4;">import </span><span>numpy </span><span style="color:#a626a4;">as </span><span>np
+</span><span style="color:#a626a4;">import </span><span>networkx </span><span style="color:#a626a4;">as </span><span>nx
+</span><span style="color:#a626a4;">import </span><span>scipy.linalg </span><span style="color:#a626a4;">as </span><span>sla
+</span><span style="color:#a626a4;">import </span><span>matplotlib.pyplot </span><span style="color:#a626a4;">as </span><span>plt
+</span><span>
+</span><span>laplacian_matrix </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">laplacian_matrix</span><span>(graph).</span><span style="color:#e45649;">toarray</span><span>()
+</span><span>eigenvalues, eigenvectors </span><span style="color:#a626a4;">= </span><span>np.linalg.</span><span style="color:#e45649;">eigh</span><span>(laplacian_matrix)
+</span><span>eigenvectors </span><span style="color:#a626a4;">= </span><span>eigenvectors.T
+</span><span>
+</span><span>vector_nums </span><span style="color:#a626a4;">= </span><span>[</span><span style="color:#c18401;">1</span><span>, </span><span style="color:#c18401;">15</span><span>]
+</span><span>fig, axs </span><span style="color:#a626a4;">= </span><span>plt.</span><span style="color:#e45649;">subplots</span><span>(</span><span style="color:#c18401;">1</span><span>, </span><span style="color:#c18401;">2</span><span>, </span><span style="color:#e45649;">figsize</span><span style="color:#a626a4;">=</span><span>(</span><span style="color:#c18401;">24</span><span>, </span><span style="color:#c18401;">9</span><span>))
+</span><span>
+</span><span style="color:#a626a4;">for </span><span>i, vector_num </span><span style="color:#a626a4;">in </span><span style="color:#0184bc;">enumerate</span><span>(vector_nums):
+</span><span>    curr_vector </span><span style="color:#a626a4;">= </span><span>eigenvectors[vector_num]
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># plot the graph, and color the vertices by the values in the eigenvector
+</span><span>    nx.</span><span style="color:#e45649;">draw</span><span>(graph, </span><span style="color:#e45649;">ax</span><span style="color:#a626a4;">=</span><span>axs[i], </span><span style="color:#e45649;">node_color</span><span style="color:#a626a4;">=</span><span>curr_vector, </span><span style="color:#e45649;">cmap</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;viridis&#39;</span><span>, </span><span style="color:#e45649;">node_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">300</span><span>, 
+</span><span>            </span><span style="color:#e45649;">with_labels</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">True</span><span>, </span><span style="color:#e45649;">font_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">8</span><span>, </span><span style="color:#e45649;">edge_color</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;gray&#39;</span><span>, </span><span style="color:#e45649;">width</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.6</span><span>, </span><span style="color:#e45649;">alpha</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.7</span><span>)
+</span><span>    axs[i].</span><span style="color:#e45649;">set_title</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&#39;Graph Colored by Eigenvector </span><span>{vector_num </span><span style="color:#a626a4;">+ </span><span style="color:#c18401;">1</span><span>}</span><span style="color:#50a14f;">&#39;</span><span>)
+</span><span>    axs[i].</span><span style="color:#e45649;">axis</span><span>(</span><span style="color:#50a14f;">&#39;off&#39;</span><span>)
+</span><span>
+</span><span>plt.</span><span style="color:#e45649;">tight_layout</span><span>()
+</span><span>plt.</span><span style="color:#e45649;">show</span><span>()
+</span></code></pre>
+<p><img src="https://sudarsh.com/notebook/spectral-graph-theory/image.png" alt="Gradient of the Laplacian Eigenvector" /></p>
+<p>We can first try to show something like this for the continuous case. Start by defining the laplacian operator 
+$$
+L = \frac{\partial F^2}{\partial^2 x}
+$$</p>
+<p>We want to find some eigenfunction, which is a function $f$ such that 
+$$
+Lf = \lambda f
+$$
+for some eigenvalue $\lambda$. </p>
+<p>We can show that the <em>only</em> functions that satisfy this are of the form $f(x) = A\sin(kx) + B\cos(kx)$. It is trivial to verify this, and it’s a little more involved to prove this (but it is true!)</p>
+<p>As a result, for some function $F(x) = A\sin(kx) + B\cos(kx)$, we have that that $F’’(x) = -k^2 A \sin(kx) - k^2 B \cos(kx) = -k^2 F(x)$. Thus, for the eigenvalue $\lambda$, we know that it corresponds to a component with frequency $k = \sqrt{-\lambda}$. A result from the theory of Fourier analysis is that you can decompose any function into a sum of sines and cosines and that the eigenvectors of the laplacian are the components of the function. </p>
+<p>We can fall on the limit definition of the Laplacian, which says that 
+$$
+Lf = \lim_{h \to 0} \frac{f(x+h) + f(x-h) - 2f(x)}{h^2}
+$$</p>
+<p>If we instead say that our value of $h$ is a discrete value, we get a definition of the Laplacian for a grid that has $n$ dimensions.</p>
+<p>$$
+Lf(v) = \sum_{i \in [n]} \frac{f(v + x_i) + f(v - x_i) - 2f(v)}{||x_i||^2}
+$$</p>
+<p>where $x_i$ is the “step” vector in the $i$th dimension. It is fairly easy to see that as $||x_i|| \to 0$, the definition of the Laplacian converges to the definition of the Laplacian operator. Furthermore, this is equivilant to increasing the number of points in the grid, while keeping $||x_i|| = 1$</p>
+<p>We now can pair up adjacent vertices of the graph with edges, setting lattice points to vertices and the connections to edges. We then want to show that the Laplacian converges to the Laplacian operator, for some function $F: V \to \mathbb{R}$, which is a vector in $\mathbb{R}^n$. </p>
+<p>We start with two defintions of the Laplacian, and aim to show that they are the same.
+$$
+Lf = Df - Af
+$$</p>
+<p>$$
+Lf = \sum_{u \sim v} \frac{f(v) - f(u)}
+$$</p>
+<p>where $u\simv$ denotes all $u$ such that there is an edge between $u$ and $v$. Since the number of edges connecting to a vertex is equal to the degree of the vertex, we can say that </p>
+<p>$$
+Lf = \sum_{u \sim v} \frac{f(v) - f(u)} = d f(v) - \sum_{u \sim v} f(u)
+$$</p>
+<p>$$
+= Df - \sum_{u \sim v} f(u)
+$$</p>
+<p>$$
+= Df - Af
+$$</p>
+<p>We can then partition $U = {u \sim v}$ into two sets of equal size $U’$ and $U’’$. We can then rephrase the operator $Lf$ as </p>
+<p>$$
+Lf = \sum_{i \in [\frac{|U|}{2}]} f(u_i’) + f(u_i’’) - 2f(v)
+$$</p>
+<p>This is now the same as the discrete grid Laplacian, which is equivilant to the definition of the Laplacian operator in the limit as the grid size goes to infinity.</p>
+<p>However, note that this works on only specific constructions of the graph $G$, while the actual result emperically works for many other graphs. While talking with a friend at Caltech, we realized that this was in part related to the how the graph drawing software <code>NetworkX</code> chooses to draw graphs. Namely, plotting the index vs the value of the eigenvector at the index does not result in a smooth gradient for any eigenvalue. </p>
+<p><img src="https://sudarsh.com/notebook/spectral-graph-theory/nx_graph.png" alt="NetworkX Graph (not smooth)" /></p>
+<p>The graph drawing algorithm solves the spring problem, which does the following:</p>
+<ul>
+<li>Treat each edge $e$ as a spring, with equilibrium length $l$, spring constant $k$, and current length $x_e$. Both of these values are equal for all edges.</li>
+<li>Compute the total potential energy of the system, $PE =\sum_{e \in E} \frac12 k (x_e - l)^2$</li>
+<li>Minimize $PE$, which is done through iteratively applying Hooke’s law, $F = -k x_e$.</li>
+</ul>
+<p>This smoothness breaks for large graphs, but I think that this is much more because the loss landscape is uglier for large graphs and thus the optimal graph cannot be achieved, and not because the optimal graph does not show smoothness. I still haven’t truly solved this, haha.</p>
+
+</body>
+
+</html>
