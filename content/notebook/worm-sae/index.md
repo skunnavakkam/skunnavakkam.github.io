@@ -5,6 +5,8 @@ draft=false
 description="Training a sparse autoencoder on calcium traces of 189 C. Elegans neurons to interpret behaviors"
 +++
 
+Code findable [here](https://github.com/skunnavakkam/worm-sae)
+
 C elegans (Caenorhabditis elegans) is a nematode worm with 302 neurons. This small number of neurons makes it an ideal model organism to study brains. As such, it has been used for things like whole brain emulation, connectome research, etc. As a result, we have extremely good optogenetic control over these worms, and have quite a comprehensive ability to read and write to a large fraction of the worm's neurons.
 
 ![C elegans](c-elegans.jpg)
