@@ -43,6 +43,7 @@
 - Wrote high throughput computer vision screens for optical and ultrasound imaging to scale to 1000s of cells / day
 - Designed custom Protein-Protein linkers with ESM3 and Alphafold
 - Imaged cells using xAM mode ultrasound
+- *Skills*: CAD, Signal Processing, Wet Lab
 
 #work(
   company: "Supervised Program for Alignment Research",
@@ -70,7 +71,7 @@
   institution: "California Institute of Technology",
   location: "Pasadena, CA",
   dates: "In progress",
-  degree: "Physics / Computer Science"
+  degree: "B.S. in Physics & Computer Science"
 )
 
 #edu(
@@ -79,8 +80,7 @@
   dates: dates-helper(start-date: "Sep 2020", end-date: "Jun 2024"),
   degree: "High School Diploma"
 )
-- Selected Coursework: Mathematical Physics, Linear Algebra, Differential Equations, Multivariable Calculus, Theoretical Computer Science
-- Graduated *Summa Cum Laude*
+
 
 
 == Publications
@@ -164,6 +164,11 @@
 == Awards
 
 #project(
+  name: "ARENA 6.0 Attendee",
+  dates: 2025,
+)
+
+#project(
   name: "Non-trivial Fellow",
   dates: 2024,
 )
@@ -172,3 +177,14 @@
   name: "Physics Brawl, top 10 US High School Teams",
   dates: "2024, 2023"
 )
+
+#project(
+    name: "USACO Silver",
+    dates: 2023
+)
+
+#project(
+    name: "AIME Qualifier", 
+    dates: 2023
+)
+

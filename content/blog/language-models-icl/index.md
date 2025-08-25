@@ -21,7 +21,7 @@ Practically, the surprisal goes to zero very quickly if the LM is able to grasp 
 
 The following is a graph of LM surprisal to learn the task $f(x) = 2x + 3$, and we can see that the surprisal quickly drops to near zero, and very little extra information is given to the LM.
 
-![](../lm-surprisal.png)
+![](lm-surprisal.png)
 
 It is also interesting to understand how the language model updates it's priors. We only need to consider two cases: when the correct answer is $2x + 3$ and when the correct answer is not. We can call these two states $A$ and $B$ respectively. Initially, the model has some prior $\theta$ over the two, such that $P(A | \theta) + P(B | \theta)$ = 1. To give more granularity, we can say that $\theta_i$ is the prior after $i$ training examples.
 
@@ -39,13 +39,13 @@ $$
 $$
 Using this bayesian model to "simulate" the LM updating it's priors, we get a similar looking graph of surprisal over time!
 
-![alt text](../simulated-surprisal.png)
+![alt text](simulated-surprisal.png)
 
 We can also look at the LM's probability of A:
-![](../lm-prior.png)
+![](lm-prior.png)
 
 and compare this to our simulated, "bayesian" model:
-![](../simulated-prior.png)
+![](simulated-prior.png)
 
 Since language model outputs end up being softmaxed, we can work with logprobs.
 $$
