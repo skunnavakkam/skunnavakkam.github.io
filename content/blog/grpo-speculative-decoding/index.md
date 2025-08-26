@@ -15,6 +15,31 @@ Since reasoning traces are often long, on the order of $10,000$ tokens for front
 
 To ensure that the draft model is able to generate tokens close enough to the base model, we continuously update the draft model's weights to match the base model's generations. This is done by using a subset of the base model's generations during GRPO and updating the draft model's policy.
 
-I implement this through from-scratch implementation of GRPO in Jax.
+## Implementation
 
+We load Qwen3-4B into SGLang with an EAGLE3 draft model. The EAGLE draft model is a 1-layer adapter on the last layer of the base model to allow for multi-token generations. 
+
+At each step, we generate $n$ rollouts from the base model. We then calculate advantages 
+
+```python
+advantage = (rewards - r_mean) / (r_std + 1e-8)
+```
+
+After tokenizing, we create our loss ratio `ratio = torch.exp(new_logprobs - old_logprobs)` and clip loss like in the GRPO paper 
+
+```python
+pg_loss = -torch.min(
+    ratio * advantage, torch.clamp(ratio, 1 - eps, 1 + eps) * advantage
+).mean()
+```
+
+We then minimize the loss through AdamW.
+
+Then, once every `train_draft_model` steps, we update the draft model's weights to ensure that it suffices as a draft model. SGLang's Specforge takes care of a lot of this, and this step essentially looks like `scripts/train_eagle3_online.py` in the Specforge repo.
+
+Then, we save both sets of weights to disk, and synchronize the weights to the SGLang server. We sync base model weights every step, and draft model weights every `train_draft_model` steps.
+
+## Results
+
+Due to CUDA versioning errors, and specifically the `undefined symbol: _ZN3c104cuda9SetDeviceEab` error I've been perpetually running into, I've been unable to run the full training loop. I'm going to weight for a patch on the SGLang / vLLM side before running the script. However, it should work great. 
 
