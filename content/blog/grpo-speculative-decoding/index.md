@@ -1,7 +1,7 @@
 +++
 title="Speculative Decoding for GRPO"
 date=2025-08-08
-draft=true
+draft=false
 description="Using speculative decoding to try speeding up GRPO"
 +++
 
