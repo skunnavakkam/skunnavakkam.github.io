@@ -5,6 +5,11 @@ const members = [
         preferredName: null,
         url: "https://sudarsh.com"
     },
+    {
+        username: "vincent",
+        preferredName: null,
+        url: "https://vvvincent.me/",
+    },
 ]
 // Wait for DOM content to load before populating members list
 document.addEventListener('DOMContentLoaded', () => {
