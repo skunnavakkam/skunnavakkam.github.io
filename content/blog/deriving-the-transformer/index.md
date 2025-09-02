@@ -1,7 +1,6 @@
 +++
 title="Deriving the Autoregressive Transformer"
 date=2025-09-01
-draft = true
 +++
 
 The year is 2015. You want to invent a model that can competently generate natural language. Here's how you might have been able to go about building the Autoregressive Transformer to its current form. The current transformer is a huge endeavor, shaped by many people, and many mistakes along the way, and this is an idealized scenario.
@@ -61,10 +60,93 @@ $$
 E("king") - E("queen") \approx E("man") - E("woman")
 $$
 
-### Detour: Seq2Seq
 
-Seq2Seq was a landmark machine learning 
+## Step 3: Self-Attention
 
-## Step 3: Attention
+At this point, we have a sequence of tokens and we want a way to relate them to each other and generate new tokens. Here's one way of going about this.
 
-At this point, we have 
+### Attention
+
+Let's take a small detour into machine translation. From previous work, we've had models that predict text, like Seq2Seq. However, since language is *contextual*, you might want a way to emphasize certain parts of the input to decode certain parts of the output state.
+
+To do this, we might compute a pairwise score between input and output tokens as a form of relevancy. This was first done with a small MLP
+
+$$
+e_{i, j} = v_a^T \tanh(W_d h_j^{dec} + W_e h_i^{enc})
+$$
+
+The actual formulation here is a little arbitrary, but since $h^{dec}$ and $h^{enc}$ belong in different vector spaces (sub-manifolds? the idea is that these don't have similar semantic mappings from vector direction -> concept), we use an MLP to learn how much attention to pay. Then, to convert these values to a distribution of which input tokens we should consider, we then softmax over the input tokens.
+
+This produces the following example for machine translation
+
+![bahdanau attention](ban-att.png)
+
+The circled region implies that information about from the token "Area" corresponds to the french "Zone" instead of "europeèn" as it would have been had you just been matching token positions.
+
+Instead of doing attention with an MLP, we can instead ensure that the dimension of $h^{dec}$ is the same as $h^{enc}$ so that we can do dot product attention where these attention scores are simply $\langle h^{dec}, h^{enc} \rangle$. In the case where $\langle h^{dec}, h^{enc} \rangle$ does not result in appropriate scores, we can instead learn a linear transformation that allows us to compute better scores.
+
+We can do the matrix product
+
+$$
+Q = W_q h^{enc}; K = W_k h^{enc};
+$$
+
+and compute attention scores as $\langle Q, K \rangle$.
+
+This attention mechanism was first introduced by Bahdanau in 2014 and Luong in 2015 and was used for RNNs for machine translation. In this context, RNNs serve as the way to move information from the input tokens to the output tokens, where they then get decoded. RNNs work by updating their hidden state based on the previous hidden state and the current input token.
+
+![rnn](rnn.png)
+
+For Bahdanau attention, the hidden state after each token is a vector that represents the encoding of the input token, in addition to the additional context from the previous hidden states. This is done passed to a seperate decoder RNN which takes in inputs as attention-weighted hidden states from the encoder.
+
+![rnn2](rnn2.png)
+
+However, training RNNs is terrible. Since you have to backpropogate through a huge chain of hidden states, if your matrices have determinants too far from 1, your gradients will vanish / explode. It's also computationally expensive to do this, since you have trouble parallelizing this with GPUs.
+
+### Attention is all you need
+
+Instead, we can get rid of the RNN and try to implement the idea of moving information from input tokens to output tokens purely with attention and an MLP. So far, we have a way to quantify how much a particular input token is relevant to a particular output token, we now need to figure out how to update the hidden token. 
+
+To keep notation clean, let's refer to the input embeddings $h_i^{enc}$ as $h_i^{dec}$ let $Q = W_q h_i^{dec}; K = W_k h_i^{dec}$. The first thing that pops into your mind might be tocompute updates through putting $concat(h_j^{dec}, h_i^{enc})$ through an MLP. However, this does $O(n^2)$ FFN computations, which is too expensive. Instead, we can create these update *values* through a linear transformation given by $V = W_v h_i^{dec}$ and then compute an MLP over everything.
+
+We so far have our three values: queries $Q$, keys $K$, and values $V$. We have everything we need to build our attention mechanism
+
+$$
+\text{attention} = \text{softmax}(\frac{QK^T}{\sqrt{d_k}})V
+$$
+
+<details>
+<summary>Why do we divide by $\sqrt{d_k}$?</summary>
+
+We want the magnitude of our attention scores to not grow too much with the dimension. Let's see what happens when we take the dot product of $q$ and $k$, two vectors from $Q$ and $K$ respectively.
+
+Expanding out the dot product we get
+
+$$
+q \cdot k = \sum q_i k_i
+$$
+
+We can take the variance of this to see how large values might be, assuming that $\mathbf{E}[q_i] \approx \mathbf{E}[k_i] \approx 0, \text{Var}(q_i) \approx \text{Var}(k_i) \approx 1$.
+
+$$
+Var(q \cdot k) = Var(\sum q_i k_i) = \sum Var(q_i k_i) + 2 \sum_{i < j} Cov(q_i k_i, q_j k_j) = \sum Var(q_i k_i)
+$$
+
+since we assume that $Cov(q_i k_i, q_j k_j)$ due to being different index positions.
+
+We then have that
+
+$$
+Var(q_i k_i) = \mathbf{E}[q_i^2 k_i^2] - \mathbf{E}[q_i k_i]^2 = \mathbf{E}[q_i^2] \mathbf{E}[k_i^2] = 1
+$$
+
+This gives 
+
+$$
+Var(q \cdot k) = \sum Var(q_i k_i) = d_k \implies \sigma(q \cdot k) = \sqrt{d_k}
+$$
+
+Thus, we divide by $\sqrt{d_k}$ to keep the standard deviation of the attention scores
+</details>
+
+### Multi-head Attention
