@@ -150,3 +150,7 @@ Thus, we divide by $\sqrt{d_k}$ to keep the standard deviation of the attention 
 </details>
 
 ### Multi-head Attention
+
+In attention, we have keys, queries, and values, which are our $K, Q, V$ respectively. However, the dot product $\langle Q, K \rangle$ is a single number and doesn't represent much complexity about the keys and the queries. As a result, the diversity of attention being paid to the tokens is limited.
+
+Instead, we can split up our matrices into $h$ heads which each produce a different output.
