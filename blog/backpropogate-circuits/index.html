@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    /* images should be limited to  800px, centered, and with padding 20px*/
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(800px, 100% - 40px);
+        padding: 20px;
+    }
+
+    /* center the body */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0 auto;
+        /* Center the body horizontally */
+        padding: 30px;
+        box-sizing: border-box;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+        max-width: max(60%, 600px);
+    }
+
+    .content-wrapper {
+        /* max width of either 60% or 600px, whichever is larger */
+        max-width: max(60%, 600px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Space Mono', monospace;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    h4 {
+        font-size: 1.1em;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    a {
+        color: #e1b60e;
+        /* Pastel yellow */
+        text-decoration: underline;
+        font-family: 'Space Mono', monospace;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .clear {
+        font-family: 'Space Mono', monospace;
+        background-color: transparent;
+        border-width: 0px;
+        bottom: 30px;
+        left: 30px;
+        position: absolute;
+        text-decoration: underline;
+    }
+
+    /* Brutalist Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 2px solid #000;
+    }
+
+    pre {
+        padding: 10px;
+        /* Add padding to all lines of the code block */
+        /* Optional: background color for better visibility */
+
+        /* Optional: border for better visibility */
+        overflow: auto;
+        /* Optional: add scrollbars if content overflows */
+        /* Add black shadow with no blur */
+
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 30px;
+    }
+
+    ul li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 10px;
+    }
+
+    ul li::before {
+        content: '■';
+        position: absolute;
+        left: 0;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+
+
+    /* Nested Lists */
+    ul ul,
+    ol ol,
+    ul ol,
+    ol ul {
+        margin-top: 10px;
+    }
+
+    th {
+        background-color: #000;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    /* Responsive table */
+    @media screen and (max-width: 600px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+            border: 2px solid #000;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #000;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+</style>
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <meta charset="UTF-8">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://sudarsh.com/common.css"> -->
+    <title>Backpropogate Circuits</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Backpropogate Circuits" />
+    <meta name="twitter:description" content="Flowing gradients through the conductance matrix to optimize circuits of linear elements" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Backpropogate Circuits</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published May 16, 2025
+    </p>
+    <hr>
+    <p>Code visible <a href="https://github.com/skunnavakkam/backprop-circuit-simulator">here</a>.</p>
+<p>We can backpropogate circuits (with limitations). Using a SPICE solver, which solves Kirkoff’s laws, we can find voltages at nodes by solving the equation </p>
+<p>$$
+Ax = b
+$$</p>
+<p>We define $A$ to be the <em>admittance</em> matrix, $x$ to be the <em>solution</em> vector, and $b$ to be the <em>source</em> vector. </p>
+<p>$$
+A_{i j} = \text{admittance between node $i$ and node $j$}
+$$
+$$
+x_i = \text{voltage at node $i$}
+$$</p>
+<p>$$
+b_i = \text{source at node $i$}
+$$</p>
+<p>We can then sparse solve for $x$! However, how do we take gradients of $A$ and $b$ through $x$?</p>
+<img src="gradient-flow.png" alt="Gradient flow through the circuit solver" style="width: min(100%, 300px);" />
+<p>Here we reference the paper <a href="https://arxiv.org/abs/2307.12407">JAX-FDM</a> which implements a backward pass for sparse solving!</p>
+<p>For a system $Ax = b$, we have some gradients $g$ on $x$ (essentially $\frac{\partial L}{\partial x}$). We want to find $\frac{\partial L}{\partial A}$ and $\frac{\partial L}{\partial b}$.</p>
+<p>By chain rule, we know</p>
+<p>$$
+\frac{\partial L}{\partial A} = \frac{\partial L}{\partial x} \frac{\partial x}{\partial A}
+$$</p>
+<p>$$
+\frac{\partial L}{\partial b} = \frac{\partial L}{\partial x} \frac{\partial x}{\partial b}
+$$</p>
+<p>We then implicitly differentiate the system $Ax = b$ with respect to $A$ and $b$.</p>
+<p>First, with respect to $A$. </p>
+<p>$$
+\frac{\partial}{\partial A} (Ax) = \frac{\partial}{\partial A} (b)
+$$</p>
+<p>$$
+x + A \frac{\partial x}{\partial A} = 0 \implies \frac{\partial x}{\partial A} = -A^{-1} x \implies \frac{\partial L}{\partial A} = - A^{-T} g x^T
+$$</p>
+<p>Then, with respect to $b$.</p>
+<p>$$
+\frac{\partial}{\partial b} (Ax) = \frac{\partial}{\partial b} (b)
+$$</p>
+<p>$$
+A \frac{\partial x}{\partial b} = I \implies \frac{\partial x}{\partial b} = A^{-1} \implies \frac{\partial L}{\partial b} = (\frac{\partial L}{\partial x})^T A^{-1} = A^{-T} g
+$$</p>
+<p>Using these two, you can backpropogate through the linear system solver! Then, you can define a voltage vector $x’$ and define a loss function $L(x) = \text{mse}(x, x’)$ and backpropogate through the circuit solver.</p>
+<p>Another addition you can do to this is to take it over time. Instead of solving for $V$ at each node, you can solve for $\frac{dV}{dt}$ at each node, using $\frac{d}{dt} b$ as the source (note that $\frac{dA}{dt}$ is zero). This is a future addition that I hope to make :)</p>
+<p>However, as it stands, this is still pretty cool! We are able to provide a circuit, and some voltage vector $V$, and then backpropogate to find suitable parameters for the circuit. I think that with modifications this may be an interesting way to inverse-design circuits. </p>
+
+</body>
+
+</html>
