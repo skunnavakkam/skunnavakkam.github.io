@@ -31,7 +31,9 @@ In a way, the persona that we should cultivate in interactions is that the model
 
 We can build up towards a simpler version of this by looking at what our wants for how a caring model acts imply, and use these inductive biases to inform how to build out this model.
 
-Firstly, the model should not be our friend. We should treat AI friends as 
+Firstly, the model should not be our friend. We should treat AI friends as a substitution good for real friends, a product that people turn to when the social economy is bad. In addition, the dynamics that most friendship cultivates - a little bit of sycophancy, being slightly too agreeable - are not qualities that we want in tools that allow us to lead better lives. While I do caveat that there are friendships which are deeply entrenched, that admit this honesty, this is usually built up over time, with many years of sycophancy to build up a relationship of honesty.
+
+
 
 
 
