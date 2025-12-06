@@ -19,15 +19,16 @@
   paper: "us-letter",
   author-position: left,
   personal-info-position: left,
-  font-size:9pt,
+  font-size:8.5pt,
 )
 
 == Work Experience
+
 #work(
   company: "Model Evaluation and Threat Research (METR)",
   location: "Berkeley, CA",
   title: "Research Intern",
-  dates: dates-helper(start-date: "Sep 2023", end-date: "Present")
+  dates: dates-helper(start-date: "Sep 2023", end-date: "July 2025")
 )
 - Worked on projects to evaluate the agentic time horizon of LLMs
 - Co-lead engineer of a state of the art evaluation for Chain-of-Thought Faithfulness of Large Langauge Models
@@ -61,7 +62,7 @@
 
 == Skills
 
-Machine Learning (PyTorch, Jax, Transformers, Diffusion Models, Reinforcement Learning on LLMs, GRPO, PPO, Interpretability), Python, Rust, C++, Javascript, Full-stack Development, PCB Fabrication, Data Analysis, Signal Processing, Rust, 3D Modeling, Shop Experience, General Wet Lab, Electron Microscopy, AFM, Scanning Probe Microscopy
+Machine Learning (PyTorch, Jax, Transformers, Diffusion Models, Reinforcement Learning on LLMs, GRPO, PPO, Interpretability), Python, Rust, C++, Javascript, Full-stack Development, PCB Fabrication, Data Analysis, Signal Processing, Rust, 3D Modeling, Shop Experience, General Wet Lab, Electron Microscopy, AFM, Scanning Probe Microscopy, Triton, vLLM
 
 == Education
 
@@ -107,7 +108,7 @@ Machine Learning (PyTorch, Jax, Transformers, Diffusion Models, Reinforcement Le
     dates: 2025,
   )
 ]
-- Reverse mode differentiable FDFD simulators in Jax for inverse design, with fast FDFD and FDTD through diffusion & neural operators
+- Reverse mode differentiable FDFD simulators in Jax for inverse design, with fast FDFD and FDTD through diffusion & neural operators. Did tons of optimization and speculative speedups.
 
 #project(
   name: "Scanning Tunneling Microscope",

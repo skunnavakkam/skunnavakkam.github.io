@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudarsh's Website</title>
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Space Mono', monospace;
+            margin: 0 0 6px;
+        }
+
+        a {
+            color: #e1b60e;
+            text-decoration: underline;
+            font-family: 'Space Mono', monospace;
+        }
+
+        p {
+            margin: 0 0 15px;
+        }
+
+        .main-container {
+            display: flex;
+            height: 100%;
+        }
+
+        .content-wrapper {
+            flex: 0 0 400px;
+            padding: 30px;
+            background: #fff;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        #art-container {
+            flex: 1;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            display: none;
+        }
+
+        @media(min-width:769px) {
+            #art-container {
+                display: block;
+            }
+        }
+
+        #art-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 100%;
+            background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        #art-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 2.5em;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform .3s;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .nav-links a {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity .3s, transform .3s;
+        }
+
+        .clear {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: none;
+            border: none;
+            text-decoration: underline;
+            font-family: 'Space Mono', monospace;
+            cursor: pointer;
+        }
+
+        @media(max-width:768px) {
+            .menu-toggle {
+                display: block;
+                font-family: 'Space Mono', monospace;
+                color: #e1b60e;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                height: 0;
+                overflow: hidden;
+                transition: height .3s;
+            }
+
+            .nav-links.show {
+                height: 200px;
+            }
+
+            .nav-links a {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            .nav-links.show a {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .nav-links a:nth-child(1) {
+                transition-delay: .1s;
+            }
+
+            .nav-links a:nth-child(2) {
+                transition-delay: .2s;
+            }
+
+            .nav-links a:nth-child(3) {
+                transition-delay: .3s;
+            }
+
+            .nav-links a:nth-child(4) {
+                transition-delay: .4s;
+            }
+
+            .nav-links a:nth-child(5) {
+                transition-delay: .5s;
+            }
+
+            .menu-toggle.rotated {
+                transform: rotate(45deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="content-wrapper">
+            <div class="header-container">
+                <h1 class="title">Sudarsh</h1>
+                <button class="menu-toggle">+</button>
+            </div>
+            <div class="nav-links">
+                <a href="/about">About</a>
+                <a href="/blog">Blog</a>
+                <a href="/notebook">Notebook</a>
+                <a href="/vibes">vibes</a>
+            </div>
+            {{ section.content | safe }}
+            <!-- <button class="clear">Reset</button> -->
+        </div>
+        <div id="art-container"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script>
+        new p5(p => {
+            let shader;
+
+            const vertShader = `
+                attribute vec3 aPosition;
+                attribute vec2 aTexCoord;
+                varying vec2 vTexCoord;
+
+                void main() {
+                    vTexCoord = aTexCoord;
+                    vec4 positionVec4 = vec4(aPosition, 1.0);
+                    positionVec4.xy = positionVec4.xy * 2.0 - 1.0; 
+                    gl_Position = positionVec4;
+                }
+            `;
+
+            const fragShader = `
+                precision mediump float;
+                varying vec2 vTexCoord;
+                uniform vec2 u_resolution;
+                uniform vec2 u_mouse;
+                uniform float u_time;
+
+                // Complex number multiplication
+                vec2 c_mul(vec2 a, vec2 b) {
+                    return vec2(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x);
+                }
+
+                // Complex number division
+                vec2 c_div(vec2 a, vec2 b) {
+                    float denom = dot(b, b);
+                    return vec2(dot(a, b), a.y * b.x - a.x * b.y) / denom;
+                }
+                
+                // Complex sine
+                vec2 c_sin(vec2 z) {
+                    return vec2(sin(z.x) * cosh(z.y), cos(z.x) * sinh(z.y));
+                }
+                
+                // Function f(z) = z^3 - 1
+                vec2 f(vec2 z) {
+                    vec2 z2 = c_mul(z, z);
+                    vec2 z3 = c_mul(z2, z);
+                    return z3 - vec2(1.0, 0.0);
+                }
+
+                // Derivative f'(z) = 3z^2
+                vec2 df(vec2 z) {
+                    vec2 z2 = c_mul(z, z);
+                    return 3.0 * z2;
+                }
+
+                // HSV to RGB conversion
+                vec3 hsv2rgb(vec3 c) {
+                    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+                    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+                    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+                }
+
+                void main() {
+                    vec2 uv = vTexCoord;
+                    // Transform to complex plane range
+                    // Center is (0,0), typical range [-2, 2] depending on aspect ratio
+                    
+                    // Adjust for aspect ratio
+                    float aspect = u_resolution.x / u_resolution.y;
+                    vec2 z = (uv - 0.5) * 4.0;
+                    z.x *= aspect;
+
+                    // Newton iteration
+                    const int max_iter = 40;
+                    int iter = 0;
+                    float dist_min = 1e10;
+                    int root = 0;
+
+                    // Roots of z^3 - 1
+                    vec2 r1 = vec2(1.0, 0.0);
+                    vec2 r2 = vec2(-0.5, sqrt(3.0)/2.0);
+                    vec2 r3 = vec2(-0.5, -sqrt(3.0)/2.0);
+
+                    for(int i = 0; i < max_iter; i++) {
+                        vec2 fz = f(z);
+                        vec2 dfz = df(z);
+                        
+                        // Avoid division by zero
+                        if(dot(dfz, dfz) < 1e-6) break;
+
+                        vec2 step = c_div(fz, dfz);
+                        z = z - step;
+                        
+                        // Check convergence
+                        if(length(step) < 1e-4) {
+                            iter = i;
+                            break;
+                        }
+                        iter = i;
+                    }
+
+                    // Determine which root we are closest to
+                    float d1 = distance(z, r1);
+                    float d2 = distance(z, r2);
+                    float d3 = distance(z, r3);
+
+                    vec3 col = vec3(0.0);
+                    float brightness = 1.0 - float(iter) / float(max_iter);
+                    
+                    // Pastel colors
+                    // #e1b60e (Yellow) -> approx hue 0.12
+                    // Let's pick 3 nice colors
+                    
+                    if (d1 < d2 && d1 < d3) {
+                        // Root 1
+                        col = vec3(0.9, 0.2, 0.2); // Redish
+                    } else if (d2 < d3) {
+                        // Root 2
+                        col = vec3(0.2, 0.8, 0.2); // Greenish
+                    } else {
+                        // Root 3
+                        col = vec3(0.2, 0.2, 0.9); // Blueish
+                    }
+                    
+                    // Smooth coloring / shading
+                    col = col * brightness;
+
+                    gl_FragColor = vec4(col, 1.0);
+                }
+            `;
+
+            p.setup = () => {
+                const container = document.getElementById('art-container');
+                p.createCanvas(container.clientWidth, p.windowHeight, p.WEBGL).parent('art-container');
+                shader = p.createShader(vertShader, fragShader);
+                p.shader(shader);
+            };
+
+            p.draw = () => {
+                shader.setUniform('u_resolution', [p.width, p.height]);
+                shader.setUniform('u_time', p.millis() / 1000.0);
+                shader.setUniform('u_mouse', [p.mouseX / p.width, p.mouseY / p.height]);
+
+                // Full screen quad
+                p.rect(0, 0, p.width, p.height);
+            };
+
+            p.windowResized = () => {
+                const container = document.getElementById('art-container');
+                p.resizeCanvas(container.clientWidth, p.windowHeight);
+            };
+        });
+    </script>
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function () {
+            document.querySelector('.nav-links').classList.toggle('show');
+            this.classList.toggle('rotated');
+        });
+    </script>
+</body>
+
+</html>

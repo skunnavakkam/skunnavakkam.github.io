@@ -1,7 +1,7 @@
 +++
 title="Notebook"
-template="blog.html"
-page_template="blog_page.html"
+template="notebook.html"
+page_template="notebook_page.html"
 sort_by="date"
 +++
 
