@@ -1,308 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<style>
-    /* images should be limited to  800px, centered, and with padding 20px*/
-
-    /* Photo wrapper for taped images */
-    .photo-wrapper {
-        position: relative;
-        display: block;
-        margin: 32px auto;
-        max-width: min(700px, 100% - 60px);
-        padding: 8px;
-        background: #fff;
-        border: 1px solid #e0d8c8;
-        box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.18);
-        transform: rotate(-0.8deg);
-    }
-
-    .photo-wrapper:nth-of-type(even) {
-        transform: rotate(0.6deg);
-    }
-
-    .photo-wrapper img {
-        display: block;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        border: none;
-        box-shadow: none;
-    }
-
-    /* Tape strips - clear scotch tape look */
-    .photo-wrapper::before,
-    .photo-wrapper::after {
-        content: '';
-        position: absolute;
-        width: 70px;
-        height: 24px;
-        background: rgba(255, 255, 255, 0.45);
-        border: 1px solid rgba(180, 180, 170, 0.25);
-        box-shadow:
-            0 1px 2px rgba(0, 0, 0, 0.06),
-            inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        z-index: 10;
-    }
-
-    .photo-wrapper::before {
-        top: -8px;
-        left: 15px;
-        transform: rotate(-4deg);
-    }
-
-    .photo-wrapper::after {
-        top: -8px;
-        right: 15px;
-        transform: rotate(3deg);
-    }
-
-    /* Fallback for images not wrapped */
-    img:not(.photo-wrapper img) {
-        display: block;
-        margin: 32px auto;
-        max-width: min(700px, 100% - 60px);
-        padding: 8px;
-        background: #fff;
-        border: 1px solid #ddd;
-        box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.18);
-    }
-
-    /* center the body */
-    body {
-        font-family: 'Caveat', cursive;
-        font-size: 1.3rem;
-        margin: 0 auto;
-        /* Center the body horizontally */
-        padding: 32px;
-        box-sizing: border-box;
-        line-height: 32px;
-        letter-spacing: 0.5px;
-        max-width: max(60%, 600px);
-        background-color: #faf6ed;
-        background-image:
-            repeating-linear-gradient(transparent,
-                transparent 31px,
-                #e8e0d0 31px,
-                #e8e0d0 32px);
-        background-position: 0 24px;
-    }
-
-    .content-wrapper {
-        /* max width of either 60% or 600px, whichever is larger */
-        max-width: max(60%, 600px);
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-family: 'Comic Mono', monospace;
-        margin: 32px 0 0 0;
-        line-height: 32px;
-    }
-
-    .title {
-        font-size: 2.5em;
-        line-height: 1.2;
-    }
-
-    h1 {
-        font-size: 2em;
-    }
-
-    h2 {
-        font-size: 1.7em;
-    }
-
-    h3 {
-        font-size: 1.6em;
-    }
-
-    h4 {
-        font-size: 1.1em;
-    }
-
-    p {
-        margin: 0 0 32px 0;
-    }
-
-    em {
-        font-style: italic;
-    }
-
-    a {
-        color: #e1b60e;
-        /* Pastel yellow */
-        text-decoration: underline;
-        font-family: 'Comic Mono', monospace;
-    }
-
-    u {
-        text-decoration: underline;
-    }
-
-    strong {
-        font-weight: bold;
-    }
-
-    .nav-links {
-        display: flex;
-        margin-bottom: 0px;
-        width: 100%;
-    }
-
-    .clear {
-        font-family: 'Comic Mono', monospace;
-        background-color: transparent;
-        border-width: 0px;
-        bottom: 30px;
-        left: 30px;
-        position: absolute;
-        text-decoration: underline;
-    }
-
-    /* Brutalist Table Styling */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        font-family: 'Comic Mono', monospace;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-        border: 2px solid #000;
-    }
-
-    pre {
-        padding: 12px 16px;
-        overflow: auto;
-        font-family: 'Comic Mono', monospace;
-        font-size: 0.75rem;
-        background: transparent;
-        border: 1px dashed #c4b8a8;
-        margin: 32px 0;
-        line-height: 1.6;
-    }
-
-    code {
-        font-family: 'Comic Mono', monospace;
-        font-size: 0.75rem;
-    }
-
-    pre code {
-        background: transparent;
-        padding: 0;
-    }
-
-    /* Scale down KaTeX math */
-    .katex {
-        font-size: 1.3 rem !important;
-    }
-
-    .katex-display {
-        font-size: 1.3 rem !important;
-    }
-
-    ul {
-        list-style: none;
-        padding-left: 30px;
-    }
-
-    ul li {
-        position: relative;
-        padding-left: 30px;
-        margin-bottom: 10px;
-    }
-
-    ul li::before {
-        content: '■';
-        position: absolute;
-        left: 0;
-        color: #000;
-        font-size: 1.2em;
-        font-weight: bold;
-    }
-
-
-
-    /* Nested Lists */
-    ul ul,
-    ol ol,
-    ul ol,
-    ol ul {
-        margin-top: 10px;
-    }
-
-    th {
-        background-color: #000;
-        color: #fff;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f0f0f0;
-    }
-
-    /* Responsive table */
-    @media screen and (max-width: 600px) {
-
-        table,
-        thead,
-        tbody,
-        th,
-        td,
-        tr {
-            display: block;
-        }
-
-        thead tr {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-        }
-
-        tr {
-            margin-bottom: 10px;
-            border: 2px solid #000;
-        }
-
-        td {
-            border: none;
-            border-bottom: 1px solid #000;
-            position: relative;
-            padding-left: 50%;
-        }
-
-        td:before {
-            content: attr(data-label);
-            position: absolute;
-            left: 6px;
-            width: 45%;
-            padding-right: 10px;
-            white-space: nowrap;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-    }
-</style>
-
 <head>
-    <!-- Comic Mono for headings -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/comic-mono@0.0.1/index.min.css">
-    <!-- Caveat for body text -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
-    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="{{ get_url(path='common.css') | safe }}"> -->
-    <title>{{ page.title }}</title>
+    <title>{{ page.title }} | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="{{ page.description | default(value=page.content | striptags | truncate(length=160)) }}">
+    <meta name="author" content="{{ config.extra.author }}">
+
+    <link rel="canonical" href="{{ page.permalink | safe }}">
+
+    <!-- Reenie Beanie for EVERYTHING -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <!-- Recursive for CODE -->
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO@1,1,0.5&display=swap"
+        rel="stylesheet">
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
         integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
@@ -322,21 +39,325 @@
     <meta name="twitter:image" content="{{ get_url(path=page.extra.image) | safe }}" />
     {% endif %}
 
+    <style>
+        :root {
+            --paper-bg: #fdfdfd;
+            --ink-color: #2a2b2e;
+            --ink-secondary: #4a4b4e;
+            --highlight: rgba(225, 182, 14, 0.35);
+            --highlight-solid: #e1b60e;
+        }
+
+        /* Reset box sizing */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Reenie Beanie', cursive;
+            font-size: 26px;
+            /* Handwriting size */
+            line-height: 1.4;
+            margin: 0 auto;
+            /* Center the body horizontally */
+
+            /* Match blog metrics exactly */
+            padding: 30px;
+            max-width: max(60%, 600px);
+
+            color: var(--ink-color);
+            background-color: var(--paper-bg);
+            /* Subtle noise */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+
+            text-align: left;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Reenie Beanie', cursive;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--ink-color);
+        }
+
+        /* EXACT MATCH TO BLOG TITLE POSITION */
+        .title {
+            font-size: 52px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 28px;
+            text-decoration: underline;
+        }
+
+        p {
+            margin: 0 0 15px 0;
+            /* Match blog paragraph spacing */
+        }
+
+        /* Messy Highlighter Effect */
+        a {
+            color: var(--ink-color);
+            text-decoration: none;
+            border-bottom: none;
+
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 0.5em;
+            /* Thick stroke */
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+
+            transition: background-size 0.2s, background-color 0.2s;
+            border-radius: 2px 2px 0 0;
+        }
+
+        a:hover {
+            background-size: 100% 100%;
+            /* Fill up on hover */
+            background-color: rgba(225, 182, 14, 0.1);
+            /* Subtle fill */
+            color: var(--ink-color);
+        }
+
+        /* NAV LINKS - Below Title */
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 0px;
+            width: 100%;
+            align-items: baseline;
+            /* Ensure text baseline alignment */
+            margin-top: 0;
+        }
+
+        .nav-back {
+            color: var(--ink-color);
+            font-size: 22px;
+            text-decoration: none;
+            line-height: 1.0;
+            /* Tight line height */
+            display: inline-block;
+
+            /* Apply highlighter */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6));
+            background-size: 100% 0.4em;
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+            border-bottom: none;
+        }
+
+        .nav-back:hover {
+            background-size: 100% 100%;
+        }
+
+        .meta {
+            font-size: 22px;
+            color: var(--ink-secondary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            /* Match blog hr */
+            margin: 20px 0;
+        }
+
+        /* Images */
+        .photo-wrapper {
+            position: relative;
+            display: block;
+            margin: 32px auto;
+            max-width: min(700px, 100% - 20px);
+            padding: 12px;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            transform: rotate(-0.5deg);
+        }
+
+        img:not(.photo-wrapper img) {
+            display: block;
+            margin: 32px auto;
+            max-width: 100%;
+            border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .photo-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .photo-wrapper::before,
+        .photo-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(200, 200, 200, 0.2);
+            z-index: 10;
+        }
+
+        .photo-wrapper::before {
+            top: -10px;
+            left: 20px;
+            transform: rotate(-3deg);
+        }
+
+        .photo-wrapper::after {
+            top: -10px;
+            right: 20px;
+            transform: rotate(3deg);
+        }
+
+        pre {
+            padding: 16px;
+            font-family: 'Recursive', monospace;
+            font-size: 18px;
+            /* Adjusted size for Recursive */
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.03);
+            margin: 32px 0;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            transform: rotate(0.2deg);
+            color: var(--ink-color);
+        }
+
+        code {
+            font-family: 'Recursive', monospace;
+            font-size: 0.9em;
+            /* slightly smaller to fit in text */
+        }
+
+        p code,
+        li code {
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 85%;
+            background-position: 0 60%;
+            background-repeat: no-repeat;
+
+            padding: 2px 4px;
+            border-radius: 2px;
+
+            /* Ensure effect wraps correctly */
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+        }
+
+        ul,
+        ol {
+            margin: 0 0 1.5em 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            padding-left: 0;
+        }
+
+        ul li::marker {
+            color: var(--ink-color);
+            content: '- ';
+        }
+
+        blockquote {
+            margin: 20px 0;
+            padding: 10px 20px;
+
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.3),
+                    rgba(225, 182, 14, 0.5) 20%,
+                    rgba(225, 182, 14, 0.4) 80%,
+                    rgba(225, 182, 14, 0.3));
+
+            border-left: none;
+            font-style: italic;
+            color: var(--ink-secondary);
+        }
+
+        /* Footer */
+        .journal-footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 20px;
+            color: var(--ink-secondary);
+            padding-top: 20px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .title {
+                font-size: 36px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             renderMathInElement(document.body, {
                 delimiters: [
                     { left: "$$", right: "$$", display: true },
                     { left: "$", right: "$", display: false }
-                ]
+                ],
+                throwOnError: false,
+                trust: true
             });
 
-            // Wrap images in photo wrapper for tape effect with random rotation
-            document.querySelectorAll('img').forEach(function (img) {
+            document.querySelectorAll('img:not(.no-tape)').forEach(function (img) {
+                if (img.parentElement.classList.contains('photo-wrapper')) return;
                 const wrapper = document.createElement('div');
                 wrapper.className = 'photo-wrapper';
-                // Random rotation between -2.5 and 2.5 degrees
-                const rotation = (Math.random() - 0.5) * 5;
+                const rotation = (Math.random() - 0.5) * 2;
                 wrapper.style.transform = `rotate(${rotation}deg)`;
                 img.parentNode.insertBefore(wrapper, img);
                 wrapper.appendChild(img);
@@ -347,15 +368,24 @@
 
 <body>
     <h1 class="title">{{ page.title }}</h1>
+
     <div class="nav-links">
-        <a href="../">
+        <a href="../" class="nav-back">
             < back to all posts</a>
     </div>
+
     <p class="meta">
         scribbled on {{ page.date | date(format="%B %d, %Y") }}
     </p>
+
     <hr>
+
     {{ page.content | safe}}
+
+    <div class="journal-footer">
+        <div class="page-number">{{ page.date | date(format="%d") }}</div>
+        <div class="signature">- SUDARSH</div>
+    </div>
 </body>
 
 </html>

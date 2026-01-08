@@ -1,0 +1,3 @@
+# Journal transcription pipeline dependencies
+anthropic>=0.40.0
+

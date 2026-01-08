@@ -4,37 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ section.title }}</title>
+    <title>{{ section.title }} | Sudarsh Kunnavakkam</title>
     <meta name="description" content="{{ config.description }}">
     <meta name="author" content="{{ config.extra.author }}">
+    <meta name="keywords" content="{{ config.extra.keywords }}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ section.title }} | Sudarsh Kunnavakkam">
+    <meta property="og:description" content="{{ config.description }}">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="canonical" href="{{ current_url | safe }}">
 
     <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
-    <!-- Comic Mono for headings -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/comic-mono@0.0.1/index.min.css">
-    <!-- Caveat for body text - a casual handwritten font -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Reenie Beanie for handwriting ONLY -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <!-- Recursive for CODE -->
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO@1,1,0.5&display=swap"
+        rel="stylesheet">
 
     <style>
-        body {
-            font-family: 'Caveat', cursive;
-            font-size: 1.3rem;
-            margin: 0;
-            padding: 30px;
+        :root {
+            --paper-bg: #fdfdfd;
+            --ink-color: #2a2b2e;
+            --ink-secondary: #4a4b4e;
+            --highlight: rgba(225, 182, 14, 0.35);
+            --highlight-solid: #e1b60e;
+        }
+
+        /* Reset box sizing */
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
-            line-height: 32px;
-            letter-spacing: 0.5px;
-            background-color: #faf6ed;
-            background-image:
-                repeating-linear-gradient(transparent,
-                    transparent 31px,
-                    #e8e0d0 31px,
-                    #e8e0d0 32px);
-            background-position: 0 10px;
+        }
+
+        body {
+            font-family: 'Reenie Beanie', cursive;
+            font-size: 26px;
+            /* Base size */
+            line-height: 1.4;
+            margin: 0;
+
+            /* MATCH BLOG EXACTLY: padding: 30px, max-width: max(60%, 600px) */
+            padding: 30px;
+            max-width: max(60%, 600px);
+
+            color: var(--ink-color);
+            background-color: var(--paper-bg);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+
+            text-align: left;
         }
 
         .content-wrapper {
-            /* max width of either 60% or 600px, whichever is larger */
             max-width: max(60%, 600px);
         }
 
@@ -44,53 +71,57 @@
         h4,
         h5,
         h6 {
-            font-family: 'Comic Mono', monospace;
+            font-family: 'Reenie Beanie', cursive;
+            font-weight: 500;
+            margin: 0;
             margin-bottom: 6px;
-        }
-
-        .title {
-            margin-top: 0px;
-            font-size: 2.5em;
+            /* Match blog spacing */
             line-height: 1.2;
+            color: var(--ink-color);
         }
 
-        h1 {
-            font-size: 2em;
-        }
-
-        h2 {
-            font-size: 1.7em;
-        }
-
-        h3 {
-            font-size: 1.6em;
-        }
-
-        h4 {
-            font-size: 1.1em;
+        /* EXACT MATCH TO BLOG TITLE POSITION */
+        .title {
+            font-size: 52px;
+            line-height: 1.0;
+            margin-top: 9px;
+            margin-bottom: 11px;
+            display: block;
+            border-bottom: none;
+            padding-bottom: 0;
+            font-weight: 700;
         }
 
         p {
-            margin-bottom: 15px;
+            margin: 0 0 15px 0;
         }
 
-        em {
-            font-style: italic;
-        }
-
+        /* Messy Highlighter for Links */
         a {
-            color: #e1b60e;
-            /* Pastel yellow */
-            text-decoration: underline;
-            font-family: 'Comic Mono', monospace;
+            color: var(--ink-color);
+            /* Black text */
+            text-decoration: none;
+            border-bottom: none;
+
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 0.5em;
+            /* Thick stroke */
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+
+            transition: background-size 0.2s, background-color 0.2s;
+            border-radius: 2px 2px 0 0;
         }
 
-        u {
-            text-decoration: underline;
-        }
-
-        strong {
-            font-weight: bold;
+        a:hover {
+            background-size: 100% 100%;
+            /* Fill up on hover */
+            background-color: rgba(225, 182, 14, 0.1);
+            color: var(--ink-color);
         }
 
         .nav-links {
@@ -98,47 +129,57 @@
             gap: 15px;
             margin-bottom: 20px;
             width: 100%;
+            align-items: baseline;
+            margin-top: 0;
         }
 
-        .clear {
-            font-family: 'Comic Mono', monospace;
-            background-color: transparent;
-            border-width: 0px;
-            bottom: 30px;
-            left: 30px;
-            position: absolute;
-            text-decoration: underline;
+        .nav-back {
+            color: var(--ink-color);
+            /* Black text */
+            font-size: 22px;
+            text-decoration: none;
+            line-height: 1.0;
+            display: inline-block;
+
+            /* Apply highlighter */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6));
+            background-size: 100% 0.4em;
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+            border-bottom: none;
+        }
+
+        .nav-back:hover {
+            background-size: 100% 100%;
         }
 
         .blog-post-date {
-            font-size: 0.9em;
-            color: #666;
+            font-size: 20px;
+            color: var(--ink-secondary);
         }
 
         .blog-post-description {
-            margin-bottom: 5px;
+            margin-bottom: 1.5em;
+            font-size: 24px;
         }
     </style>
 </head>
-
 
 <body>
     <div class="content-wrapper">
         <h1 class="title">{{ section.title }}</h1>
 
         <div class="nav-links">
-            <a href="/..">
+            <a href="/" class="nav-back">
                 < back home</a>
         </div>
 
         {{ section.content | safe }}
 
-        <!-- content block -->
         {% block content %}
-
         {% endblock content %}
-
-
     </div>
 </body>
 

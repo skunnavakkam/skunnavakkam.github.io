@@ -4,9 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ section.title }}</title>
-    <meta name="description" content="{{ config.description }}">
+    <title>About | Sudarsh Kunnavakkam</title>
+    <meta name="description" content="About Sudarsh Kunnavakkam - Caltech sophomore working on AI safety, brain modeling, and computational neuroscience.">
     <meta name="author" content="{{ config.extra.author }}">
+    <meta name="keywords" content="{{ config.extra.keywords }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="About | Sudarsh Kunnavakkam">
+    <meta property="og:description" content="About Sudarsh Kunnavakkam - Caltech sophomore working on AI safety, brain modeling, and computational neuroscience.">
+    <meta name="twitter:card" content="summary">
+    
+    <link rel="canonical" href="{{ config.base_url }}/about">
 
     <!-- KaTeX math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">

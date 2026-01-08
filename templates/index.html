@@ -4,7 +4,22 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sudarsh's Website</title>
+    <title>Sudarsh Kunnavakkam</title>
+    <meta name="description" content="{{ config.description }}">
+    <meta name="author" content="{{ config.extra.author }}">
+    <meta name="keywords" content="{{ config.extra.keywords }}">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ config.base_url }}">
+    <meta property="og:title" content="Sudarsh Kunnavakkam">
+    <meta property="og:description" content="{{ config.description }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sudarsh Kunnavakkam">
+    <meta name="twitter:description" content="{{ config.description }}">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="{{ config.base_url }}">
     <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
         rel="stylesheet">

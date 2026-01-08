@@ -4,18 +4,18 @@
 <div class="blog-section">
     {% for page in section.pages %}
     {% if not page.draft %}
-    <div class="blog-post">
-        <h3>
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
             <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                {{ page.date | date(format="%B %d, %Y") }}
+            </span>
         </h3>
         {% if page.description %}
         <div class="blog-post-description">
             {{ page.description }}
         </div>
         {% endif %}
-        <div class="blog-post-date">
-            {{ page.date | date(format="%B %d, %Y") }}
-        </div>
     </div>
     {% endif %}
     {% endfor %}

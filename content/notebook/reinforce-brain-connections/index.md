@@ -117,5 +117,3 @@ We update a neuron $v$'s bias with $v_b := v_b - \Beta[\rho - v_f]$ where $v_f$ 
 </div>
 
 <script src="bandit-brain.js"></script>
-
-
