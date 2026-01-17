@@ -145,6 +145,48 @@
         font-weight: bold;
     }
 
+    /* Footnotes */
+    .footnotes {
+        margin-top: 30px;
+        padding-top: 10px;
+        border-top: 1px solid #ddd;
+        font-size: 0.9em;
+    }
+
+    .footnotes ol {
+        padding-left: 20px;
+    }
+
+    .footnotes li {
+        margin-bottom: 8px;
+    }
+
+    .footnote-definition {
+        margin-bottom: 8px;
+    }
+
+    .footnote-definition p {
+        display: inline;
+    }
+
+    .footnotes-separator {
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 30px 0 15px 0;
+    }
+
+    .footnote-reference,
+    .footnote-ref {
+        font-size: 0.8em;
+        vertical-align: super;
+    }
+
+    .footnote-reference a,
+    .footnote-ref a,
+    .footnote-backref {
+        text-decoration: none;
+    }
+
 
 
     /* Nested Lists */
@@ -250,6 +292,57 @@
                     { left: "$", right: "$", display: false }
                 ]
             });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
         });
     </script>
 </head>
