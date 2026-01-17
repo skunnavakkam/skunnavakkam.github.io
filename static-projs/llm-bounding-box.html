@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f9f9f9;
+				margin: 5px;
+			}
+
+			#main-image {
+				max-width: 100%;
+				max-height: 50vh; /* 50% of the viewport height */
+				height: auto;
+				border-radius: 5px;
+				display: none;
+			}
+
+			p {
+				margin: 10px 0;
+			}
+
+			input[type="text"] {
+				padding: 5px;
+				margin: 5px 0;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+			}
+
+			button {
+				padding: 10px 15px;
+				margin: 5px 5px;
+				border: none;
+				border-radius: 5px;
+				background-color: lightgrey;
+				cursor: pointer;
+				font-size: 14px;
+			}
+
+			button:hover {
+				background-color: gray;
+			}
+
+			canvas {
+				max-width: 100%;
+				max-height: 50vh;
+				border-radius: 5px;
+			}
+		</style>
+
+		<title>Compare Yourself to an LLM Drawing Bounding Boxes</title>
+	</head>
+	<body>
+		<p></p>
+
+		<img id="main-image" />
+		<canvas id="image-canvas"></canvas>
+
+		<p>
+			Compare Yourself to an LLM Drawing Bounding Boxes. Click new image to
+			start. Input x-left as a number between 0 to 1 as the point for where the
+			left of the bounding box starts as a fraction of the image, and width as a
+			number between 0 to 1 as the point for the width of the bounding box as a
+			fraction of the image. Do the same for the y-bottom and height. y-top is
+			the fraction from the bottom of the screen from which the top of the image
+			starts. Draw a bounding box around the head of the dog. If there are two
+			dogs, just regenerate :). refresh to get rid of bounding boxes
+		</p>
+		<button>New Image</button>
+		<p>
+			x-left: <input type="text" id="x-left" /> <br />
+			width:
+			<input type="text" id="width" /> <br />y-bottom:
+			<input type="text" id="y-bottom" /><br />
+			height:
+			<input type="text" id="height" />
+		</p>
+
+		<button id="bounding-box">Create Bounding Box</button>
+
+		<p>openai api key: <input type="text" id="api_key" /></p>
+
+		<button id="gpt">Ask GPT-4 to create a bounding box</button>
+
+		<script>
+			async function getRandomDogImage() {
+				const response = await fetch("https://dog.ceo/api/breeds/image/random");
+				const data = await response.json();
+				const imageUrl = data.message;
+				const mainImage = document.getElementById("main-image");
+				mainImage.src = imageUrl;
+
+				// Draw the image on the canvas
+				mainImage.onload = function () {
+					const canvas = document.getElementById("image-canvas");
+					const context = canvas.getContext("2d");
+					canvas.width = mainImage.width;
+					canvas.height = mainImage.height;
+					context.drawImage(mainImage, 0, 0, mainImage.width, mainImage.height);
+				};
+			}
+
+			document.addEventListener("DOMContentLoaded", function () {
+				document
+					.querySelector("button")
+					.addEventListener("click", getRandomDogImage);
+				document
+					.getElementById("bounding-box")
+					.addEventListener("click", drawBoundingBox);
+			});
+
+			function drawBoundingBox() {
+				const xLeft = parseFloat(document.getElementById("x-left").value);
+				const width = parseFloat(document.getElementById("width").value);
+				const yBottom =
+					1 - parseFloat(document.getElementById("y-bottom").value);
+				const height = parseFloat(document.getElementById("height").value);
+
+				const canvas = document.getElementById("image-canvas");
+				const context = canvas.getContext("2d");
+
+				const rectX = xLeft * canvas.width;
+				const rectY = yBottom * canvas.height;
+				const rectWidth = width * canvas.width;
+				const rectHeight = height * canvas.height;
+
+				context.strokeStyle = "red";
+				context.lineWidth = 2;
+				context.strokeRect(rectX, rectY, rectWidth, rectHeight);
+			}
+
+			document
+				.getElementById("gpt")
+				.addEventListener("click", async function () {
+					const apiKey = document.getElementById("api_key").value;
+					const imageUrl = document.getElementById("main-image").src;
+
+					if (!apiKey) {
+						alert("Please enter your OpenAI API key.");
+						return;
+					}
+
+					if (!imageUrl) {
+						alert("Please generate a dog image first.");
+						return;
+					}
+
+					const messageData = {
+						model: "gpt-4-turbo",
+						messages: [
+							{
+								role: "user",
+								content:
+									"Input x-left as a number between 0 to 1 as the point for where the left of the bounding box starts as a fraction of the image, and width as a number between 0 to 1 as the point for the width of the bounding box as a fraction of the image. Do the same for the y-bottom and height. y-top is the fraction from the bottom of the screen from which the top of the image starts. Draw a bounding box around the head of the dog.",
+							},
+							{
+								role: "user",
+								content: `![Dog Image](${imageUrl})`,
+							},
+						],
+						tools: [
+							{
+								type: "function",
+								function: {
+									name: "create_bounding_box",
+									description:
+										"Create bounding box coordinates for the dog's head",
+									parameters: {
+										type: "object",
+										properties: {
+											xLeft: {
+												type: "number",
+												description:
+													"The left of the bounding box as a fraction of the image (0 to 1)",
+											},
+											width: {
+												type: "number",
+												description:
+													"The width of the bounding box as a fraction of the image (0 to 1)",
+											},
+											yBottom: {
+												type: "number",
+												description:
+													"The bottom of the bounding box as a fraction of the image (0 to 1)",
+											},
+											height: {
+												type: "number",
+												description:
+													"The height of the bounding box as a fraction of the image (0 to 1)",
+											},
+										},
+										required: ["xLeft", "width", "yBottom", "height"],
+									},
+								},
+							},
+						],
+						tool_choice: "required",
+					};
+
+					try {
+						const response = await fetch(
+							"https://api.openai.com/v1/chat/completions",
+							{
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json",
+									Authorization: `Bearer ${apiKey}`,
+								},
+								body: JSON.stringify(messageData),
+							}
+						);
+
+						const data = await response.json();
+
+						console.log("API Response:", data);
+
+						if (data.choices && data.choices.length > 0) {
+							const toolCalls = data.choices[0].message.tool_calls;
+
+							if (toolCalls && toolCalls.length > 0) {
+								const boundingBox = JSON.parse(toolCalls[0].function.arguments);
+								drawYellowBoundingBox(
+									boundingBox.xLeft,
+									boundingBox.width,
+									boundingBox.yBottom,
+									boundingBox.height
+								);
+							} else {
+								alert("No bounding box coordinates returned.");
+							}
+						} else {
+							alert("No choices found in the API response.");
+						}
+					} catch (error) {
+						console.error("Error:", error);
+						alert(
+							"An error occurred while fetching the bounding box coordinates."
+						);
+					}
+				});
+
+			function drawYellowBoundingBox(xLeft, width, yBottom, height) {
+				const canvas = document.getElementById("image-canvas");
+				const context = canvas.getContext("2d");
+
+				const rectX = xLeft * canvas.width;
+				const rectY = yBottom * canvas.height;
+				const rectWidth = width * canvas.width;
+				const rectHeight = height * canvas.height;
+
+				context.strokeStyle = "yellow";
+				context.lineWidth = 2;
+				context.strokeRect(rectX, rectY, rectWidth, rectHeight);
+			}
+		</script>
+	</body>
+</html>

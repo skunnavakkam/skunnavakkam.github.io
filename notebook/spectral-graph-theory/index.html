@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eigenvectors of the Graph Laplacian hold Spectral Information | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="I want to give (and gain) some intuition about a specific phenomenon. This is a phenomenon from Spectral Graph Theory! Namely, when we take this matrix called t…">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+
+    <link rel="canonical" href="https://sudarsh.com/notebook/spectral-graph-theory/">
+
+    <!-- Reenie Beanie for EVERYTHING -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <!-- Recursive for CODE -->
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO@1,1,0.5&display=swap"
+        rel="stylesheet">
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Eigenvectors of the Graph Laplacian hold Spectral Information" />
+    <meta name="twitter:description"
+        content="I want to give (and gain) some intuition about a specific phenomenon. This is a phenomenon from Spectral Graph Theory! Namely, when we take this matrix called the graph Laplacian. We define it for a g…" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <style>
+        :root {
+            --paper-bg: #fdfdfd;
+            --ink-color: #2a2b2e;
+            --ink-secondary: #4a4b4e;
+            --highlight: rgba(225, 182, 14, 0.35);
+            --highlight-solid: #e1b60e;
+        }
+
+        /* Reset box sizing */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Reenie Beanie', cursive;
+            font-size: 26px;
+            /* Handwriting size */
+            line-height: 1.4;
+            margin: 0 auto;
+            /* Center the body horizontally */
+
+            /* Match blog metrics exactly */
+            padding: 30px;
+            max-width: max(60%, 600px);
+
+            color: var(--ink-color);
+            background-color: var(--paper-bg);
+            /* Subtle noise */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+
+            text-align: left;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Reenie Beanie', cursive;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--ink-color);
+        }
+
+        /* EXACT MATCH TO BLOG TITLE POSITION */
+        .title {
+            font-size: 52px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 28px;
+            text-decoration: underline;
+        }
+
+        p {
+            margin: 0 0 15px 0;
+            /* Match blog paragraph spacing */
+        }
+
+        /* Messy Highlighter Effect */
+        a {
+            color: var(--ink-color);
+            text-decoration: none;
+            border-bottom: none;
+
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 0.5em;
+            /* Thick stroke */
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+
+            transition: background-size 0.2s, background-color 0.2s;
+            border-radius: 2px 2px 0 0;
+        }
+
+        a:hover {
+            background-size: 100% 100%;
+            /* Fill up on hover */
+            background-color: rgba(225, 182, 14, 0.1);
+            /* Subtle fill */
+            color: var(--ink-color);
+        }
+
+        /* NAV LINKS - Below Title */
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 0px;
+            width: 100%;
+            align-items: baseline;
+            /* Ensure text baseline alignment */
+            margin-top: 0;
+        }
+
+        .nav-back {
+            color: var(--ink-color);
+            font-size: 22px;
+            text-decoration: none;
+            line-height: 1.0;
+            /* Tight line height */
+            display: inline-block;
+
+            /* Apply highlighter */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6));
+            background-size: 100% 0.4em;
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+            border-bottom: none;
+        }
+
+        .nav-back:hover {
+            background-size: 100% 100%;
+        }
+
+        .meta {
+            font-size: 22px;
+            color: var(--ink-secondary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            /* Match blog hr */
+            margin: 20px 0;
+        }
+
+        /* Images */
+        .photo-wrapper {
+            position: relative;
+            display: block;
+            margin: 32px auto;
+            max-width: min(700px, 100% - 20px);
+            padding: 12px;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            transform: rotate(-0.5deg);
+        }
+
+        img:not(.photo-wrapper img) {
+            display: block;
+            margin: 32px auto;
+            max-width: 100%;
+            border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .photo-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .photo-wrapper::before,
+        .photo-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(200, 200, 200, 0.2);
+            z-index: 10;
+        }
+
+        .photo-wrapper::before {
+            top: -10px;
+            left: 20px;
+            transform: rotate(-3deg);
+        }
+
+        .photo-wrapper::after {
+            top: -10px;
+            right: 20px;
+            transform: rotate(3deg);
+        }
+
+        pre {
+            padding: 16px;
+            font-family: 'Recursive', monospace;
+            font-size: 18px;
+            /* Adjusted size for Recursive */
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.03);
+            margin: 32px 0;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            transform: rotate(0.2deg);
+            color: var(--ink-color);
+        }
+
+        code {
+            font-family: 'Recursive', monospace;
+            font-size: 0.9em;
+            /* slightly smaller to fit in text */
+        }
+
+        p code,
+        li code {
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 85%;
+            background-position: 0 60%;
+            background-repeat: no-repeat;
+
+            padding: 2px 4px;
+            border-radius: 2px;
+
+            /* Ensure effect wraps correctly */
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+        }
+
+        ul,
+        ol {
+            margin: 0 0 1.5em 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            padding-left: 0;
+        }
+
+        ul li::marker {
+            color: var(--ink-color);
+            content: '- ';
+        }
+
+        blockquote {
+            margin: 20px 0;
+            padding: 10px 20px;
+
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.3),
+                    rgba(225, 182, 14, 0.5) 20%,
+                    rgba(225, 182, 14, 0.4) 80%,
+                    rgba(225, 182, 14, 0.3));
+
+            border-left: none;
+            font-style: italic;
+            color: var(--ink-secondary);
+        }
+
+        /* Footnotes */
+        .footnotes {
+            margin-top: 36px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 0.85em;
+        }
+
+        .footnotes ol {
+            padding-left: 20px;
+        }
+
+        .footnotes li {
+            margin-bottom: 10px;
+        }
+
+        .footnote-definition {
+            margin-bottom: 10px;
+        }
+
+        .footnote-definition p {
+            display: inline;
+        }
+
+        .footnotes-separator {
+            border: none;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            margin: 36px 0 18px 0;
+        }
+
+        .footnote-reference,
+        .footnote-ref {
+            font-size: 0.75em;
+            vertical-align: super;
+        }
+
+        .footnote-reference a,
+        .footnote-ref a,
+        .footnote-backref {
+            background-image: none;
+            border-bottom: none;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        /* Footer */
+        .journal-footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 20px;
+            color: var(--ink-secondary);
+            padding-top: 20px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .title {
+                font-size: 36px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ],
+                throwOnError: false,
+                trust: true
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+
+            document.querySelectorAll('img:not(.no-tape)').forEach(function (img) {
+                if (img.parentElement.classList.contains('photo-wrapper')) return;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'photo-wrapper';
+                const rotation = (Math.random() - 0.5) * 2;
+                wrapper.style.transform = `rotate(${rotation}deg)`;
+                img.parentNode.insertBefore(wrapper, img);
+                wrapper.appendChild(img);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Eigenvectors of the Graph Laplacian hold Spectral Information</h1>
+
+    <div class="nav-links">
+        <a href="../" class="nav-back">
+            < back to all posts</a>
+    </div>
+
+    <p class="meta">
+        scribbled on October 06, 2024
+    </p>
+
+    <hr>
+
+    <p>I want to give (and gain) some intuition about a specific phenomenon. This is a phenomenon from Spectral Graph Theory! Namely, when we take this matrix called the graph Laplacian. We define it for a graph $G = (V, E)$ as $L = D - A$, where $D$ is the degree matrix </p>
+<p>$$
+D = \begin{pmatrix}
+degree_{1} &amp; 0 &amp; 0 &amp; \cdots &amp; 0 \
+0 &amp; degree_{2} &amp; 0 &amp; \cdots &amp; 0 \
+0 &amp; 0 &amp; degree_{3} &amp; \cdots &amp; 0 \
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \
+0 &amp; 0 &amp; 0 &amp; \cdots &amp; degree_{n}
+\end{pmatrix}
+$$</p>
+<p>and $A$ is the adjacency matrix. </p>
+<p>Treat the eigenvectors of the Laplacian as a function $F: V \to \mathbb{R}$. When you color the vertices of a graph according to the value of the function at those vertices, the color follows a smooth gradient for low eigenvalues, and the coloring is not smooth for high eigenvalues. </p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a626a4;">import </span><span>networkx </span><span style="color:#a626a4;">as </span><span>nx
+</span><span style="color:#a626a4;">import </span><span>random
+</span><span style="color:#a626a4;">import </span><span>matplotlib.pyplot </span><span style="color:#a626a4;">as </span><span>plt
+</span><span>
+</span><span>n </span><span style="color:#a626a4;">= </span><span style="color:#c18401;">50  </span><span style="color:#a0a1a7;"># number of vertices
+</span><span>d </span><span style="color:#a626a4;">= </span><span style="color:#c18401;">6 </span><span style="color:#a0a1a7;"># degree of each vertex
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">generate_d_regular_graph</span><span>(</span><span style="color:#e45649;">n</span><span>, </span><span style="color:#e45649;">d</span><span>):
+</span><span>    </span><span style="color:#a0a1a7;">&quot;&quot;&quot;
+</span><span style="color:#a0a1a7;">    Generate a random d-regular graph with n vertices and no self-cycles.
+</span><span style="color:#a0a1a7;">    
+</span><span style="color:#a0a1a7;">    Parameters:
+</span><span style="color:#a0a1a7;">    n (int): Number of vertices
+</span><span style="color:#a0a1a7;">    d (int): Degree of each vertex
+</span><span style="color:#a0a1a7;">    
+</span><span style="color:#a0a1a7;">    Returns:
+</span><span style="color:#a0a1a7;">    nx.Graph: A d-regular graph
+</span><span style="color:#a0a1a7;">    &quot;&quot;&quot;
+</span><span>    </span><span style="color:#a626a4;">if </span><span>n </span><span style="color:#a626a4;">* </span><span>d </span><span style="color:#a626a4;">% </span><span style="color:#c18401;">2 </span><span style="color:#a626a4;">!= </span><span style="color:#c18401;">0 </span><span style="color:#a626a4;">or </span><span>d </span><span style="color:#a626a4;">&gt;= </span><span>n:
+</span><span>        </span><span style="color:#a626a4;">raise </span><span style="color:#e45649;">ValueError</span><span>(</span><span style="color:#50a14f;">&quot;n * d must be even and d must be less than n&quot;</span><span>)
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># Create an empty graph
+</span><span>    G </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">Graph</span><span>()
+</span><span>    G.</span><span style="color:#e45649;">add_nodes_from</span><span>(</span><span style="color:#0184bc;">range</span><span>(n))
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># Create a list of available stubs (connection points)
+</span><span>    stubs </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">list</span><span>(</span><span style="color:#0184bc;">range</span><span>(n)) </span><span style="color:#a626a4;">* </span><span>d
+</span><span>    
+</span><span>    </span><span style="color:#a626a4;">while </span><span>stubs:
+</span><span>        </span><span style="color:#a0a1a7;"># Randomly select two different stubs
+</span><span>        u, v </span><span style="color:#a626a4;">= </span><span>random.</span><span style="color:#e45649;">sample</span><span>(stubs, </span><span style="color:#c18401;">2</span><span>)
+</span><span>        
+</span><span>        </span><span style="color:#a0a1a7;"># Ensure no self-loops and no multiple edges
+</span><span>        </span><span style="color:#a626a4;">if </span><span>u </span><span style="color:#a626a4;">!= </span><span>v </span><span style="color:#a626a4;">and not </span><span>G.</span><span style="color:#e45649;">has_edge</span><span>(u </span><span style="color:#a626a4;">% </span><span>n, v </span><span style="color:#a626a4;">% </span><span>n):
+</span><span>            G.</span><span style="color:#e45649;">add_edge</span><span>(u </span><span style="color:#a626a4;">% </span><span>n, v </span><span style="color:#a626a4;">% </span><span>n)
+</span><span>            stubs.</span><span style="color:#e45649;">remove</span><span>(u)
+</span><span>            stubs.</span><span style="color:#e45649;">remove</span><span>(v)  
+</span><span>
+</span><span>        </span><span style="color:#a626a4;">import </span><span>sys
+</span><span>        sys.stdout.</span><span style="color:#e45649;">write</span><span>(</span><span style="color:#50a14f;">&quot;</span><span style="color:#0997b3;">\r</span><span style="color:#50a14f;">&quot; </span><span style="color:#a626a4;">+ </span><span style="color:#50a14f;">&quot; &quot; </span><span style="color:#a626a4;">* </span><span style="color:#c18401;">20 </span><span style="color:#a626a4;">+ </span><span style="color:#50a14f;">&quot;</span><span style="color:#0997b3;">\r</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span>        sys.stdout.</span><span style="color:#e45649;">write</span><span>(</span><span style="color:#50a14f;">&quot;</span><span style="color:#0997b3;">\r</span><span style="color:#50a14f;">&quot; </span><span style="color:#a626a4;">+ f</span><span style="color:#50a14f;">&quot;Number of stubs remaining: </span><span>{</span><span style="color:#0184bc;">len</span><span>(stubs)}</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span>        sys.stdout.</span><span style="color:#e45649;">flush</span><span>()
+</span><span>    </span><span style="color:#0184bc;">print</span><span>()
+</span><span>    </span><span style="color:#a626a4;">return </span><span>G
+</span><span>
+</span><span>graph </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">generate_d_regular_graph</span><span>(n, d)
+</span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;Generated a </span><span>{d}</span><span style="color:#50a14f;">-regular graph with </span><span>{n}</span><span style="color:#50a14f;"> vertices&quot;</span><span>)
+</span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;Number of edges: </span><span>{graph.</span><span style="color:#e45649;">number_of_edges</span><span>()}</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span>
+</span><span style="color:#a0a1a7;"># plot the graph
+</span><span>
+</span><span>plt.</span><span style="color:#e45649;">figure</span><span>(</span><span style="color:#e45649;">figsize</span><span style="color:#a626a4;">=</span><span>(</span><span style="color:#c18401;">12</span><span>, </span><span style="color:#c18401;">9</span><span>))
+</span><span>pos </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">spring_layout</span><span>(graph, </span><span style="color:#e45649;">k</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.5</span><span>, </span><span style="color:#e45649;">iterations</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">50</span><span>)
+</span><span>nx.</span><span style="color:#e45649;">draw</span><span>(graph, pos,
+</span><span>        </span><span style="color:#e45649;">node_color</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;lightblue&#39;</span><span>,
+</span><span>        </span><span style="color:#e45649;">node_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">300</span><span>,
+</span><span>        </span><span style="color:#e45649;">with_labels</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">True</span><span>,
+</span><span>        </span><span style="color:#e45649;">font_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">8</span><span>,
+</span><span>        </span><span style="color:#e45649;">edge_color</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;gray&#39;</span><span>,
+</span><span>        </span><span style="color:#e45649;">width</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.6</span><span>,
+</span><span>        </span><span style="color:#e45649;">alpha</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.7</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">title</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&#39;Random </span><span>{d}</span><span style="color:#50a14f;">-Regular Graph with </span><span>{n}</span><span style="color:#50a14f;"> Vertices&#39;</span><span>, </span><span style="color:#e45649;">fontsize</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">16</span><span>, </span><span style="color:#e45649;">fontweight</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;bold&#39;</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">axis</span><span>(</span><span style="color:#50a14f;">&#39;off&#39;</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">show</span><span>()
+</span><span>
+</span><span style="color:#a626a4;">import </span><span>numpy </span><span style="color:#a626a4;">as </span><span>np
+</span><span style="color:#a626a4;">import </span><span>networkx </span><span style="color:#a626a4;">as </span><span>nx
+</span><span style="color:#a626a4;">import </span><span>scipy.linalg </span><span style="color:#a626a4;">as </span><span>sla
+</span><span style="color:#a626a4;">import </span><span>matplotlib.pyplot </span><span style="color:#a626a4;">as </span><span>plt
+</span><span>
+</span><span>laplacian_matrix </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">laplacian_matrix</span><span>(graph).</span><span style="color:#e45649;">toarray</span><span>()
+</span><span>eigenvalues, eigenvectors </span><span style="color:#a626a4;">= </span><span>np.linalg.</span><span style="color:#e45649;">eigh</span><span>(laplacian_matrix)
+</span><span>eigenvectors </span><span style="color:#a626a4;">= </span><span>eigenvectors.T
+</span><span>
+</span><span>vector_nums </span><span style="color:#a626a4;">= </span><span>[</span><span style="color:#c18401;">1</span><span>, </span><span style="color:#c18401;">15</span><span>]
+</span><span>fig, axs </span><span style="color:#a626a4;">= </span><span>plt.</span><span style="color:#e45649;">subplots</span><span>(</span><span style="color:#c18401;">1</span><span>, </span><span style="color:#c18401;">2</span><span>, </span><span style="color:#e45649;">figsize</span><span style="color:#a626a4;">=</span><span>(</span><span style="color:#c18401;">24</span><span>, </span><span style="color:#c18401;">9</span><span>))
+</span><span>
+</span><span style="color:#a626a4;">for </span><span>i, vector_num </span><span style="color:#a626a4;">in </span><span style="color:#0184bc;">enumerate</span><span>(vector_nums):
+</span><span>    curr_vector </span><span style="color:#a626a4;">= </span><span>eigenvectors[vector_num]
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># plot the graph, and color the vertices by the values in the eigenvector
+</span><span>    nx.</span><span style="color:#e45649;">draw</span><span>(graph, </span><span style="color:#e45649;">ax</span><span style="color:#a626a4;">=</span><span>axs[i], </span><span style="color:#e45649;">node_color</span><span style="color:#a626a4;">=</span><span>curr_vector, </span><span style="color:#e45649;">cmap</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;viridis&#39;</span><span>, </span><span style="color:#e45649;">node_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">300</span><span>, 
+</span><span>            </span><span style="color:#e45649;">with_labels</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">True</span><span>, </span><span style="color:#e45649;">font_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">8</span><span>, </span><span style="color:#e45649;">edge_color</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;gray&#39;</span><span>, </span><span style="color:#e45649;">width</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.6</span><span>, </span><span style="color:#e45649;">alpha</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.7</span><span>)
+</span><span>    axs[i].</span><span style="color:#e45649;">set_title</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&#39;Graph Colored by Eigenvector </span><span>{vector_num </span><span style="color:#a626a4;">+ </span><span style="color:#c18401;">1</span><span>}</span><span style="color:#50a14f;">&#39;</span><span>)
+</span><span>    axs[i].</span><span style="color:#e45649;">axis</span><span>(</span><span style="color:#50a14f;">&#39;off&#39;</span><span>)
+</span><span>
+</span><span>plt.</span><span style="color:#e45649;">tight_layout</span><span>()
+</span><span>plt.</span><span style="color:#e45649;">show</span><span>()
+</span></code></pre>
+<p><img src="https://sudarsh.com/notebook/spectral-graph-theory/image.png" alt="Gradient of the Laplacian Eigenvector" /></p>
+<p>We can first try to show something like this for the continuous case. Start by defining the laplacian operator 
+$$
+L = \frac{\partial F^2}{\partial^2 x}
+$$</p>
+<p>We want to find some eigenfunction, which is a function $f$ such that 
+$$
+Lf = \lambda f
+$$
+for some eigenvalue $\lambda$. </p>
+<p>We can show that the <em>only</em> functions that satisfy this are of the form $f(x) = A\sin(kx) + B\cos(kx)$. It is trivial to verify this, and it’s a little more involved to prove this (but it is true!)</p>
+<p>As a result, for some function $F(x) = A\sin(kx) + B\cos(kx)$, we have that that $F’’(x) = -k^2 A \sin(kx) - k^2 B \cos(kx) = -k^2 F(x)$. Thus, for the eigenvalue $\lambda$, we know that it corresponds to a component with frequency $k = \sqrt{-\lambda}$. A result from the theory of Fourier analysis is that you can decompose any function into a sum of sines and cosines and that the eigenvectors of the laplacian are the components of the function. </p>
+<p>We can fall on the limit definition of the Laplacian, which says that 
+$$
+Lf = \lim_{h \to 0} \frac{f(x+h) + f(x-h) - 2f(x)}{h^2}
+$$</p>
+<p>If we instead say that our value of $h$ is a discrete value, we get a definition of the Laplacian for a grid that has $n$ dimensions.</p>
+<p>$$
+Lf(v) = \sum_{i \in [n]} \frac{f(v + x_i) + f(v - x_i) - 2f(v)}{||x_i||^2}
+$$</p>
+<p>where $x_i$ is the “step” vector in the $i$th dimension. It is fairly easy to see that as $||x_i|| \to 0$, the definition of the Laplacian converges to the definition of the Laplacian operator. Furthermore, this is equivilant to increasing the number of points in the grid, while keeping $||x_i|| = 1$</p>
+<p>We now can pair up adjacent vertices of the graph with edges, setting lattice points to vertices and the connections to edges. We then want to show that the Laplacian converges to the Laplacian operator, for some function $F: V \to \mathbb{R}$, which is a vector in $\mathbb{R}^n$. </p>
+<p>We start with two defintions of the Laplacian, and aim to show that they are the same.
+$$
+Lf = Df - Af
+$$</p>
+<p>$$
+Lf = \sum_{u \sim v} \frac{f(v) - f(u)}
+$$</p>
+<p>where $u\simv$ denotes all $u$ such that there is an edge between $u$ and $v$. Since the number of edges connecting to a vertex is equal to the degree of the vertex, we can say that </p>
+<p>$$
+Lf = \sum_{u \sim v} \frac{f(v) - f(u)} = d f(v) - \sum_{u \sim v} f(u)
+$$</p>
+<p>$$
+= Df - \sum_{u \sim v} f(u)
+$$</p>
+<p>$$
+= Df - Af
+$$</p>
+<p>We can then partition $U = {u \sim v}$ into two sets of equal size $U’$ and $U’’$. We can then rephrase the operator $Lf$ as </p>
+<p>$$
+Lf = \sum_{i \in [\frac{|U|}{2}]} f(u_i’) + f(u_i’’) - 2f(v)
+$$</p>
+<p>This is now the same as the discrete grid Laplacian, which is equivilant to the definition of the Laplacian operator in the limit as the grid size goes to infinity.</p>
+<p>However, note that this works on only specific constructions of the graph $G$, while the actual result emperically works for many other graphs. While talking with a friend at Caltech, we realized that this was in part related to the how the graph drawing software <code>NetworkX</code> chooses to draw graphs. Namely, plotting the index vs the value of the eigenvector at the index does not result in a smooth gradient for any eigenvalue. </p>
+<p><img src="https://sudarsh.com/notebook/spectral-graph-theory/nx_graph.png" alt="NetworkX Graph (not smooth)" /></p>
+<p>The graph drawing algorithm solves the spring problem, which does the following:</p>
+<ul>
+<li>Treat each edge $e$ as a spring, with equilibrium length $l$, spring constant $k$, and current length $x_e$. Both of these values are equal for all edges.</li>
+<li>Compute the total potential energy of the system, $PE =\sum_{e \in E} \frac12 k (x_e - l)^2$</li>
+<li>Minimize $PE$, which is done through iteratively applying Hooke’s law, $F = -k x_e$.</li>
+</ul>
+<p>This smoothness breaks for large graphs, but I think that this is much more because the loss landscape is uglier for large graphs and thus the optimal graph cannot be achieved, and not because the optimal graph does not show smoothness. I still haven’t truly solved this, haha.</p>
+
+
+    <div class="journal-footer">
+        <div class="page-number">06</div>
+        <div class="signature">- SUDARSH</div>
+    </div>
+</body>
+
+</html>

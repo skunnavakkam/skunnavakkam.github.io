@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    /* images should be limited to  800px, centered, and with padding 20px*/
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(800px, 100% - 40px);
+        padding: 20px;
+    }
+
+    /* center the body */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0 auto;
+        /* Center the body horizontally */
+        padding: 30px;
+        box-sizing: border-box;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+        max-width: max(60%, 600px);
+    }
+
+    .content-wrapper {
+        /* max width of either 60% or 600px, whichever is larger */
+        max-width: max(60%, 600px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Space Mono', monospace;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    h4 {
+        font-size: 1.1em;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    a {
+        color: #e1b60e;
+        /* Pastel yellow */
+        text-decoration: underline;
+        font-family: 'Space Mono', monospace;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .clear {
+        font-family: 'Space Mono', monospace;
+        background-color: transparent;
+        border-width: 0px;
+        bottom: 30px;
+        left: 30px;
+        position: absolute;
+        text-decoration: underline;
+    }
+
+    /* Brutalist Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 2px solid #000;
+    }
+
+    pre {
+        padding: 10px;
+        /* Add padding to all lines of the code block */
+        /* Optional: background color for better visibility */
+
+        /* Optional: border for better visibility */
+        overflow: auto;
+        /* Optional: add scrollbars if content overflows */
+        /* Add black shadow with no blur */
+
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 30px;
+    }
+
+    ul li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 10px;
+    }
+
+    ul li::before {
+        content: '■';
+        position: absolute;
+        left: 0;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    /* Footnotes */
+    .footnotes {
+        margin-top: 30px;
+        padding-top: 10px;
+        border-top: 1px solid #ddd;
+        font-size: 0.9em;
+    }
+
+    .footnotes ol {
+        padding-left: 20px;
+    }
+
+    .footnotes li {
+        margin-bottom: 8px;
+    }
+
+    .footnote-definition {
+        margin-bottom: 8px;
+    }
+
+    .footnote-definition p {
+        display: inline;
+    }
+
+    .footnotes-separator {
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 30px 0 15px 0;
+    }
+
+    .footnote-reference,
+    .footnote-ref {
+        font-size: 0.8em;
+        vertical-align: super;
+    }
+
+    .footnote-reference a,
+    .footnote-ref a,
+    .footnote-backref {
+        text-decoration: none;
+    }
+
+
+
+    /* Nested Lists */
+    ul ul,
+    ol ol,
+    ul ol,
+    ol ul {
+        margin-top: 10px;
+    }
+
+    th {
+        background-color: #000;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    /* Responsive table */
+    @media screen and (max-width: 600px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+            border: 2px solid #000;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #000;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phenomenlogical Transhumanism | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="In our day to day, we treat our senses as fixed – we have the set that we do, and no more. 
+The idea of adding senses seems to make as little sense as the idea …">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <link rel="canonical" href="https://sudarsh.com/blog/new-senses-conciousness/">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Phenomenlogical Transhumanism" />
+    <meta name="twitter:description"
+        content="In our day to day, we treat our senses as fixed – we have the set that we do, and no more. 
+The idea of adding senses seems to make as little sense as the idea of putting four dimensions into a three …" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Phenomenlogical Transhumanism</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published January 14, 2026
+    </p>
+    <hr>
+    <p>In our day to day, we treat our senses as fixed – we have the set that we do, and no more. </p>
+<p>The idea of adding senses seems to make as little sense as the idea of putting four dimensions into a three dimensional space. “Where does the new dimension go?”, you may ask, and there’s not much more of an intuitive answer than, “orthogonal to the other three”. The world of higher dimensions is a little kinder to us – you can understand translating through the fourth dimension as sliding through time, and you can give a user two extra knobs to understand rotations about the fourth axis, and you can take projections down to three dimensions, and maybe this is enough for the user to understand the fourth dimension.</p>
+<p>Describing new senses seems harder, and attempts to do so rely on what a description of what more you can experience with it, or relying on connections we make to other sense, but what does it mean for yellow to be fresh and bright when you have no idea what a yellow is?</p>
+<p>Yet, our minds are incredibly malleable, and perhaps we can build new senses through training that translate technology to intuition, being able to <em>feel</em>, at a deeper level, what we could once only observe. </p>
+<p>The introduction of new sense has been done before. In an <a href="https://web.archive.org/web/20090210124207/https://www.wired.com/wired/archive/15.04/esp.html">experiment</a>, Udo Wächter built a belt with 13 vibrating motors on its perimeter, which buzzed in the direction of north, constantly. </p>
+<blockquote>
+<p>I suddenly realized that my perception had shifted. I had some kind of internal map of the city in my head. I could always find my way home. Eventually, I felt I couldn’t get lost, even in a completely new place.</p>
+<p>–Udo Wächter</p>
+</blockquote>
+<p>I’d like to draw attention to this distinction that Wächter makes – that his perception had shifted, instead of just being able to measure the direction of north. I think that this distinction is really meaningful. In my process of doing Math or Physics, being able to develop an intuition for the objects I work with allows me to progress significantly faster, despite knowing the rules of how to manipulate these objects before and after developing the intuition.</p>
+<p>In drawing this distinction I want to motivate some version of <em>phenomenological transhumanism</em>. In addition to transhumanism’s current focus on extending our life, becoming strong, faster, smarter – getting <em>more</em> of the things we have – that there is a possibility of extending the diversity of our experiences by building new senses, that is easy and achievable today. </p>
+<p>Here’s one version of what this looks like: Smart Watches are common today and generally have a vibration motor on them. Just like the brain is able to process multiple frequencies overlaid on top of each other as distinct sounds, the brain should be able to process multiple prime vibrational frequencies overlaid on top of each other from your smart watch. I don’t think you’re going to be able to get more than 30Hz sensing or so, so you get at most 11 bits of information in this way at any point of time. </p>
+<p>With these bits you can build proximity sensing to other people <sup class="footnote-reference"><a href="#1">1</a></sup>, magnetosensing, electrical sensing, directional help, and a whole suite of other things. Notably, this is a gut-level, instinctive sense that is not available to us today.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Yes, I’m taking this from that <em>one</em> r/applyingtocollege post.</p>
+</div>
+
+</body>
+
+</html>

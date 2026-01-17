@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    /* images should be limited to  800px, centered, and with padding 20px*/
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(800px, 100% - 40px);
+        padding: 20px;
+    }
+
+    /* center the body */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0 auto;
+        /* Center the body horizontally */
+        padding: 30px;
+        box-sizing: border-box;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+        max-width: max(60%, 600px);
+    }
+
+    .content-wrapper {
+        /* max width of either 60% or 600px, whichever is larger */
+        max-width: max(60%, 600px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Space Mono', monospace;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    h4 {
+        font-size: 1.1em;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    a {
+        color: #e1b60e;
+        /* Pastel yellow */
+        text-decoration: underline;
+        font-family: 'Space Mono', monospace;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .clear {
+        font-family: 'Space Mono', monospace;
+        background-color: transparent;
+        border-width: 0px;
+        bottom: 30px;
+        left: 30px;
+        position: absolute;
+        text-decoration: underline;
+    }
+
+    /* Brutalist Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 2px solid #000;
+    }
+
+    pre {
+        padding: 10px;
+        /* Add padding to all lines of the code block */
+        /* Optional: background color for better visibility */
+
+        /* Optional: border for better visibility */
+        overflow: auto;
+        /* Optional: add scrollbars if content overflows */
+        /* Add black shadow with no blur */
+
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 30px;
+    }
+
+    ul li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 10px;
+    }
+
+    ul li::before {
+        content: '■';
+        position: absolute;
+        left: 0;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    /* Footnotes */
+    .footnotes {
+        margin-top: 30px;
+        padding-top: 10px;
+        border-top: 1px solid #ddd;
+        font-size: 0.9em;
+    }
+
+    .footnotes ol {
+        padding-left: 20px;
+    }
+
+    .footnotes li {
+        margin-bottom: 8px;
+    }
+
+    .footnote-definition {
+        margin-bottom: 8px;
+    }
+
+    .footnote-definition p {
+        display: inline;
+    }
+
+    .footnotes-separator {
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 30px 0 15px 0;
+    }
+
+    .footnote-reference,
+    .footnote-ref {
+        font-size: 0.8em;
+        vertical-align: super;
+    }
+
+    .footnote-reference a,
+    .footnote-ref a,
+    .footnote-backref {
+        text-decoration: none;
+    }
+
+
+
+    /* Nested Lists */
+    ul ul,
+    ol ol,
+    ul ol,
+    ol ul {
+        margin-top: 10px;
+    }
+
+    th {
+        background-color: #000;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    /* Responsive table */
+    @media screen and (max-width: 600px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+            border: 2px solid #000;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #000;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementing E&amp;M Simulators | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="Backpropogatable FDFD and FDTD simulators in Jax, and trying to use diffusion models, tiled preconditioning, and other tricks to try to make them faster">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <link rel="canonical" href="https://sudarsh.com/blog/em-sim/">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Implementing E&amp;M Simulators" />
+    <meta name="twitter:description"
+        content="Backpropogatable FDFD and FDTD simulators in Jax, and trying to use diffusion models, tiled preconditioning, and other tricks to try to make them faster" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Implementing E&amp;M Simulators</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published July 28, 2025
+    </p>
+    <hr>
+    <p>E&amp;M is largely governed by Maxwell’s equations, a set of partial differential equations that describe the behavior of electric and mangetic fields.</p>
+<p>Almost all E&amp;M can be modeled by Maxwell’s equations, and almost all other E&amp;M phenomenon can be modeled this way. As a result, E&amp;M simulators based on Maxwell’s equations are widespread.</p>
+<p>To start, let’s look at Maxwell’s curl equations.</p>
+<p>$$
+\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t} = -\mu \frac{\partial \mathbf{H}}{\partial t}
+$$</p>
+<p>$$
+\nabla \times \mathbf{H} = \frac{\partial \mathbf{D}}{\partial t} = \epsilon \frac{\partial \mathbf{E}}{\partial t}
+$$</p>
+<p>However, getting from these equations to a simulation is not straightforward, and this blog post will walk through the process and motivation of implementing and optimizing a simulator in 2 dimensions. </p>
+<h2 id="maxwell-s-curl-equations-in-2d">Maxwell’s Curl Equations in 2D</h2>
+<p>We can pick two polarizations of light in 2D, one where the electric field is perpendicular to the plane of the paper, and one where the electric field is in the plane of the paper. These are the TE and TM modes respectively. In the TE mode, the electric field only contains a $z$ component, and the change in the $z$ component $\frac{\partial E_z}{\partial t}$ is 0. In this case, we can expand the curl operator to be</p>
+<p>$$
+\nabla \times \mathbf{E} = \begin{vmatrix}
+\mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \
+\frac{\partial}{\partial x} &amp; \frac{\partial}{\partial y} &amp; \frac{\partial}{\partial z} \
+E_x &amp; E_y &amp; E_z
+\end{vmatrix}
+$$</p>
+<h2 id="fdtd">FDTD</h2>
+<p>In FDTD, we step through time steps and update the fields at each time step. We update the $E$ field at time $t$ and the $B$/$H$ field at time $t + \frac{1}{2}$ (arb units). Doing this in numpy leads to fast results, which we can later optimize using FNOs.</p>
+<p><code>fdtd.mp4</code> shows the propagation of a wave through a medium with varying permittivity:</p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/fdtd.mp4" alt="FDTD" /></p>
+<h2 id="fdfd">FDFD</h2>
+<p>FDTD is an extremely good way to solve Maxwell’s equations for transient sources, but oftentimes in photonics simulations we are concenred about the state of a system after a very long time passes, or the steady state. Steady state solutions happen rapidly in light-matter simulations due to the high speed of light! The relation between time-domain and frequency-domain signals by the Fourier transform already gives a hint that we can solve for the steady state at a given frequency!</p>
+<p>This is a really nice solution, since we often only care about the behavior of light with constant frequency sources such as a red laser. </p>
+<p>We can take Maxwell’s equations in the frequency domain, which yields </p>
+<p>$$
+\nabla \times \mathbf{E} = i \omega \mu \mathbf{H} = i \omega \mathbf{B}
+$$</p>
+<p>Since we say that $\mathbf{B} = \Re(B_0 e^{i \omega t})$, and from Maxwell’s equations we have that $\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$, we can then differentiation $\mathbf{B}$.</p>
+<p>$$
+-\frac{\partial \mathbf{B}}{\partial t} = i \omega \cdot B_0 e^{i \omega t} = i \omega \mathbf{B}
+$$</p>
+<p>This equation works with a continuous E-field and B-field, but we can discretize it to get a matrix equation. We can unravel the $E$ and $B$ fields (each initially with discretized shape $N_x, N_y$) into a single vector $\hat{E}$ and $\hat{B}$ with shape $N_x \times N_y$ We can then generate an operator $curl: \mathbb{R}^{N_x \times N_y} \to \mathbb{R}^{N_x \times N_y}$ that takes the curl of the field. Constructing this field is given by the Crank-Nicolson method, but I’ll also provide some motivation here with a smaller sample, taking the curl of a $3 \times 3$ grid. </p>
+<p>First, flatten the grid into a vector.</p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/flatten.png" alt="Flattening a 3x3 grid into a vector" /></p>
+<p>We can then try to compute the curl at $(2, 2)$. We should first the discrete $\frac{\Delta E}{\Delta y}$ and $\frac{\Delta E}{\Delta x}$ at $(2, 2)$.</p>
+<p>$$
+\Delta E_x = \frac{E_{2, 3} - E_{2, 1}}{2}`
+$$</p>
+<p>$$
+\Delta E_y = \frac{E_{1, 2} - E_{3, 2}}{2}
+$$</p>
+<p>We then have that the curl at $(2, 2)$ is</p>
+<p>$$
+\nabla \times \mathbf{E} = \frac{\Delta E_x}{\Delta x} - \frac{\Delta E_y}{\Delta y}
+$$</p>
+<p>We can then construct a matrix that takes the curl of the field at that point.</p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/constructed_matrix.png" alt="The Constructed Matrix" /></p>
+<p>In general, you get a matrix of this form, sometimes called an <em>outrigger</em> matrix. </p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/outrigger.png" alt="The Outrigger Matrix" /></p>
+<p>This yields a system of equations</p>
+<p>$$
+A \hat{E} = -i \omega \hat{B}
+$$</p>
+<p>We can then solve for $\hat{E}$ using a sparse solver. Recall that the matrix has shape $(N_x \times N_y, N_x \times N_y)$, but only has $4$ non-zero entries per row. This is a big matrix, but it is sparse, and it is a banded matrix. </p>
+<p>We solve this system of equations using a sparse solver like <code>scipy.sparse.linalg.spsolve</code> and voila! Look at this perfect ring resonator coupling!</p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/ring_resonator.png" alt="The Ring Resonator" /></p>
+<h3 id="rewriting-in-jax">Rewriting in Jax</h3>
+<p>In the main <code>fdfd.py</code> file, the core function is <code>make_A</code> which generates the matrix $A$ from the permittivity, permeability, and source. I want to rewrite this in Jax so I can have the ability to backpropagate through it. However, like many other libraries, Jax has <em>really bad</em> support for sparse matrices, so we have to go around it and implement other things like our own sparse matrix operations by registering custom forward and backward passes for <code>scipy.sparse</code> subroutines.</p>
+<p>However, with some help from o3 this works pretty well, and now we can backprop through the FDFD solver and do inverse design to some extent. Let’s suppose that we want to do a low pass filter, so only low frequencies of light are allowed to pass through. </p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/inverse_design.png" alt="Inverse Design" /></p>
+<p>Let’s start! You can see the code here in <code>inverse_design.py</code>.</p>
+<h3 id="diffusion-modelling">Diffusion Modelling</h3>
+<p>Diffusion models are probably very good at solving these types of problems, and things like <code>DiffusionPDE</code> already show some promise! I think diffusion modelling can be thought of as a heuristics-based iterative solver. </p>
+<p>We first generate the data by generating random permittivities and sources, and then running the FDFD solver to get Ez fields. Then, with a cosine noise scheduler, we add noise to the Ez fields to train the denoising diffusion model. The noisy steps are shown below.</p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/diffusion_data.png" alt="Noisy Steps" /></p>
+<p>We train the diffusion model with DDPM using SNR loss and a cosine noise scheduler, and after 90 epochs ($90000$ samples), we get the following results.</p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/diffusion.png" alt="Diffusion Model Results" /></p>
+<p>The model definitely learns some of the dynamics, and is not perfect, but with time should be a lot more competent! I’m going to run it on ~2000 epochs after this post. </p>
+<h3 id="tiled-fdfd">Tiled FDFD</h3>
+<p>The uniqueness and existence theorem gives that the boundary conditions of a system are sufficient in determining the solution in the system. Maybe we can then solve for the solution in the area around the source, and then solve for the solution in patches adjacent to that, and so on and so forth. </p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/patch_distances.png" alt="Patch distances visualization showing how far each patch is from the source" /></p>
+<p>The image above shows the distance of each patch from the source patch (marked with a red star). The colors indicate how many patches away from the source each patch is, with lighter colors being further. What happens if we solve for the solution in each patch, enforce some dirichelet boundary conditions at each point, and then use the solution in the patches to solve for the solution in the next patch? Let’s implement this, solving for patches in a partial ordering given by distance from the source, determined by Djikstra’s. </p>
+<p>Some basic math shows that this solution happens in $O(n^2)$ time (technically $O(n^2 \log n)$ time since Djikstra’s is $O(n^2 \log n)$ but the time taken for Djikstra’s is negligible compared to the time taken to solve the sparse system of equations), which is a little too good to be true, and this is evidence by the solution not working perfectly. I think this probably ends up being a good approximation for a solution after a long but not infinite time, and I think that with a little bit more work this can serve as adequate preconditioning for a matrix solve, or this can work in a similar iterative fashion to an iterative matrix solver. Some hints that this might work are that you see coupling to the ring resonator (look at the bottom right quadrant).</p>
+<p><img src="https://sudarsh.com/blog/em-sim/assets/Ez_tiled.png" alt="Tiled FDFD" /></p>
+<p>My implementation of this is about 5-7x faster than the native sparse solve, since I tile $100 \times 100$-sized patches patches with overlap of $20$ pixels, leading to sparse solving a $120 \times 120$ matrix $100$ times. This takes about 3 seconds. The direct sparse solve of $1000 \times 1000$ matrix takes about 20 seconds.</p>
+<p>Pulling a number out of nowhere, I think that the ideal solution happens in about $O(n^2 \log n)$ time. My justification of this is solving the patches takes $O(n^2)$ time, and there would be $\log n$ iteration steps if each iteration step was a constant multiple better (for example, if we needed $10^-2$ tolerance, and each iteration step was $10$x betterm then there would be $\log_{10} (100) = 2$ iteration steps)..</p>
+
+</body>
+
+</html>

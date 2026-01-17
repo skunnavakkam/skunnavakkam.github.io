@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REINFORCEing A Brain | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="I think that there are ways that strengthening paths on a graph can be like reinforcement learning, and a reduction of how brains work is strengthening paths on…">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+
+    <link rel="canonical" href="https://sudarsh.com/notebook/reinforce-brain-connections/">
+
+    <!-- Reenie Beanie for EVERYTHING -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <!-- Recursive for CODE -->
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO@1,1,0.5&display=swap"
+        rel="stylesheet">
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="REINFORCEing A Brain" />
+    <meta name="twitter:description"
+        content="I think that there are ways that strengthening paths on a graph can be like reinforcement learning, and a reduction of how brains work is strengthening paths on a graph. In real life, brains are wayyy…" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <style>
+        :root {
+            --paper-bg: #fdfdfd;
+            --ink-color: #2a2b2e;
+            --ink-secondary: #4a4b4e;
+            --highlight: rgba(225, 182, 14, 0.35);
+            --highlight-solid: #e1b60e;
+        }
+
+        /* Reset box sizing */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Reenie Beanie', cursive;
+            font-size: 26px;
+            /* Handwriting size */
+            line-height: 1.4;
+            margin: 0 auto;
+            /* Center the body horizontally */
+
+            /* Match blog metrics exactly */
+            padding: 30px;
+            max-width: max(60%, 600px);
+
+            color: var(--ink-color);
+            background-color: var(--paper-bg);
+            /* Subtle noise */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+
+            text-align: left;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Reenie Beanie', cursive;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--ink-color);
+        }
+
+        /* EXACT MATCH TO BLOG TITLE POSITION */
+        .title {
+            font-size: 52px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 28px;
+            text-decoration: underline;
+        }
+
+        p {
+            margin: 0 0 15px 0;
+            /* Match blog paragraph spacing */
+        }
+
+        /* Messy Highlighter Effect */
+        a {
+            color: var(--ink-color);
+            text-decoration: none;
+            border-bottom: none;
+
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 0.5em;
+            /* Thick stroke */
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+
+            transition: background-size 0.2s, background-color 0.2s;
+            border-radius: 2px 2px 0 0;
+        }
+
+        a:hover {
+            background-size: 100% 100%;
+            /* Fill up on hover */
+            background-color: rgba(225, 182, 14, 0.1);
+            /* Subtle fill */
+            color: var(--ink-color);
+        }
+
+        /* NAV LINKS - Below Title */
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 0px;
+            width: 100%;
+            align-items: baseline;
+            /* Ensure text baseline alignment */
+            margin-top: 0;
+        }
+
+        .nav-back {
+            color: var(--ink-color);
+            font-size: 22px;
+            text-decoration: none;
+            line-height: 1.0;
+            /* Tight line height */
+            display: inline-block;
+
+            /* Apply highlighter */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6));
+            background-size: 100% 0.4em;
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+            border-bottom: none;
+        }
+
+        .nav-back:hover {
+            background-size: 100% 100%;
+        }
+
+        .meta {
+            font-size: 22px;
+            color: var(--ink-secondary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            /* Match blog hr */
+            margin: 20px 0;
+        }
+
+        /* Images */
+        .photo-wrapper {
+            position: relative;
+            display: block;
+            margin: 32px auto;
+            max-width: min(700px, 100% - 20px);
+            padding: 12px;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            transform: rotate(-0.5deg);
+        }
+
+        img:not(.photo-wrapper img) {
+            display: block;
+            margin: 32px auto;
+            max-width: 100%;
+            border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .photo-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .photo-wrapper::before,
+        .photo-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(200, 200, 200, 0.2);
+            z-index: 10;
+        }
+
+        .photo-wrapper::before {
+            top: -10px;
+            left: 20px;
+            transform: rotate(-3deg);
+        }
+
+        .photo-wrapper::after {
+            top: -10px;
+            right: 20px;
+            transform: rotate(3deg);
+        }
+
+        pre {
+            padding: 16px;
+            font-family: 'Recursive', monospace;
+            font-size: 18px;
+            /* Adjusted size for Recursive */
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.03);
+            margin: 32px 0;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            transform: rotate(0.2deg);
+            color: var(--ink-color);
+        }
+
+        code {
+            font-family: 'Recursive', monospace;
+            font-size: 0.9em;
+            /* slightly smaller to fit in text */
+        }
+
+        p code,
+        li code {
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 85%;
+            background-position: 0 60%;
+            background-repeat: no-repeat;
+
+            padding: 2px 4px;
+            border-radius: 2px;
+
+            /* Ensure effect wraps correctly */
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+        }
+
+        ul,
+        ol {
+            margin: 0 0 1.5em 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            padding-left: 0;
+        }
+
+        ul li::marker {
+            color: var(--ink-color);
+            content: '- ';
+        }
+
+        blockquote {
+            margin: 20px 0;
+            padding: 10px 20px;
+
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.3),
+                    rgba(225, 182, 14, 0.5) 20%,
+                    rgba(225, 182, 14, 0.4) 80%,
+                    rgba(225, 182, 14, 0.3));
+
+            border-left: none;
+            font-style: italic;
+            color: var(--ink-secondary);
+        }
+
+        /* Footnotes */
+        .footnotes {
+            margin-top: 36px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 0.85em;
+        }
+
+        .footnotes ol {
+            padding-left: 20px;
+        }
+
+        .footnotes li {
+            margin-bottom: 10px;
+        }
+
+        .footnote-definition {
+            margin-bottom: 10px;
+        }
+
+        .footnote-definition p {
+            display: inline;
+        }
+
+        .footnotes-separator {
+            border: none;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            margin: 36px 0 18px 0;
+        }
+
+        .footnote-reference,
+        .footnote-ref {
+            font-size: 0.75em;
+            vertical-align: super;
+        }
+
+        .footnote-reference a,
+        .footnote-ref a,
+        .footnote-backref {
+            background-image: none;
+            border-bottom: none;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        /* Footer */
+        .journal-footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 20px;
+            color: var(--ink-secondary);
+            padding-top: 20px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .title {
+                font-size: 36px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ],
+                throwOnError: false,
+                trust: true
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+
+            document.querySelectorAll('img:not(.no-tape)').forEach(function (img) {
+                if (img.parentElement.classList.contains('photo-wrapper')) return;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'photo-wrapper';
+                const rotation = (Math.random() - 0.5) * 2;
+                wrapper.style.transform = `rotate(${rotation}deg)`;
+                img.parentNode.insertBefore(wrapper, img);
+                wrapper.appendChild(img);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">REINFORCEing A Brain</h1>
+
+    <div class="nav-links">
+        <a href="../" class="nav-back">
+            < back to all posts</a>
+    </div>
+
+    <p class="meta">
+        scribbled on September 19, 2025
+    </p>
+
+    <hr>
+
+    <p>I think that there are ways that strengthening paths on a graph can be like reinforcement learning, and a reduction of how brains work is strengthening paths on a graph. In real life, brains are wayyyyyy more complex.</p>
+<p>Start with a directed acyclic graph $G = (V, E)$ with edge weights $w: E \to \mathbb{R}$. Applying a topological sort, we get an ordered sequence of vertices. The $n$ input nodes are $I = \{v \in V : \text{in-degree}(v) = 0\}$ and the $m$ output nodes are $O = \{v \in V : \text{out-degree}(v) = 0\}$. </p>
+<p>The graph operates by taking some input observation $\mathbb{R}^n$ and produces a one-hot vector $\mathbb{R}^m$ with the following algorithm:</p>
+<ul>
+<li>Start with $\text{nodes} = I$</li>
+<li>Each node $v \in \text{nodes}$ has a value $v_{v}$ and a bias $v_{b}$. It fires with probability $\text{sigmoid}(v_{v} + v_{b})$.</li>
+<li>For each node $v \in \text{nodes}$ with outgoing edges to nodes in $u \in U$, we have a weight $w_{v, u}$. We update $u_{v}$ by $u_{v} := {u_v} + w_{v, u} \text{if } v \text{ fires}$</li>
+<li>nodes := all nodes with incoming edges from $\text{nodes}$ or the node itself it it’s an output node</li>
+<li>Repeat until $\text{nodes} = O$</li>
+</ul>
+<p>We can then sample an action  $a \in O$ by $\text{softmax}(O_v)$.</p>
+<div id="brain-graph-sim" style="border:2px solid #e0e7ff;border-radius:16px;padding:20px;margin:20px 0;background:linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);box-shadow:0 4px 20px rgba(0,0,0,0.08)">
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:16px">
+    <div style="font-weight:700;font-size:16px;color:#1e293b">Inputs:</div>
+    <label style="display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px; cursor:pointer; transition:all 0.2s">
+      <input type="checkbox" id="input-I1" style="margin:0">
+      <span style="font-weight:500;color:#374151">I1</span>
+    </label>
+    <label style="display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px; cursor:pointer; transition:all 0.2s">
+      <input type="checkbox" id="input-I2" style="margin:0">
+      <span style="font-weight:500;color:#374151">I2</span>
+    </label>
+    <label style="display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px; cursor:pointer; transition:all 0.2s">
+      <input type="checkbox" id="input-I3" style="margin:0">
+      <span style="font-weight:500;color:#374151">I3</span>
+    </label>
+    <div style="margin-left:auto;display:flex;gap:10px;align-items:center">
+      <label style="display:inline-flex;align-items:center;gap:8px">
+        <span style="font-weight:500;color:#374151">Mode:</span>
+        <select id="fire-mode" style="padding:6px 12px;border-radius:8px;border:1px solid #d1d5db;background:#ffffff;color:#374151;font-size:14px">
+          <option value="sample">Sample</option>
+          <option value="deterministic">Deterministic (p > 0.5)</option>
+        </select>
+      </label>
+      <button id="btn-step" style="padding:8px 14px;border:2px solid #1e293b;border-radius:10px;background:#1e293b;color:white;font-weight:600; transition:all 0.2s">Step</button>
+      <button id="btn-run" style="padding:8px 14px;border:2px solid #3b82f6;border-radius:10px;background:#3b82f6;color:white;font-weight:600; transition:all 0.2s">Run</button>
+      <button id="btn-reset" style="padding:8px 14px;border:2px solid #6b7280;border-radius:10px;background:#ffffff;color:#374151;font-weight:600; transition:all 0.2s">Reset</button>
+      <button id="btn-randomize" style="padding:8px 14px;border:2px solid #8b5cf6;border-radius:10px;background:#8b5cf6;color:white;font-weight:600; transition:all 0.2s">Randomize</button>
+    </div>
+  </div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <svg id="brain-sim-svg" width="760" height="360" viewBox="0 0 760 360" style="background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);border:2px solid #e2e8f0;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05)"></svg>
+    <div style="flex:1;min-width:280px;display:flex;flex-direction:column;gap:16px">
+      <div style="font-weight:700;font-size:16px;color:#1e293b">Output distribution (softmax over O):</div>
+      <div id="output-bars" style="display:flex;flex-direction:column;gap:12px"></div>
+      <div id="legend" style="font-size:13px;color:#64748b;background:#ffffff;border-radius:8px;padding:12px;border:1px solid #e2e8f0">
+        <div style="margin-bottom:6px"><strong>Color:</strong> Node value (blue = low → red = high)</div>
+        <div style="margin-bottom:6px"><strong>Yellow outline:</strong> Fired in last step</div>
+        <div style="margin-bottom:6px"><strong>Edge color:</strong> Red (−), Gray (~0), Green (+)</div>
+        <div style="margin-bottom:6px"><strong>Red bar:</strong> Sampled action (at end)</div>
+        <div><em>Note: Sampling is probabilistic</em></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="brain-sim.js"></script>
+<p>Let’s suppose that at the end, we receive a reward $r$. This allows us to update the weights of edges and the biases of nodes. Take the firing edges $E_f = \{ e(u, v) \text{if } u \text{ fired and } v \text{ fired} \}$. We can update the weights $e(u, v) := e(u, v) + \alpha \cdot r$. </p>
+<p>We can then perform updates. We have two updates, one on the biases and one on the weights. </p>
+<p>We update a neuron $v$’s bias with $v_b := v_b - \Beta[\rho - v_f]$ where $v_f$ is whether or not the neuron fires and $\rho$ is the time-averaged firing rate / probability of firing. We also update the weight $w(v, u) := \alpha \gamma A_u$ where $A_u$ is the advantage at node $u$, so it gets discounted by $\gamma$ as you propogate backwards.</p>
+<div id="bandit-brain" style="border:2px solid #e0e7ff;border-radius:16px;padding:20px;margin:20px 0;background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%);box-shadow:0 4px 20px rgba(0,0,0,0.08)">
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:16px">
+    <div style="font-weight:700;font-size:16px;color:#1e293b">K-Armed Bandit:</div>
+    <label style="display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px">
+      <span style="color:#374151">Arms</span>
+      <input id="num-arms" type="number" min="2" max="12" value="5" style="width:64px;padding:6px 8px;border:1px solid #d1d5db;border-radius:8px" />
+    </label>
+    <label style="display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px">
+      <span style="color:#374151">Hidden depth</span>
+      <input id="hidden-depth" type="number" min="2" max="6" value="4" style="width:64px;padding:6px 8px;border:1px solid #d1d5db;border-radius:8px" />
+    </label>
+    <label style="display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px">
+      <span style="color:#374151">Hidden width</span>
+      <input id="hidden-width" type="number" min="4" max="48" value="16" style="width:72px;padding:6px 8px;border:1px solid #d1d5db;border-radius:8px" />
+    </label>
+    <label style="display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px">
+      <span style="color:#374151">Alpha</span>
+      <input id="alpha" type="number" step="0.0001" min="0" value="0.02" style="width:84px;padding:6px 8px;border:1px solid #d1d5db;border-radius:8px" />
+    </label>
+    <label style="display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px">
+      <span style="color:#374151">Beta</span>
+      <input id="beta" type="number" step="0.0001" min="0" value="0.01" style="width:84px;padding:6px 8px;border:1px solid #d1d5db;border-radius:8px" />
+    </label>
+    <label style="display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 12px">
+      <span style="color:#374151">Gamma</span>
+      <input id="gamma" type="number" step="0.01" min="0" max="0.999" value="0.95" style="width:84px;padding:6px 8px;border:1px solid #d1d5db;border-radius:8px" />
+    </label>
+    <div style="margin-left:auto;display:flex;gap:10px;align-items:center">
+      <button id="btn-init" style="padding:8px 14px;border:2px solid #0ea5e9;border-radius:10px;background:#0ea5e9;color:white;font-weight:600">Init</button>
+      <button id="btn-train" style="padding:8px 14px;border:2px solid #22c55e;border-radius:10px;background:#22c55e;color:white;font-weight:600">Train</button>
+      <button id="btn-stop" style="padding:8px 14px;border:2px solid #ef4444;border-radius:10px;background:#ef4444;color:white;font-weight:600">Stop</button>
+      <button id="btn-step-ep" style="padding:8px 14px;border:2px solid #6b7280;border-radius:10px;background:#ffffff;color:#374151;font-weight:600">Step Episode</button>
+      <button id="btn-reset" style="padding:8px 14px;border:2px solid #6b7280;border-radius:10px;background:#ffffff;color:#374151;font-weight:600">Reset Weights</button>
+    </div>
+  </div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <svg id="net-viz" width="780" height="420" viewBox="0 0 780 420" style="background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);border:2px solid #e2e8f0;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05)"></svg>
+    <div style="flex:1;min-width:300px;display:flex;flex-direction:column;gap:12px">
+      <div style="font-weight:700;font-size:16px;color:#1e293b">Stats</div>
+      <div id="stats" style="font-size:13px;color:#64748b;background:#ffffff;border-radius:8px;padding:12px;border:1px solid #e2e8f0"></div>
+      <div style="font-weight:700;font-size:16px;color:#1e293b">Output distribution</div>
+      <div id="out-bars" style="display:flex;flex-direction:column;gap:10px"></div>
+    </div>
+  </div>
+</div>
+<script src="bandit-brain.js"></script>
+
+
+    <div class="journal-footer">
+        <div class="page-number">19</div>
+        <div class="signature">- SUDARSH</div>
+    </div>
+</body>
+
+</html>

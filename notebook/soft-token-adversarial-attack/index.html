@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soft Token Adversarial Attack | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="This is a writeup for a quick adversarial attack on a language model. The idea is as follows:
+
+Take a language model and some target sequence. This target seque…">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+
+    <link rel="canonical" href="https://sudarsh.com/notebook/soft-token-adversarial-attack/">
+
+    <!-- Reenie Beanie for EVERYTHING -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <!-- Recursive for CODE -->
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO@1,1,0.5&display=swap"
+        rel="stylesheet">
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Soft Token Adversarial Attack" />
+    <meta name="twitter:description"
+        content="This is a writeup for a quick adversarial attack on a language model. The idea is as follows:
+
+Take a language model and some target sequence. This target sequence has space size $length * vocab_size$…" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <style>
+        :root {
+            --paper-bg: #fdfdfd;
+            --ink-color: #2a2b2e;
+            --ink-secondary: #4a4b4e;
+            --highlight: rgba(225, 182, 14, 0.35);
+            --highlight-solid: #e1b60e;
+        }
+
+        /* Reset box sizing */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Reenie Beanie', cursive;
+            font-size: 26px;
+            /* Handwriting size */
+            line-height: 1.4;
+            margin: 0 auto;
+            /* Center the body horizontally */
+
+            /* Match blog metrics exactly */
+            padding: 30px;
+            max-width: max(60%, 600px);
+
+            color: var(--ink-color);
+            background-color: var(--paper-bg);
+            /* Subtle noise */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+
+            text-align: left;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Reenie Beanie', cursive;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--ink-color);
+        }
+
+        /* EXACT MATCH TO BLOG TITLE POSITION */
+        .title {
+            font-size: 52px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 28px;
+            text-decoration: underline;
+        }
+
+        p {
+            margin: 0 0 15px 0;
+            /* Match blog paragraph spacing */
+        }
+
+        /* Messy Highlighter Effect */
+        a {
+            color: var(--ink-color);
+            text-decoration: none;
+            border-bottom: none;
+
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 0.5em;
+            /* Thick stroke */
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+
+            transition: background-size 0.2s, background-color 0.2s;
+            border-radius: 2px 2px 0 0;
+        }
+
+        a:hover {
+            background-size: 100% 100%;
+            /* Fill up on hover */
+            background-color: rgba(225, 182, 14, 0.1);
+            /* Subtle fill */
+            color: var(--ink-color);
+        }
+
+        /* NAV LINKS - Below Title */
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 0px;
+            width: 100%;
+            align-items: baseline;
+            /* Ensure text baseline alignment */
+            margin-top: 0;
+        }
+
+        .nav-back {
+            color: var(--ink-color);
+            font-size: 22px;
+            text-decoration: none;
+            line-height: 1.0;
+            /* Tight line height */
+            display: inline-block;
+
+            /* Apply highlighter */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6));
+            background-size: 100% 0.4em;
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+            border-bottom: none;
+        }
+
+        .nav-back:hover {
+            background-size: 100% 100%;
+        }
+
+        .meta {
+            font-size: 22px;
+            color: var(--ink-secondary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            /* Match blog hr */
+            margin: 20px 0;
+        }
+
+        /* Images */
+        .photo-wrapper {
+            position: relative;
+            display: block;
+            margin: 32px auto;
+            max-width: min(700px, 100% - 20px);
+            padding: 12px;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            transform: rotate(-0.5deg);
+        }
+
+        img:not(.photo-wrapper img) {
+            display: block;
+            margin: 32px auto;
+            max-width: 100%;
+            border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .photo-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .photo-wrapper::before,
+        .photo-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(200, 200, 200, 0.2);
+            z-index: 10;
+        }
+
+        .photo-wrapper::before {
+            top: -10px;
+            left: 20px;
+            transform: rotate(-3deg);
+        }
+
+        .photo-wrapper::after {
+            top: -10px;
+            right: 20px;
+            transform: rotate(3deg);
+        }
+
+        pre {
+            padding: 16px;
+            font-family: 'Recursive', monospace;
+            font-size: 18px;
+            /* Adjusted size for Recursive */
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.03);
+            margin: 32px 0;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            transform: rotate(0.2deg);
+            color: var(--ink-color);
+        }
+
+        code {
+            font-family: 'Recursive', monospace;
+            font-size: 0.9em;
+            /* slightly smaller to fit in text */
+        }
+
+        p code,
+        li code {
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 85%;
+            background-position: 0 60%;
+            background-repeat: no-repeat;
+
+            padding: 2px 4px;
+            border-radius: 2px;
+
+            /* Ensure effect wraps correctly */
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+        }
+
+        ul,
+        ol {
+            margin: 0 0 1.5em 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            padding-left: 0;
+        }
+
+        ul li::marker {
+            color: var(--ink-color);
+            content: '- ';
+        }
+
+        blockquote {
+            margin: 20px 0;
+            padding: 10px 20px;
+
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.3),
+                    rgba(225, 182, 14, 0.5) 20%,
+                    rgba(225, 182, 14, 0.4) 80%,
+                    rgba(225, 182, 14, 0.3));
+
+            border-left: none;
+            font-style: italic;
+            color: var(--ink-secondary);
+        }
+
+        /* Footnotes */
+        .footnotes {
+            margin-top: 36px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 0.85em;
+        }
+
+        .footnotes ol {
+            padding-left: 20px;
+        }
+
+        .footnotes li {
+            margin-bottom: 10px;
+        }
+
+        .footnote-definition {
+            margin-bottom: 10px;
+        }
+
+        .footnote-definition p {
+            display: inline;
+        }
+
+        .footnotes-separator {
+            border: none;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            margin: 36px 0 18px 0;
+        }
+
+        .footnote-reference,
+        .footnote-ref {
+            font-size: 0.75em;
+            vertical-align: super;
+        }
+
+        .footnote-reference a,
+        .footnote-ref a,
+        .footnote-backref {
+            background-image: none;
+            border-bottom: none;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        /* Footer */
+        .journal-footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 20px;
+            color: var(--ink-secondary);
+            padding-top: 20px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .title {
+                font-size: 36px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ],
+                throwOnError: false,
+                trust: true
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+
+            document.querySelectorAll('img:not(.no-tape)').forEach(function (img) {
+                if (img.parentElement.classList.contains('photo-wrapper')) return;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'photo-wrapper';
+                const rotation = (Math.random() - 0.5) * 2;
+                wrapper.style.transform = `rotate(${rotation}deg)`;
+                img.parentNode.insertBefore(wrapper, img);
+                wrapper.appendChild(img);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Soft Token Adversarial Attack</h1>
+
+    <div class="nav-links">
+        <a href="../" class="nav-back">
+            < back to all posts</a>
+    </div>
+
+    <p class="meta">
+        scribbled on April 20, 2025
+    </p>
+
+    <hr>
+
+    <p>This is a writeup for a quick adversarial attack on a language model. The idea is as follows:</p>
+<ol>
+<li>Take a language model and some target sequence. This target sequence has space size $length * vocab_size$.</li>
+<li>Start inference off of a “soft” token. This means just a random embedding, that isn’t in the vocabulary.</li>
+<li>Use the model to generate the next tokens</li>
+<li>Calculate the loss, $CE(target, output)$</li>
+<li>Backpropogate the embedding with respect to the loss and gradient descent. </li>
+</ol>
+<p>This works really well! With models such as <code>qwen1.5-0.5b</code>, we can generate dozens of tokens with a single soft token!</p>
+<p>In addition, one option you could try is to use a soft token and a translation matrix $L$ to target two models $M_1$ and $M_2$. Then, you start $M_1$ with some soft token $x$ and then use $L \cdot x$ as a soft token for $M_2$. This allows some control over the two models.</p>
+<p>Trying to use this as a semantic map is unfortunately not possible, since it seems like this local minima is fairly sensitive to the position of the soft token. Trying to use something like Orthogonal Procrustes to solve this and translate between the two spaces thus doesn’t work, since even a small error after getting the soft token throws off the entire attack. However, Orthogonal Procrustes does work for translation! <a href="https://arxiv.org/pdf/1912.10168">source</a></p>
+<p>In fact, the mainstream adversarial attack GCG does something similar, by “descending” through computing discrete gradients of token substitutions, and following them greedily. However, I think this is a much more fun way to do it, although you cannot prompt a public model with soft tokens to do anything. </p>
+<p>The attack can be found <a href="https://github.com/skunnavakkam/soft-token-adversarial-attack">here</a></p>
+<p>On the example string: “We can backpropogate circuits (with limitations). Using a SPICE solver, which solves Kirkoff’s laws, we can find voltages at nodes by solving the equation”, training for 1000 steps, we get the following:</p>
+<p><code>Step 650 | Corr: 10 | Max Corr: 10 | Loss: 2.8110198974609375 | We can backpropogate circuits (with limitations</code></p>
+<p>This still is pretty <em>poor</em> optimization. We have $768 * 16$ bits of information in for the soft-token, and we generate about $10 * \log_2(50000) \approx 160$ bits of information, which is pretty terrible. </p>
+
+
+    <div class="journal-footer">
+        <div class="page-number">20</div>
+        <div class="signature">- SUDARSH</div>
+    </div>
+</body>
+
+</html>
