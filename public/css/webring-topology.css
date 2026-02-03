@@ -1,0 +1,11 @@
+/* Page-specific overrides for /notebook/webring-topology/ */
+
+/* Make the page a bit wider for the diagram. */
+body {
+  max-width: max(75%, 780px);
+}
+
+/* Let the taped photo frame be wider on this page. */
+.photo-wrapper {
+  max-width: min(980px, 100% - 20px);
+}

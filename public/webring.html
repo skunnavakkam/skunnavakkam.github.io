@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Webring</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <script src="../webring.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 30px;
+            box-sizing: border-box;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+        }
+
+        .content-wrapper {
+            /* max width of either 60% or 600px, whichever is larger */
+            max-width: max(60%, 600px);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 6px;
+        }
+
+        .title {
+            margin-top: 0px;
+            font-size: 2.5em;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.7em;
+        }
+
+        h3 {
+            font-size: 1.6em;
+        }
+
+        h4 {
+            font-size: 1.1em;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        a {
+            color: #e1b60e;
+            /* Pastel yellow */
+            text-decoration: underline;
+            font-family: 'Space Mono', monospace;
+        }
+
+        u {
+            text-decoration: underline;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .clear {
+            font-family: 'Space Mono', monospace;
+            background-color: transparent;
+            border-width: 0px;
+            bottom: 30px;
+            left: 30px;
+            position: absolute;
+            text-decoration: underline;
+        }
+
+        .widget-container {
+            margin: 20px 0;
+        }
+
+        .input-field {
+            font-family: 'Space Mono', monospace;
+            padding: 8px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-wrapper">
+        <h1 class="title">Webring</h1>
+        <p>To add your name to the webring, create a pull request to the
+            <code><a href="https://github.com/skunnavakkam/skunnavakkam.github.io/blob/main/static/webring.js">/static/webring.js</a></code>
+            file in this
+            repository. There's a list of members there, and you should include your username (typically your name, but
+            it can be anything, just unique) and url.</p>
+
+        <p>Adding your name to the webring implies that you will also add the webring links to your site.</p>
+
+        <p>To make sure your username is unique, here's a small widget that should help out! It tells you if your
+            username is already taken or not. In addition, there's also a generator for the webring links that you can
+            add :P</p>
+
+        <div id="widget" style="border: 2px solid #000; padding: 25px;">
+            <div class="widget-container">
+                <p><strong>Check if your username is already taken:</strong></p>
+                <input type="text" id="username-input" class="input-field" placeholder="Enter your username">
+                <p class="hint" style="font-size: 0.9em; color: #666; margin-top: 5px;">The border will turn green if
+                    the username is available</p>
+            </div>
+
+            <div class="widget-container" style="margin-top: 30px;">
+                <p><strong>Generate webring links for your site:</strong></p>
+                <input type="text" id="link-username-input" class="input-field" placeholder="Enter your username">
+                <div id="generated-links" style="margin-top: 15px; font-family: 'Space Mono', monospace;">
+                    <div style="margin-bottom: 8px;">Previous: <code id="prev-link"
+                            style="background: #f5f5f5; padding: 2px 4px; border-radius: 3px;"></code></div>
+                    <div>Next: <code id="next-link"
+                            style="background: #f5f5f5; padding: 2px 4px; border-radius: 3px;"></code></div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <p>The members of the webring are:</p>
+
+        <div id="members">
+            <ul id="members-list">
+
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
