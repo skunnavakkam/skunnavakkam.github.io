@@ -10,10 +10,8 @@ og_description = "sudarsh kunnavakkam works on ai safety, phyiscs, math, and bio
 
 Hi! I'm Sudarsh; I'm a Sophomore on leave from a physics degree at Caltech with the hopes of building magical models of brains.
 
-I care a lot about making the world a happier and more abundant place! I value kindness, honesty, and being genuine a lot, and try to practice these values as much as I can. 
+I care a lot about making the world a happier and more abundant place! I value kindness, honesty, and being genuine a lot, and try to practice these values as much as I can. I'm really fortunate for the people who I get to call my [friends](/friends) - they're all incredibly kind and driven, and overall just wonderful people to know. 
 
-I'm interested in aligning AI systems, understanding the brain, and a bunch of miscellaneous Physics and Biology interests. 
-
-I've written more about my interests [here](/about)!
+I'm interested in aligning AI systems, understanding the brain, and a bunch of miscellaneous Physics and Biology interests, with more [here](/about)!
 
 If you'd like to contact me, you can either use my [anonymous feedback form](/feedback) or find other contact information [here](/about). It'd always be a pleasure to meet new people!
