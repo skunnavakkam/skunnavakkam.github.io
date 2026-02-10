@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    /* images should be limited to  800px, centered, and with padding 20px*/
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: min(800px, 100% - 40px);
+        padding: 20px;
+    }
+
+    /* center the body */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0 auto;
+        /* Center the body horizontally */
+        padding: 30px;
+        box-sizing: border-box;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+        max-width: max(60%, 600px);
+    }
+
+    .content-wrapper {
+        /* max width of either 60% or 600px, whichever is larger */
+        max-width: max(60%, 600px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Space Mono', monospace;
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.7em;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    h4 {
+        font-size: 1.1em;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    a {
+        color: #e1b60e;
+        /* Pastel yellow */
+        text-decoration: underline;
+        font-family: 'Space Mono', monospace;
+    }
+
+    u {
+        text-decoration: underline;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+
+    .clear {
+        font-family: 'Space Mono', monospace;
+        background-color: transparent;
+        border-width: 0px;
+        bottom: 30px;
+        left: 30px;
+        position: absolute;
+        text-decoration: underline;
+    }
+
+    /* Brutalist Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-family: 'Space Mono', monospace;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border: 2px solid #000;
+    }
+
+    pre {
+        padding: 10px;
+        /* Add padding to all lines of the code block */
+        /* Optional: background color for better visibility */
+
+        /* Optional: border for better visibility */
+        overflow: auto;
+        /* Optional: add scrollbars if content overflows */
+        /* Add black shadow with no blur */
+
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 30px;
+    }
+
+    ul li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 10px;
+    }
+
+    ul li::before {
+        content: '■';
+        position: absolute;
+        left: 0;
+        color: #000;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    /* Footnotes */
+    .footnotes {
+        margin-top: 30px;
+        padding-top: 10px;
+        border-top: 1px solid #ddd;
+        font-size: 0.9em;
+    }
+
+    .footnotes ol {
+        padding-left: 20px;
+    }
+
+    .footnotes li {
+        margin-bottom: 8px;
+    }
+
+    .footnote-definition {
+        margin-bottom: 8px;
+    }
+
+    .footnote-definition p {
+        display: inline;
+    }
+
+    .footnotes-separator {
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 30px 0 15px 0;
+    }
+
+    .footnote-reference,
+    .footnote-ref {
+        font-size: 0.8em;
+        vertical-align: super;
+    }
+
+    .footnote-reference a,
+    .footnote-ref a,
+    .footnote-backref {
+        text-decoration: none;
+    }
+
+
+
+    /* Nested Lists */
+    ul ul,
+    ol ol,
+    ul ol,
+    ol ul {
+        margin-top: 10px;
+    }
+
+    th {
+        background-color: #000;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    /* Responsive table */
+    @media screen and (max-width: 600px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 10px;
+            border: 2px solid #000;
+        }
+
+        td {
+            border: none;
+            border-bottom: 1px solid #000;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modeling Protein Evolution | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="See source code here
+We construct a graph where nodes are amino sequences, and edges connect sequences with Levenshtein distance == 1. This is motivated by Mayn…">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <link rel="canonical" href="https://sudarsh.com/blog/protein-evolution/">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Modeling Protein Evolution" />
+    <meta name="twitter:description"
+        content="See source code here
+We construct a graph where nodes are amino sequences, and edges connect sequences with Levenshtein distance == 1. This is motivated by Maynard-Smith’s model of protein evolution, …" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Modeling Protein Evolution</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published October 05, 2024
+    </p>
+    <hr>
+    <p><em>See source code <a href="https://github.com/skunnavakkam/protein-evolution-experiment">here</a></em></p>
+<p>We construct a graph where nodes are amino sequences, and edges connect sequences with Levenshtein distance == 1. This is motivated by Maynard-Smith’s model of protein evolution, where one protein can evolve into another protein if there is a path of functional proteins between them, all with Levenshtein distance 1.</p>
+<p>For rigor, we limit the minimum sequence length to 20, since this supports our result, that we should only see <em>any</em> connected components <em>iff</em> Maynard-Smith’s model is correct, even more.</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a626a4;">import </span><span>networkx </span><span style="color:#a626a4;">as </span><span>nx
+</span><span style="color:#a626a4;">from </span><span>itertools </span><span style="color:#a626a4;">import </span><span>combinations
+</span><span style="color:#a626a4;">import </span><span>time
+</span><span style="color:#a626a4;">from </span><span>pybktree </span><span style="color:#a626a4;">import </span><span>BKTree
+</span><span style="color:#a626a4;">import </span><span>Levenshtein </span><span style="color:#a626a4;">as </span><span>lev  </span><span style="color:#a0a1a7;"># Efficient Levenshtein distance computation
+</span><span style="color:#a626a4;">import </span><span>numpy </span><span style="color:#a626a4;">as </span><span>np
+</span><span style="color:#a626a4;">import </span><span>scipy.linalg </span><span style="color:#a626a4;">as </span><span>spla
+</span><span style="color:#a626a4;">from </span><span>tqdm.notebook </span><span style="color:#a626a4;">import </span><span>tqdm  
+</span><span>
+</span><span style="color:#a0a1a7;"># load &quot;PDB Seqres.fasta&quot;
+</span><span>
+</span><span style="color:#a626a4;">with </span><span style="color:#0184bc;">open</span><span>(</span><span style="color:#50a14f;">&quot;PDB Seqres.fasta&quot;</span><span>, </span><span style="color:#50a14f;">&quot;r&quot;</span><span>) </span><span style="color:#a626a4;">as </span><span>file:
+</span><span>    data </span><span style="color:#a626a4;">= </span><span>file.</span><span style="color:#e45649;">read</span><span>()
+</span><span>
+</span><span>
+</span><span>proteins </span><span style="color:#a626a4;">= </span><span>data.</span><span style="color:#e45649;">split</span><span>(</span><span style="color:#50a14f;">&quot;&gt;&quot;</span><span>)[</span><span style="color:#c18401;">1</span><span>:]
+</span><span>aminos </span><span style="color:#a626a4;">= </span><span>[]
+</span><span>labels </span><span style="color:#a626a4;">= </span><span>[]
+</span><span>
+</span><span>
+</span><span style="color:#a626a4;">for </span><span>idx, protein </span><span style="color:#a626a4;">in </span><span style="color:#0184bc;">enumerate</span><span>(proteins):
+</span><span>    </span><span style="color:#a626a4;">try</span><span>:
+</span><span>        aminos.</span><span style="color:#e45649;">append</span><span>(protein.</span><span style="color:#e45649;">split</span><span>(</span><span style="color:#50a14f;">&quot;</span><span style="color:#0997b3;">\n</span><span style="color:#50a14f;">&quot;</span><span>)[</span><span style="color:#c18401;">1</span><span>])
+</span><span>        labels.</span><span style="color:#e45649;">append</span><span>(protein.</span><span style="color:#e45649;">split</span><span>(</span><span style="color:#50a14f;">&quot;</span><span style="color:#0997b3;">\n</span><span style="color:#50a14f;">&quot;</span><span>)[</span><span style="color:#c18401;">0</span><span>])
+</span><span>    </span><span style="color:#a626a4;">except</span><span>:
+</span><span>        </span><span style="color:#a626a4;">pass
+</span><span>
+</span><span style="color:#a0a1a7;"># dedupe
+</span><span>aminos </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">list</span><span>(</span><span style="color:#e45649;">set</span><span>(aminos))
+</span><span>aminos </span><span style="color:#a626a4;">= </span><span>[amino </span><span style="color:#a626a4;">for </span><span>amino </span><span style="color:#a626a4;">in </span><span>aminos </span><span style="color:#a626a4;">if </span><span style="color:#50a14f;">&quot;X&quot; </span><span style="color:#a626a4;">not in </span><span>amino </span><span style="color:#a626a4;">and </span><span style="color:#0184bc;">len</span><span>(amino) </span><span style="color:#a626a4;">&gt; </span><span style="color:#c18401;">25</span><span>]
+</span><span>
+</span><span>n </span><span style="color:#a626a4;">= </span><span style="color:#c18401;">50000
+</span><span>aminos </span><span style="color:#a626a4;">= </span><span>aminos[:n]
+</span><span>
+</span><span>
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">create_graph_bktree</span><span>(</span><span style="color:#e45649;">aminos</span><span>, </span><span style="color:#e45649;">k</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">1</span><span>):
+</span><span>    </span><span style="color:#a0a1a7;">&quot;&quot;&quot;
+</span><span style="color:#a0a1a7;">    Create a graph where nodes are amino sequences and edges connect sequences with
+</span><span style="color:#a0a1a7;">    Levenshtein distance up to k, including insertions and deletions at the ends.
+</span><span style="color:#a0a1a7;">
+</span><span style="color:#a0a1a7;">    Parameters:
+</span><span style="color:#a0a1a7;">    - aminos (list): List of amino acid sequences.
+</span><span style="color:#a0a1a7;">    - k (int): Maximum Levenshtein distance for edge creation.
+</span><span style="color:#a0a1a7;">
+</span><span style="color:#a0a1a7;">    Returns:
+</span><span style="color:#a0a1a7;">    - G (networkx.Graph): The constructed graph.
+</span><span style="color:#a0a1a7;">    &quot;&quot;&quot;
+</span><span>    G </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">Graph</span><span>()
+</span><span>    G.</span><span style="color:#e45649;">add_nodes_from</span><span>(</span><span style="color:#0184bc;">range</span><span>(</span><span style="color:#0184bc;">len</span><span>(aminos)))  </span><span style="color:#a0a1a7;"># Using indices as node identifiers
+</span><span>
+</span><span>    </span><span style="color:#a0a1a7;"># Build BK-tree using Levenshtein distance as the metric
+</span><span>    tree </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">BKTree</span><span>(lev.distance, aminos)
+</span><span>
+</span><span>    start_time </span><span style="color:#a626a4;">= </span><span>time.</span><span style="color:#e45649;">time</span><span>()
+</span><span>    length </span><span style="color:#a626a4;">= </span><span style="color:#0184bc;">len</span><span>(aminos)
+</span><span>
+</span><span>    </span><span style="color:#a626a4;">for </span><span>idx, seq </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">tqdm</span><span>(</span><span style="color:#e45649;">list</span><span>(</span><span style="color:#0184bc;">enumerate</span><span>(aminos))):
+</span><span>        </span><span style="color:#a0a1a7;"># Query for all sequences within distance k
+</span><span>        matches </span><span style="color:#a626a4;">= </span><span>tree.</span><span style="color:#e45649;">find</span><span>(seq, k)
+</span><span>        </span><span style="color:#a626a4;">for </span><span>distance, match_seq </span><span style="color:#a626a4;">in </span><span>matches:
+</span><span>            neighbor_idx </span><span style="color:#a626a4;">= </span><span>aminos.</span><span style="color:#e45649;">index</span><span>(match_seq)
+</span><span>            </span><span style="color:#a626a4;">if </span><span>neighbor_idx </span><span style="color:#a626a4;">!= </span><span>idx:
+</span><span>                G.</span><span style="color:#e45649;">add_edge</span><span>(idx, neighbor_idx)
+</span><span>
+</span><span>
+</span><span>    total_time </span><span style="color:#a626a4;">= </span><span>time.</span><span style="color:#e45649;">time</span><span>() </span><span style="color:#a626a4;">- </span><span>start_time
+</span><span>    </span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;Total time for BK-tree graph creation: </span><span>{total_time</span><span style="color:#c18401;">:.2f</span><span>}</span><span style="color:#50a14f;"> seconds&quot;</span><span>)
+</span><span>    </span><span style="color:#a626a4;">return </span><span>G
+</span><span>
+</span><span>
+</span><span style="color:#a0a1a7;"># Create the optimized graph with Hamming distance threshold k=2
+</span><span>graph </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">create_graph_bktree</span><span>(aminos, </span><span style="color:#e45649;">k</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">1</span><span>)
+</span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;Number of nodes in the graph: </span><span>{graph.</span><span style="color:#e45649;">number_of_nodes</span><span>()}</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;Number of edges in the graph: </span><span>{graph.</span><span style="color:#e45649;">number_of_edges</span><span>()}</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span>
+</span></code></pre>
+<pre style="background-color:#fafafa;color:#383a42;"><code><span>  0%|          | 0/50000 [00:00&lt;?, ?it/s]
+</span><span>
+</span><span>
+</span><span>Total time for BK-tree graph creation: 16.77 seconds
+</span><span>Number of nodes in the graph: 50000
+</span><span>Number of edges in the graph: 3341
+</span></code></pre>
+<p>We lower bound sequence length to 20. As a result, we will assume that all of our proteins are 20 amino acids long. This is not true, but it is a good approximation for the purposes of this analysis.</p>
+<p>Take an initial string $s$. We can then estimate the number of strings that are Levenshtein distance 1 apart from $s$. This is approximately equal to 
+$$
+19 \times 20 + 20 \times 20 + 20 = 800
+$$
+These terms correspond to changing letters, inserting letters, and deleting letters respectively. We can then say that the probability of finding a string within Levenshtein distance 1 is given by 
+$$
+\frac{800}{20^{20}} \times 50000 \approx 0
+$$</p>
+<p>This means that it’s quite cool that we see <em>any</em> connected components at all.</p>
+<p>I think that this confirms Maynard-Smith’s model of protein evolution, where one protein can evolve into another protein if there is a path of functional proteins between them, all with Levenshtein distance 1.</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a626a4;">import </span><span>matplotlib.pyplot </span><span style="color:#a626a4;">as </span><span>plt
+</span><span style="color:#a626a4;">from </span><span>pprint </span><span style="color:#a626a4;">import </span><span>pprint
+</span><span>
+</span><span style="color:#a0a1a7;"># Plot the 6 largest connected components
+</span><span>plt.</span><span style="color:#e45649;">figure</span><span>(</span><span style="color:#e45649;">figsize</span><span style="color:#a626a4;">=</span><span>(</span><span style="color:#c18401;">20</span><span>, </span><span style="color:#c18401;">15</span><span>))
+</span><span>
+</span><span style="color:#a0a1a7;"># Get the 6 largest connected components
+</span><span>connected_components </span><span style="color:#a626a4;">= </span><span style="color:#0184bc;">sorted</span><span>(nx.</span><span style="color:#e45649;">connected_components</span><span>(graph), </span><span style="color:#e45649;">key</span><span style="color:#a626a4;">=</span><span style="color:#0184bc;">len</span><span>, </span><span style="color:#e45649;">reverse</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">True</span><span>)[:</span><span style="color:#c18401;">6</span><span>]
+</span><span>
+</span><span style="color:#a626a4;">for </span><span>i, component </span><span style="color:#a626a4;">in </span><span style="color:#0184bc;">enumerate</span><span>(connected_components, </span><span style="color:#c18401;">1</span><span>):
+</span><span>    plt.</span><span style="color:#e45649;">subplot</span><span>(</span><span style="color:#c18401;">2</span><span>, </span><span style="color:#c18401;">3</span><span>, i)
+</span><span>    subgraph </span><span style="color:#a626a4;">= </span><span>graph.</span><span style="color:#e45649;">subgraph</span><span>(component)
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># Calculate layout for the subgraph
+</span><span>    pos </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">spring_layout</span><span>(subgraph)
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># Draw nodes
+</span><span>    nx.</span><span style="color:#e45649;">draw_networkx_nodes</span><span>(subgraph, pos, </span><span style="color:#e45649;">node_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">50</span><span>, </span><span style="color:#e45649;">node_color</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&quot;lightblue&quot;</span><span>, </span><span style="color:#e45649;">alpha</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.8</span><span>)
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># Draw edges
+</span><span>    nx.</span><span style="color:#e45649;">draw_networkx_edges</span><span>(subgraph, pos, </span><span style="color:#e45649;">edge_color</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&quot;gray&quot;</span><span>, </span><span style="color:#e45649;">alpha</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.5</span><span>)
+</span><span>    
+</span><span>    </span><span style="color:#a0a1a7;"># Set title and adjust layout
+</span><span>    plt.</span><span style="color:#e45649;">title</span><span>(</span><span style="color:#a626a4;">f</span><span style="color:#50a14f;">&quot;Connected Component </span><span>{i}</span><span style="color:#50a14f;"> (</span><span>{</span><span style="color:#0184bc;">len</span><span>(component)}</span><span style="color:#50a14f;"> nodes)&quot;</span><span>)
+</span><span>    plt.</span><span style="color:#e45649;">axis</span><span>(</span><span style="color:#50a14f;">&quot;off&quot;</span><span>)
+</span><span>
+</span><span>plt.</span><span style="color:#e45649;">tight_layout</span><span>()
+</span><span>plt.</span><span style="color:#e45649;">savefig</span><span>(</span><span style="color:#50a14f;">&quot;six_largest_connected_components.png&quot;</span><span>, </span><span style="color:#e45649;">dpi</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">300</span><span>, </span><span style="color:#e45649;">bbox_inches</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&quot;tight&quot;</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">show</span><span>()
+</span></code></pre>
+<p><img src="https://sudarsh.com/blog/protein-evolution/main_3_0.png" alt="png" /></p>
+<p>From each 6 of our connected components, we can project all of our proteins into an embedding space using some embedding AI model. We can then PCA this space, and see if connected components in the original graph correspond to clusters in the PCA space.</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a626a4;">import </span><span>torch
+</span><span style="color:#a626a4;">from </span><span>transformers </span><span style="color:#a626a4;">import </span><span>BertModel, BertTokenizer
+</span><span>
+</span><span style="color:#a626a4;">if </span><span>torch.backends.mps.</span><span style="color:#e45649;">is_available</span><span>():
+</span><span>    device </span><span style="color:#a626a4;">= </span><span style="color:#50a14f;">&quot;mps&quot;
+</span><span style="color:#a626a4;">else</span><span>:
+</span><span>    device </span><span style="color:#a626a4;">= </span><span style="color:#50a14f;">&quot;cuda&quot; </span><span style="color:#a626a4;">if </span><span>torch.cuda.</span><span style="color:#e45649;">is_available</span><span>() </span><span style="color:#a626a4;">else </span><span style="color:#50a14f;">&quot;cpu&quot;
+</span><span>
+</span><span>tokenizer </span><span style="color:#a626a4;">= </span><span>BertTokenizer.</span><span style="color:#e45649;">from_pretrained</span><span>(</span><span style="color:#50a14f;">&quot;Rostlab/prot_bert&quot;</span><span>, </span><span style="color:#e45649;">do_lower_case</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">False </span><span>)
+</span><span>model </span><span style="color:#a626a4;">= </span><span>BertModel.</span><span style="color:#e45649;">from_pretrained</span><span>(</span><span style="color:#50a14f;">&quot;Rostlab/prot_bert&quot;</span><span>).</span><span style="color:#e45649;">to</span><span>(device)
+</span><span style="color:#a626a4;">def </span><span style="color:#0184bc;">get_bert_embeddings_batch</span><span>(</span><span style="color:#e45649;">sequences</span><span>, </span><span style="color:#e45649;">batch_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">32</span><span>, </span><span style="color:#e45649;">len_seq_limit</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">300</span><span>):
+</span><span>    </span><span style="color:#a0a1a7;">&#39;&#39;&#39;
+</span><span style="color:#a0a1a7;">    Function to collect last hidden state embedding vectors from pre-trained ProtBERT Model in batches
+</span><span style="color:#a0a1a7;">
+</span><span style="color:#a0a1a7;">    INPUTS:
+</span><span style="color:#a0a1a7;">    - sequences (list): List of protein sequences
+</span><span style="color:#a0a1a7;">    - batch_size (int): Number of sequences to process in each batch
+</span><span style="color:#a0a1a7;">    - len_seq_limit (int): Maximum sequence length for truncation
+</span><span style="color:#a0a1a7;">
+</span><span style="color:#a0a1a7;">    OUTPUTS:
+</span><span style="color:#a0a1a7;">    - embeddings: List of embedding vectors for input sequences
+</span><span style="color:#a0a1a7;">    &#39;&#39;&#39;
+</span><span>    embeddings </span><span style="color:#a626a4;">= </span><span>[]
+</span><span>    
+</span><span>    </span><span style="color:#a626a4;">for </span><span>i </span><span style="color:#a626a4;">in </span><span style="color:#0184bc;">range</span><span>(</span><span style="color:#c18401;">0</span><span>, </span><span style="color:#0184bc;">len</span><span>(sequences), batch_size):
+</span><span>        batch </span><span style="color:#a626a4;">= </span><span>sequences[i:i</span><span style="color:#a626a4;">+</span><span>batch_size]
+</span><span>        sequences_w_spaces </span><span style="color:#a626a4;">= </span><span>[</span><span style="color:#50a14f;">&#39; &#39;</span><span>.</span><span style="color:#e45649;">join</span><span>(</span><span style="color:#e45649;">list</span><span>(seq)) </span><span style="color:#a626a4;">for </span><span>seq </span><span style="color:#a626a4;">in </span><span>batch]
+</span><span>        
+</span><span>        encoded_input </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">tokenizer</span><span>(
+</span><span>            sequences_w_spaces,
+</span><span>            </span><span style="color:#e45649;">truncation</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">True</span><span>,
+</span><span>            </span><span style="color:#e45649;">max_length</span><span style="color:#a626a4;">=</span><span>len_seq_limit,
+</span><span>            </span><span style="color:#e45649;">padding</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;max_length&#39;</span><span>,
+</span><span>            </span><span style="color:#e45649;">return_tensors</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;pt&#39;
+</span><span>        ).</span><span style="color:#e45649;">to</span><span>(device)
+</span><span>        
+</span><span>        </span><span style="color:#a626a4;">with </span><span>torch.</span><span style="color:#e45649;">no_grad</span><span>():
+</span><span>            output </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">model</span><span>(</span><span style="color:#a626a4;">**</span><span>encoded_input)
+</span><span>        
+</span><span>        batch_embeddings </span><span style="color:#a626a4;">= </span><span>output[</span><span style="color:#50a14f;">&#39;last_hidden_state&#39;</span><span>][:,</span><span style="color:#c18401;">0</span><span>].</span><span style="color:#e45649;">detach</span><span>().</span><span style="color:#e45649;">cpu</span><span>().</span><span style="color:#e45649;">numpy</span><span>()
+</span><span>        embeddings.</span><span style="color:#e45649;">extend</span><span>(batch_embeddings)
+</span><span>    
+</span><span>    </span><span style="color:#a626a4;">return </span><span>embeddings
+</span><span>
+</span><span>embeddings </span><span style="color:#a626a4;">= </span><span>[]  </span><span style="color:#a0a1a7;"># 6 * n * 1024
+</span><span>
+</span><span style="color:#a626a4;">for </span><span>component </span><span style="color:#a626a4;">in </span><span style="color:#e45649;">tqdm</span><span>(connected_components, </span><span style="color:#e45649;">desc</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&quot;Processing components&quot;</span><span>):
+</span><span>    component_sequences </span><span style="color:#a626a4;">= </span><span>[aminos[node] </span><span style="color:#a626a4;">for </span><span>node </span><span style="color:#a626a4;">in </span><span>component]
+</span><span>    component_embeddings </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">get_bert_embeddings_batch</span><span>(component_sequences)
+</span><span>    embeddings.</span><span style="color:#e45649;">append</span><span>(component_embeddings)
+</span><span>
+</span><span style="color:#a626a4;">del </span><span>model
+</span></code></pre>
+<p>The model is now loaded.</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span>embeddings </span><span style="color:#a626a4;">= </span><span>[np.</span><span style="color:#e45649;">array</span><span>(component_embeddings) </span><span style="color:#a626a4;">for </span><span>component_embeddings </span><span style="color:#a626a4;">in </span><span>embeddings]
+</span><span style="color:#0184bc;">print</span><span>(</span><span style="color:#0184bc;">len</span><span>(embeddings))
+</span><span style="color:#0184bc;">print</span><span>(embeddings[</span><span style="color:#c18401;">0</span><span>].shape)
+</span><span>concated </span><span style="color:#a626a4;">= </span><span>np.</span><span style="color:#e45649;">concatenate</span><span>(embeddings, </span><span style="color:#e45649;">axis</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0</span><span>)
+</span><span>
+</span><span style="color:#a0a1a7;"># Perform PCA on the concatenated embeddings
+</span><span style="color:#a626a4;">from </span><span>sklearn.decomposition </span><span style="color:#a626a4;">import </span><span style="color:#e45649;">PCA
+</span><span>
+</span><span style="color:#a0a1a7;"># Initialize and fit PCA
+</span><span>pca </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">PCA</span><span>(</span><span style="color:#e45649;">n_components</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">2</span><span>)
+</span><span style="color:#a0a1a7;"># fit pca on concated
+</span><span>pca.</span><span style="color:#e45649;">fit</span><span>(concated)
+</span><span>
+</span><span>transformed_embeddings </span><span style="color:#a626a4;">= </span><span>[pca.</span><span style="color:#e45649;">transform</span><span>(component) </span><span style="color:#a626a4;">for </span><span>component </span><span style="color:#a626a4;">in </span><span>embeddings]
+</span><span>
+</span><span style="color:#a0a1a7;"># plot each transformed embedding, with a different color for each component
+</span><span style="color:#a626a4;">for </span><span>i, transformed_embedding </span><span style="color:#a626a4;">in </span><span style="color:#0184bc;">enumerate</span><span>(transformed_embeddings):
+</span><span>    plt.</span><span style="color:#e45649;">scatter</span><span>(transformed_embedding[:, </span><span style="color:#c18401;">0</span><span>], transformed_embedding[:, </span><span style="color:#c18401;">1</span><span>], </span><span style="color:#e45649;">label</span><span style="color:#a626a4;">=f</span><span style="color:#50a14f;">&quot;Component </span><span>{i</span><span style="color:#a626a4;">+</span><span style="color:#c18401;">1</span><span>}</span><span style="color:#50a14f;">&quot;</span><span>)
+</span><span>
+</span><span>plt.</span><span style="color:#e45649;">legend</span><span>()
+</span><span>plt.</span><span style="color:#e45649;">show</span><span>()
+</span><span>
+</span><span>
+</span></code></pre>
+<pre style="background-color:#fafafa;color:#383a42;"><code><span>6
+</span><span>(60, 1024)
+</span></code></pre>
+<p><img src="https://sudarsh.com/blog/protein-evolution/main_6_1.png" alt="png" /></p>
+<p>We quite clearly see that the proteins in Component 4 are split into two distinct clusters. Projecting this PCA into 1 dimension confirms this.</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># pca JUST component 4
+</span><span>pca_2 </span><span style="color:#a626a4;">= </span><span style="color:#e45649;">PCA</span><span>(</span><span style="color:#e45649;">n_components </span><span style="color:#a626a4;">= </span><span style="color:#c18401;">1</span><span>)
+</span><span>pca_2.</span><span style="color:#e45649;">fit</span><span>(embeddings[</span><span style="color:#c18401;">3</span><span>])
+</span><span>transformed_embeddings_2 </span><span style="color:#a626a4;">= </span><span>pca_2.</span><span style="color:#e45649;">transform</span><span>(embeddings[</span><span style="color:#c18401;">3</span><span>])
+</span><span>
+</span><span>plt.</span><span style="color:#e45649;">hist</span><span>(transformed_embeddings_2, </span><span style="color:#e45649;">bins</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">100</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">show</span><span>()
+</span><span>
+</span><span>
+</span></code></pre>
+<p><img src="https://sudarsh.com/blog/protein-evolution/main_7_0.png" alt="png" /></p>
+<p>We can then color the nodes in the graph by this position in PCA space. We should see a clear change in this value at some point in the graph, hopefully cleaving the graph cleanly into two. Since the embedding represents functionality, I think this may show that the protein mutation develops a new function through evolution.</p>
+<pre data-lang="python" style="background-color:#fafafa;color:#383a42;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#a0a1a7;"># plot the nx graph of component 4
+</span><span style="color:#a0a1a7;"># color them by the magnitude of their index in the transformed_embeddings_2 array
+</span><span>plt.</span><span style="color:#e45649;">figure</span><span>(</span><span style="color:#e45649;">figsize</span><span style="color:#a626a4;">=</span><span>(</span><span style="color:#c18401;">10</span><span>, </span><span style="color:#c18401;">6</span><span>))
+</span><span>pos </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">spring_layout</span><span>(graph.</span><span style="color:#e45649;">subgraph</span><span>(connected_components[</span><span style="color:#c18401;">3</span><span>]))
+</span><span>nodes </span><span style="color:#a626a4;">= </span><span>nx.</span><span style="color:#e45649;">draw_networkx_nodes</span><span>(graph.</span><span style="color:#e45649;">subgraph</span><span>(connected_components[</span><span style="color:#c18401;">3</span><span>]), pos,
+</span><span>                               </span><span style="color:#e45649;">node_color</span><span style="color:#a626a4;">=</span><span>transformed_embeddings_2,
+</span><span>                               </span><span style="color:#e45649;">cmap</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;viridis&#39;</span><span>,
+</span><span>                               </span><span style="color:#e45649;">node_size</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">10</span><span>,
+</span><span>                               </span><span style="color:#e45649;">alpha</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.7</span><span>)
+</span><span>nx.</span><span style="color:#e45649;">draw_networkx_edges</span><span>(graph.</span><span style="color:#e45649;">subgraph</span><span>(connected_components[</span><span style="color:#c18401;">3</span><span>]), pos, </span><span style="color:#e45649;">alpha</span><span style="color:#a626a4;">=</span><span style="color:#c18401;">0.2</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">colorbar</span><span>(nodes, </span><span style="color:#e45649;">label</span><span style="color:#a626a4;">=</span><span style="color:#50a14f;">&#39;Transformed Component 4 Embeddings&#39;</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">title</span><span>(</span><span style="color:#50a14f;">&#39;Colored Component 4 Vertices by PCA Position&#39;</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">axis</span><span>(</span><span style="color:#50a14f;">&#39;off&#39;</span><span>)
+</span><span>plt.</span><span style="color:#e45649;">tight_layout</span><span>()
+</span><span>plt.</span><span style="color:#e45649;">show</span><span>()
+</span><span>
+</span><span>
+</span></code></pre>
+<p><img src="https://sudarsh.com/blog/protein-evolution/main_9_0.png" alt="png" /></p>
+<p>Wow! I wonder if this change in functionality reflects a functional mutation!</p>
+
+</body>
+
+</html>

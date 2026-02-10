@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA as fixed length codings | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="We treat DNA as an instruction to synthesis proteins . To formalize this, we can define the program $R$ for ribosome
+$$
+R: {0, 1, 2, 3}^n \to (p_1, p_2, \cdots …">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+
+    <link rel="canonical" href="https://sudarsh.com/notebook/dna-fixed-length/">
+
+    <!-- Reenie Beanie for EVERYTHING -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <!-- Recursive for CODE -->
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO@1,1,0.5&display=swap"
+        rel="stylesheet">
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="DNA as fixed length codings" />
+    <meta name="twitter:description"
+        content="We treat DNA as an instruction to synthesis proteins . To formalize this, we can define the program $R$ for ribosome
+$$
+R: {0, 1, 2, 3}^n \to (p_1, p_2, \cdots p_m)
+$$
+where $p_1, p_2, \cdots, p_m$ ar…" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <style>
+        :root {
+            --paper-bg: #fdfdfd;
+            --ink-color: #2a2b2e;
+            --ink-secondary: #4a4b4e;
+            --highlight: rgba(225, 182, 14, 0.35);
+            --highlight-solid: #e1b60e;
+        }
+
+        /* Reset box sizing */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Reenie Beanie', cursive;
+            font-size: 26px;
+            /* Handwriting size */
+            line-height: 1.4;
+            margin: 0 auto;
+            /* Center the body horizontally */
+
+            /* Match blog metrics exactly */
+            padding: 30px;
+            max-width: max(60%, 600px);
+
+            color: var(--ink-color);
+            background-color: var(--paper-bg);
+            /* Subtle noise */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+
+            text-align: left;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Reenie Beanie', cursive;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--ink-color);
+        }
+
+        /* EXACT MATCH TO BLOG TITLE POSITION */
+        .title {
+            font-size: 52px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 28px;
+            text-decoration: underline;
+        }
+
+        p {
+            margin: 0 0 15px 0;
+            /* Match blog paragraph spacing */
+        }
+
+        /* Messy Highlighter Effect */
+        a {
+            color: var(--ink-color);
+            text-decoration: none;
+            border-bottom: none;
+
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 0.5em;
+            /* Thick stroke */
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+
+            transition: background-size 0.2s, background-color 0.2s;
+            border-radius: 2px 2px 0 0;
+        }
+
+        a:hover {
+            background-size: 100% 100%;
+            /* Fill up on hover */
+            background-color: rgba(225, 182, 14, 0.1);
+            /* Subtle fill */
+            color: var(--ink-color);
+        }
+
+        /* NAV LINKS - Below Title */
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 0px;
+            width: 100%;
+            align-items: baseline;
+            /* Ensure text baseline alignment */
+            margin-top: 0;
+        }
+
+        .nav-back {
+            color: var(--ink-color);
+            font-size: 22px;
+            text-decoration: none;
+            line-height: 1.0;
+            /* Tight line height */
+            display: inline-block;
+
+            /* Apply highlighter */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6));
+            background-size: 100% 0.4em;
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+            border-bottom: none;
+        }
+
+        .nav-back:hover {
+            background-size: 100% 100%;
+        }
+
+        .meta {
+            font-size: 22px;
+            color: var(--ink-secondary);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            /* Match blog hr */
+            margin: 20px 0;
+        }
+
+        /* Images */
+        .photo-wrapper {
+            position: relative;
+            display: block;
+            margin: 32px auto;
+            max-width: min(700px, 100% - 20px);
+            padding: 12px;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            transform: rotate(-0.5deg);
+        }
+
+        img:not(.photo-wrapper img) {
+            display: block;
+            margin: 32px auto;
+            max-width: 100%;
+            border-radius: 2px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .photo-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .photo-wrapper::before,
+        .photo-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(200, 200, 200, 0.2);
+            z-index: 10;
+        }
+
+        .photo-wrapper::before {
+            top: -10px;
+            left: 20px;
+            transform: rotate(-3deg);
+        }
+
+        .photo-wrapper::after {
+            top: -10px;
+            right: 20px;
+            transform: rotate(3deg);
+        }
+
+        pre {
+            padding: 16px;
+            font-family: 'Recursive', monospace;
+            font-size: 18px;
+            /* Adjusted size for Recursive */
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.03);
+            margin: 32px 0;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            transform: rotate(0.2deg);
+            color: var(--ink-color);
+        }
+
+        code {
+            font-family: 'Recursive', monospace;
+            font-size: 0.9em;
+            /* slightly smaller to fit in text */
+        }
+
+        p code,
+        li code {
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 85%;
+            background-position: 0 60%;
+            background-repeat: no-repeat;
+
+            padding: 2px 4px;
+            border-radius: 2px;
+
+            /* Ensure effect wraps correctly */
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+        }
+
+        ul,
+        ol {
+            margin: 0 0 1.5em 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            padding-left: 0;
+        }
+
+        ul li::marker {
+            color: var(--ink-color);
+            content: '- ';
+        }
+
+        blockquote {
+            margin: 20px 0;
+            padding: 10px 20px;
+
+            /* Messy Highlighter Background */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.3),
+                    rgba(225, 182, 14, 0.5) 20%,
+                    rgba(225, 182, 14, 0.4) 80%,
+                    rgba(225, 182, 14, 0.3));
+
+            border-left: none;
+            font-style: italic;
+            color: var(--ink-secondary);
+        }
+
+        /* Footnotes */
+        .footnotes {
+            margin-top: 36px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 0.85em;
+        }
+
+        .footnotes ol {
+            padding-left: 20px;
+        }
+
+        .footnotes li {
+            margin-bottom: 10px;
+        }
+
+        .footnote-definition {
+            margin-bottom: 10px;
+        }
+
+        .footnote-definition p {
+            display: inline;
+        }
+
+        .footnotes-separator {
+            border: none;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            margin: 36px 0 18px 0;
+        }
+
+        .footnote-reference,
+        .footnote-ref {
+            font-size: 0.75em;
+            vertical-align: super;
+        }
+
+        .footnote-reference a,
+        .footnote-ref a,
+        .footnote-backref {
+            background-image: none;
+            border-bottom: none;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        /* Footer */
+        .journal-footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 20px;
+            color: var(--ink-secondary);
+            padding-top: 20px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .title {
+                font-size: 36px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ],
+                throwOnError: false,
+                trust: true
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+
+            document.querySelectorAll('img:not(.no-tape)').forEach(function (img) {
+                if (img.parentElement.classList.contains('photo-wrapper')) return;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'photo-wrapper';
+                const rotation = (Math.random() - 0.5) * 2;
+                wrapper.style.transform = `rotate(${rotation}deg)`;
+                img.parentNode.insertBefore(wrapper, img);
+                wrapper.appendChild(img);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">DNA as fixed length codings</h1>
+
+    <div class="nav-links">
+        <a href="../" class="nav-back">
+            < back to all posts</a>
+    </div>
+
+    <p class="meta">
+        scribbled on September 10, 2024
+    </p>
+
+    <hr>
+
+    <p>We treat DNA as an instruction to synthesis proteins . To formalize this, we can define the program $R$ for ribosome
+$$
+R: {0, 1, 2, 3}^n \to (p_1, p_2, \cdots p_m)
+$$
+where $p_1, p_2, \cdots, p_m$ are proteins. </p>
+<p>Since proteins are of variable length, we need to encode a delimiter to seperate proteins from each other. These are equivilant to STOP codons. </p>
+<p>A length-$k$ protein $p$ is equivilant to $A^k$, where $|A| = 20$, which are the number of amino acids we humans. synthesize. This expands causes a vocabulary of $20 + 1 = 21$, including the STOP codon. </p>
+<p>We bound the number of bases needed per represented amino acid as 
+$$
+\log_4(21) &lt; 2.2
+$$</p>
+<p>If DNA were perfectly compressed, we should expect around $2.2$ bases per amino for very long proteins. This isn’t the case. Each amino acid is represented by $3$ bases. This is fairly natural for any fixed length encoding scheme. </p>
+<p>However, through assigning multiple codons to the most common amino acids, DNA can save on the number of comparisions being done by the ribosome. Take a case where there are 16 possible amino acids $\in A$, codons of length $s \geq 2$</p>
+<p>Also, suppose that $A_0$ was $85$% of all manufactured amino acids, and each remaning element $A_1, \cdots A_{15}$ each were $1$%. In this case, a map between $A \to {0, 1, 2, 3}^2$ yields $2$ comparisions per amino acid. </p>
+<p>On the other hand, a map $F: A \to {0, 1, 2, 3}^3$ could be much more computationally efficient. Take the output string of this map $S$. Then, if $S_0 = 0$, then $F^{-1}(S) = A_0$. We can dedicate the remaining 8 numbers representable with the first two bits to $A_1, \cdots, A_8$ (this corresponds with the case where $S_0 \neq 0 \land S_0 \neq 3$) and use the combinations where $S_0 = 3$ to represent $A_9, \cdots, A_{15}$. This gives us $7$ computations that take $3$ comparisions each, $8$ that take $2$ each, and $1$ that takes $1$. However, taking the weighted sum </p>
+<p>$$
+0.85 * 1 + 0.01 * 8 * 2 + 0.01 * 7 * 3 = 1.22 \text{ comparisions per amino}
+$$</p>
+<p>This is a constructed scenario, but real DNA is somewhat similar! The four most common aminos each have $\geq 4$ combinations of three bases (or states) assigned to them, while the few least common have only $1$ or $2$</p>
+
+
+    <div class="journal-footer">
+        <div class="page-number">10</div>
+        <div class="signature">- SUDARSH</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudarsh Kunnavakkam</title>
+    <meta name="description" content="Research and thoughts on machine learning, mathematics, and technology.">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https:&#x2F;&#x2F;sudarsh.com">
+    <meta property="og:title" content="Sudarsh Kunnavakkam">
+    <meta property="og:description" content="Research and thoughts on machine learning, mathematics, and technology.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sudarsh Kunnavakkam">
+    <meta name="twitter:description" content="Research and thoughts on machine learning, mathematics, and technology.">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https:&#x2F;&#x2F;sudarsh.com">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Space Mono', monospace;
+            margin: 0 0 6px;
+        }
+
+        a {
+            color: #e1b60e;
+            text-decoration: underline;
+            font-family: 'Space Mono', monospace;
+        }
+
+        p {
+            margin: 0 0 15px;
+        }
+
+        .main-container {
+            display: flex;
+            height: 100%;
+        }
+
+        .content-wrapper {
+            flex: 0 0 400px;
+            padding: 30px;
+            background: #fff;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        #bubble-chamber {
+            flex: 1;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            display: none;
+        }
+
+        @media(min-width:769px) {
+            #bubble-chamber {
+                display: block;
+            }
+        }
+
+        #bubble-chamber::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 100%;
+            background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        #bubble-chamber canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 2.5em;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform .3s;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .nav-links a {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity .3s, transform .3s;
+        }
+
+        .clear {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: none;
+            border: none;
+            text-decoration: underline;
+            font-family: 'Space Mono', monospace;
+            cursor: pointer;
+        }
+
+        @media(max-width:768px) {
+            .menu-toggle {
+                display: block;
+                font-family: 'Space Mono', monospace;
+                color: #e1b60e;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                height: 0;
+                overflow: hidden;
+                transition: height .3s;
+            }
+
+            .nav-links.show {
+                height: 200px;
+            }
+
+            .nav-links a {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            .nav-links.show a {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .nav-links a:nth-child(1) {
+                transition-delay: .1s;
+            }
+
+            .nav-links a:nth-child(2) {
+                transition-delay: .2s;
+            }
+
+            .nav-links a:nth-child(3) {
+                transition-delay: .3s;
+            }
+
+            .nav-links a:nth-child(4) {
+                transition-delay: .4s;
+            }
+
+            .nav-links a:nth-child(5) {
+                transition-delay: .5s;
+            }
+
+            .menu-toggle.rotated {
+                transform: rotate(45deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="content-wrapper">
+            <div class="header-container">
+                <h1 class="title">Sudarsh</h1>
+                <button class="menu-toggle">+</button>
+            </div>
+            <div class="nav-links">
+                <a href="/about">About</a>
+                <a href="/blog">Blog</a>
+                <a href="/notebook">Notebook</a>
+            </div>
+            <p>Hi! I’m Sudarsh; I’m a Sophomore on leave from a physics degree at Caltech with the hopes of building magical models of brains.</p>
+<p>I care a lot about making the world a happier and more abundant place! I value kindness, honesty, and being genuine a lot, and try to practice these values as much as I can. I’m really fortunate for the people who I get to call my <a href="/friends">friends</a> - they’re all incredibly kind and driven, and overall just wonderful people to know. </p>
+<p>I’m interested in aligning AI systems, understanding the brain, and a bunch of miscellaneous Physics and Biology interests, with more <a href="/about">here</a>!</p>
+<p>If you’d like to contact me, you can either use my <a href="/feedback">anonymous feedback form</a> or find other contact information <a href="/about">here</a>. It’d always be a pleasure to meet new people!</p>
+
+            <button class="clear">Reset Trails</button>
+        </div>
+        <div id="bubble-chamber"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script>
+        new p5(p => {
+            /* ---- CONFIG ---- */
+            const fadeLinear = 2;
+            const fadeNonLinear = 120;
+            const opacityThreshold = 200;
+
+            const rate_constant = 2;
+            const dt_constant = 0.5;
+            const baseColor = [225, 182, 14];
+
+            const counts = { muon: 400, quark: 300, hadron: 200, axion: 50 };
+            let particles = {}, θ;
+
+            class Particle {
+                constructor(P, type) {
+                    this.P = P;
+                    this.type = type;
+                    this.reset();
+                }
+                reset() {
+                    const P = this.P;
+                    this.x = P.width / 2;
+                    this.y = P.height / 2;
+                    this.speed = P.random(1, this.type === 'axion' ? 10 : this.type === 'muon' ? 40 : 6);
+                    this.speedD = this.type === 'muon'
+                        ? P.random(0.0005, 0.0015)
+                        : P.random(0.995, 1.002);
+                    θ = P.random(P.TWO_PI);
+                    this.θ = θ + P.random(-0.3, 0.3);
+                    this.θD = P.random(-0.002, 0.002);
+                    this.θDD = P.random(-0.02, 0.02);
+                }
+                move() {
+                    const P = this.P;
+                    P.stroke(...baseColor, 80 / (counts[this.type] / 50));
+                    P.strokeWeight(
+                        this.type === 'muon' ? 2 :
+                            this.type === 'quark' ? 1.2 :
+                                this.type === 'hadron' ? 1 : 0.8
+                    );
+                    P.point(this.x, this.y);
+
+                    this.x += this.speed * Math.sin(this.θ) * dt_constant;
+                    this.y += this.speed * Math.cos(this.θ) * dt_constant;
+                    this.speed *= this.speedD;
+                    this.θ += this.θD;
+                    this.θD += this.θDD * 0.01;
+
+                    if (
+                        this.speed < 0.5 ||
+                        this.x < -50 || this.x > P.width + 50 ||
+                        this.y < -50 || this.y > P.height + 50
+                    ) {
+                        this.reset();
+                    }
+                }
+            }
+
+            p.setup = () => {
+                const container = document.getElementById('bubble-chamber');
+                p.createCanvas(container.clientWidth, p.windowHeight)
+                    .parent('bubble-chamber');
+                p.noFill();
+                for (const t in counts) {
+                    particles[t] = Array.from(
+                        { length: counts[t] },
+                        () => new Particle(p, t)
+                    );
+                }
+                clearTrails();
+
+                setTimeout(() => p.noLoop(), 120_000)
+            };
+
+            p.draw = () => {
+                p.noStroke();
+                p.fill(255, fadeLinear);
+                p.rect(0, 0, p.width, p.height);
+
+                p.loadPixels();
+                const px = p.pixels;
+                for (let i = 0; i < px.length; i += 4) {
+                    const lum = px[i];
+                    if (255 - lum < opacityThreshold) {
+                        const boost = Math.min(fadeNonLinear, 255 - lum);
+                        px[i] += boost;
+                        px[i + 1] += boost;
+                        px[i + 2] += boost;
+                    }
+                }
+                p.updatePixels();
+
+                for (let k = 0; k < rate_constant; k++) {
+                    for (const t in particles) {
+                        particles[t].forEach(pt => pt.move());
+                    }
+                }
+
+                // Pure black attribution text at same vertical level and margin as the clear button
+                p.noStroke();
+                p.fill(0);
+                p.textFont('Space Mono');
+                p.textSize(13);
+                p.textAlign(p.RIGHT, p.BOTTOM);
+                p.text('a simulation of a bubble chamber', p.width - 30, p.height - 30);
+            };
+
+            p.windowResized = () => {
+                const container = document.getElementById('bubble-chamber');
+                p.resizeCanvas(container.clientWidth, p.windowHeight);
+                clearTrails();
+            };
+
+            function clearTrails() {
+                p.background(255);
+                for (const t in particles) particles[t].forEach(pt => pt.reset());
+            }
+            document.querySelector('.clear')
+                .addEventListener('click', clearTrails);
+        });
+    </script>
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function () {
+            document.querySelector('.nav-links').classList.toggle('show');
+            this.classList.toggle('rotated');
+        });
+    </script>
+</body>
+
+</html>

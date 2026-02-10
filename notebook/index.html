@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notebook | Sudarsh Kunnavakkam</title>
+    <meta name="description" content="Research and thoughts on machine learning, mathematics, and technology.">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Notebook | Sudarsh Kunnavakkam">
+    <meta property="og:description" content="Research and thoughts on machine learning, mathematics, and technology.">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="canonical" href="https://sudarsh.com/notebook/">
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+    <!-- Reenie Beanie for handwriting ONLY -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <!-- Recursive for CODE -->
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO@1,1,0.5&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --paper-bg: #fdfdfd;
+            --ink-color: #2a2b2e;
+            --ink-secondary: #4a4b4e;
+            --highlight: rgba(225, 182, 14, 0.35);
+            --highlight-solid: #e1b60e;
+        }
+
+        /* Reset box sizing */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Reenie Beanie', cursive;
+            font-size: 26px;
+            /* Base size */
+            line-height: 1.4;
+            margin: 0;
+
+            /* MATCH BLOG EXACTLY: padding: 30px, max-width: max(60%, 600px) */
+            padding: 30px;
+            max-width: max(60%, 600px);
+
+            color: var(--ink-color);
+            background-color: var(--paper-bg);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+
+            text-align: left;
+        }
+
+        .content-wrapper {
+            max-width: max(60%, 600px);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Reenie Beanie', cursive;
+            font-weight: 500;
+            margin: 0;
+            margin-bottom: 6px;
+            /* Match blog spacing */
+            line-height: 1.2;
+            color: var(--ink-color);
+        }
+
+        /* EXACT MATCH TO BLOG TITLE POSITION */
+        .title {
+            font-size: 52px;
+            line-height: 1.0;
+            margin-top: 9px;
+            margin-bottom: 11px;
+            display: block;
+            border-bottom: none;
+            padding-bottom: 0;
+            font-weight: 700;
+        }
+
+        p {
+            margin: 0 0 15px 0;
+        }
+
+        /* Messy Highlighter for Links */
+        a {
+            color: var(--ink-color);
+            /* Black text */
+            text-decoration: none;
+            border-bottom: none;
+
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6) 20%,
+                    rgba(225, 182, 14, 0.5) 80%,
+                    rgba(225, 182, 14, 0.4));
+            background-size: 100% 0.5em;
+            /* Thick stroke */
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+
+            transition: background-size 0.2s, background-color 0.2s;
+            border-radius: 2px 2px 0 0;
+        }
+
+        a:hover {
+            background-size: 100% 100%;
+            /* Fill up on hover */
+            background-color: rgba(225, 182, 14, 0.1);
+            color: var(--ink-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            align-items: baseline;
+            margin-top: 0;
+        }
+
+        .nav-back {
+            color: var(--ink-color);
+            /* Black text */
+            font-size: 22px;
+            text-decoration: none;
+            line-height: 1.0;
+            display: inline-block;
+
+            /* Apply highlighter */
+            background-image: linear-gradient(to right,
+                    rgba(225, 182, 14, 0.4),
+                    rgba(225, 182, 14, 0.6));
+            background-size: 100% 0.4em;
+            background-position: 0 88%;
+            background-repeat: no-repeat;
+            border-bottom: none;
+        }
+
+        .nav-back:hover {
+            background-size: 100% 100%;
+        }
+
+        .blog-post-date {
+            font-size: 20px;
+            color: var(--ink-secondary);
+        }
+
+        .blog-post-description {
+            margin-bottom: 1.5em;
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-wrapper">
+        <h1 class="title">Notebook</h1>
+
+        <div class="nav-links">
+            <a href="/" class="nav-back">
+                < back home</a>
+        </div>
+
+        <p>This is a lower barrier to entry place for me to put things, where I don’t worry so much about polish.</p>
+
+
+        
+
+<div class="blog-section">
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/webring-topology/">More Interesting Webrings</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                February 02, 2026
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            can we make webrings more than circles?
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/reinforce-brain-connections/">REINFORCEing A Brain</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                September 19, 2025
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/grpo-speculative-decoding/">Speculative Decoding for GRPO</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                August 08, 2025
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            Using speculative decoding to try speeding up GRPO
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/reward-shapes/">Why does my reward look like *that*?</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                July 17, 2025
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/backpropogate-circuits/">Backpropogate Circuits</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                May 16, 2025
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            Flowing gradients through the conductance matrix to optimize circuits of linear elements
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/soft-token-adversarial-attack/">Soft Token Adversarial Attack</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                April 20, 2025
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/side-channel-communication/">Using Power Draw as a Side Channel for Communication</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                April 07, 2025
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            A sketch of how models may be able to change their weights to communicate through power draw resulting from increased bitflips
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/gradient-inversion/">Gradient Inversion Attack</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                March 24, 2025
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            A replication of the paper Deep Leakage from Gradients to reverse-engineer the training data from the gradients of a neural network in training.
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/spectral-graph-theory/">Eigenvectors of the Graph Laplacian hold Spectral Information</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                October 06, 2024
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/notebook/dna-fixed-length/">DNA as fixed length codings</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                September 10, 2024
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+</div>
+
+    </div>
+</body>
+
+</html>
