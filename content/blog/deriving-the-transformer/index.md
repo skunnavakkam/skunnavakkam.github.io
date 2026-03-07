@@ -1,6 +1,7 @@
 +++
 title="Deriving the Autoregressive Transformer"
 date=2025-09-01
+draft=true
 +++
 
 The year is 2015. You want to invent a model that can competently generate natural language. Here's how you might have been able to go about building the Autoregressive Transformer to its current form. The current transformer is a huge endeavor, shaped by many people, and many mistakes along the way, and this is an idealized scenario.
