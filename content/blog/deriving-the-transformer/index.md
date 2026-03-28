@@ -1,7 +1,7 @@
 +++
 title="Deriving the Autoregressive Transformer"
 date=2025-09-01
-draft=true
+draft=false
 +++
 
 The year is 2015. You want to invent a model that can competently generate natural language. Here's how you might have been able to go about building the Autoregressive Transformer to its current form. The current transformer is a huge endeavor, shaped by many people, and many mistakes along the way, and this is an idealized scenario.
@@ -154,4 +154,6 @@ Thus, we divide by $\sqrt{d_k}$ to keep the standard deviation of the attention 
 
 In attention, we have keys, queries, and values, which are our $K, Q, V$ respectively. However, the dot product $\langle Q, K \rangle$ is a single number and doesn't represent much complexity about the keys and the queries. As a result, the diversity of attention being paid to the tokens is limited.
 
-Instead, we can split up our matrices into $h$ heads which each produce a different output.
+Instead, we can split up our matrices into $h$ heads which each produce a different output. Since each of our $h$ heads are trying to capture a different subspace of "meaning" of the input tokens, we probably don't need as large of a dimension for the values computed within the head, and instead we can consider a dimension $d_{head}$. Since we want each head to capture different subspaces of the model dimension $d$, and for there to not be any unecessary overlap, we should enforce that $d = h \cdot d_{head}$. Since each head can only contribute $d_head$ independent dimensions to the output, this enforces that to maximize information, each head should write to independent subspaces of the $d$ dimensional space, keeping the model efficient :)
+
+As a result, we have our $K, Q, V: \mathbb{R}^{d} \to \mathbb{R}^{d_{head}}$ as our key, query, and value matrices. Each head does standard attention, producing an output vector $I \in \mathbb{R}^{d_{head}}$. We then up-project this to the model dimension by multiplying by a matrix $O: \mathbb{R}^{d_{head}} \to \mathbb{R}^{d}$, and adding the outputs of each head together to get our final output; in this way, we trade off the dimension of each head for an increase in the number of heads, and as a consequence, an increase in the diversity of information moved by the model.

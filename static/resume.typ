@@ -29,8 +29,8 @@
   title: "CTO, Co-Founder",
   dates: dates-helper(start-date: "Oct 2025", end-date: "Present")
 )
-- Built a fourier-light-field-microscope to collect large-scale functional, single-neuron data from Zebrafish at  novel data scales
-- Built models to predict, autoregressively, the neural activity of Zebrafish and predict downstream behavior
+- Built a Fourier Light Field Microscope to image every neuron in the Zebrafish brain at 100 FPS
+- Trained models to autoregressively predict the neural activity and emulate the Zebrafish brain
 - Raised \$1M from Character VC at 18
 
 #work(
@@ -39,10 +39,9 @@
   title: "Undergraduate Research Intern",
   dates: dates-helper(start-date: "Nov 2024", end-date: "Aug 2025")
 )
-- Building better BCIs by engineering towards 10ms response time ultrasound reporters
+- Built better BCIs by engineering towards 10ms response time ultrasound reporters
 - Built a high throughput ultrasound screening platform to scale to 1000s of variants per day
 - Designed custom proteins with RFDiffusion, Alphafold, and ESM3 for 10x faster kinetics
-- Arthur Noyes SURF Fellow
 
 
 #work(
@@ -62,9 +61,7 @@
   title: "Research Fellow",
   dates: dates-helper(start-date: "Feb 2025", end-date: "May 2025")
 )
-- Implemented a complex, _continuous double auction_ agent arena as a model environment for LLM collusion
-- Benchmarked emergent collusion between LLMs under various pressures
-- Work accepted to ICML 2025
+- Implemented a _continuous double auction_ agent arena as a model environment for LLM collusion, accepted to _ICML 2025_
 
  
 #work(
@@ -86,12 +83,6 @@
   degree: "B.S. in Physics & Computer Science"
 )
 
-#edu(
-  institution: "University High School",
-  location: "Irvine, CA",
-  dates: dates-helper(start-date: "Sep 2020", end-date: "Jun 2024"),
-  degree: "High School Diploma"
-)
 
 
 
@@ -150,15 +141,6 @@
 - Works in time domain, as well as just to do component selection
 - Implemented custom `spsolver` that is differentiable in JaX
 
-#link("https://sudarsh.com/blog/soft-token-adversarial-attack/")[
-#project(
-  name: "Adversarial Attack Using Soft Tokens",
-  dates: 2024,
-)]
-- Soft-token embedding technique for adversarial text generation
-- Orthogonal Procrustes Alignment for token mapping
-- Demonstrated attack generalization across models (PyTorch)
-
 #project(
   name: "Scanning Tunneling Microscope",
   dates: 2024,
@@ -191,5 +173,10 @@
 #project(
     name: "AIME Qualifier", 
     dates: 2023
+)
+
+#project(
+  name: "YC W26 Acceptance (Declined)",
+  dates: 2026,
 )
 

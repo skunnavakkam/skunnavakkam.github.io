@@ -19,15 +19,20 @@
 
     <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
-    <!-- Reenie Beanie for handwriting ONLY -->
+    <!-- Recursive for CODE -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
-    <!-- Recursive for CODE -->
     <link href="https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO@1,1,0.5&display=swap"
         rel="stylesheet">
 
     <style>
+        @font-face {
+            font-family: 'Sudarshhandwriting';
+            src: url('/Sudarshhandwriting-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
         :root {
             --paper-bg: #fdfdfd;
             --ink-color: #2a2b2e;
@@ -44,7 +49,7 @@
         }
 
         body {
-            font-family: 'Reenie Beanie', cursive;
+            font-family: 'Sudarshhandwriting', cursive;
             font-size: 26px;
             /* Base size */
             line-height: 1.4;
@@ -71,7 +76,7 @@
         h4,
         h5,
         h6 {
-            font-family: 'Reenie Beanie', cursive;
+            font-family: 'Sudarshhandwriting', cursive;
             font-weight: 500;
             margin: 0;
             margin-bottom: 6px;
@@ -164,10 +169,61 @@
             margin-bottom: 1.5em;
             font-size: 24px;
         }
+
+        /* Font toggle */
+        .font-toggle {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            font-family: 'Sudarshhandwriting', cursive;
+            font-size: 18px;
+            background: var(--paper-bg);
+            color: var(--ink-color);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.06);
+            z-index: 100;
+            transition: opacity 0.2s;
+        }
+
+        .font-toggle:hover {
+            opacity: 0.7;
+        }
+
+        body.normal-font,
+        body.normal-font h1,
+        body.normal-font h2,
+        body.normal-font h3,
+        body.normal-font h4,
+        body.normal-font h5,
+        body.normal-font h6 {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body.normal-font {
+            font-size: 18px;
+        }
+
+        body.normal-font .font-toggle {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
     </style>
 </head>
 
 <body>
+    <button class="font-toggle" onclick="toggleFont()" aria-label="Toggle handwriting font">Aa</button>
+    <script>
+        function toggleFont() {
+            document.body.classList.toggle('normal-font');
+            const isNormal = document.body.classList.contains('normal-font');
+            localStorage.setItem('notebook-normal-font', isNormal);
+        }
+        if (localStorage.getItem('notebook-normal-font') === 'true') {
+            document.body.classList.add('normal-font');
+        }
+    </script>
     <div class="content-wrapper">
         <h1 class="title">{{ section.title }}</h1>
 
