@@ -16,17 +16,19 @@
     <meta name="twitter:card" content="summary">
 
     <link rel="canonical" href="{{ config.base_url }}/friends">
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
     <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="/common.css">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            line-height: 1.6;
-            letter-spacing: 0.5px;
             min-height: 100vh;
             background: #fafaf6;
             overflow-x: hidden;
@@ -50,28 +52,16 @@
             padding: 200px 30px 120px;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Space Mono', monospace;
-            margin-bottom: 6px;
+        @media (max-width: 600px) {
+            .content-wrapper {
+                padding: 100px 22px 80px;
+                max-width: 100%;
+            }
         }
 
-        .title {
-            margin-top: 0;
-            font-size: 2.5em;
-            color: #2a2a20;
-        }
+        .title { color: #2a2a20; }
 
-        .nav-links {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 12px;
-        }
-
-        a {
-            color: #e1b60e;
-            text-decoration: underline;
-            font-family: 'Space Mono', monospace;
-        }
+        .nav-links { margin-bottom: 12px; }
 
         p {
             color: #6a6a58;
@@ -101,7 +91,7 @@
         }
 
         li a:hover {
-            color: #e1b60e;
+            color: var(--accent);
         }
 
         li {
@@ -172,6 +162,31 @@
             pointer-events: none;
             z-index: 2;
             animation: petal-drift 1.2s ease-out forwards;
+        }
+
+        html.night body {
+            background: #0e1117;
+            color: #c9cdd3;
+        }
+
+        html.night .title {
+            color: #c9cdd3;
+        }
+
+        html.night p {
+            color: #9da3ab;
+        }
+
+        html.night a {
+            color: #9db4ff;
+        }
+
+        html.night li a {
+            color: #9ecaa1;
+        }
+
+        html.night li a:hover {
+            color: var(--accent);
         }
     </style>
 </head>

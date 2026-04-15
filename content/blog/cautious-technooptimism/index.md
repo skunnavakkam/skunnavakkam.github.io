@@ -1,5 +1,5 @@
 +++
-title="cautious technooptimism"
+title="Cautious Technooptimism"
 date=2026-02-06
 draft=false
 +++

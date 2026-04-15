@@ -21,89 +21,69 @@
     <!-- Canonical -->
     <link rel="canonical" href="{{ config.base_url }}">
     <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
-        rel="stylesheet">
+    <!-- Apply theme before first paint so reload never flashes the wrong color. -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="stylesheet" href="/common.css">
     <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
+        /* Home-page specific overrides. The shared :root in common.css
+           defines defaults; these tighten the fg color and introduce the
+           canvas-bg variable the night sky scene reads from. */
+        :root {
+            --fg: #1a1a1a;
+            --canvas-bg: #ffffff;
+            --canvas-bg-rgb: 255, 255, 255;
+        }
+        html.night {
+            --bg: #0a0e1a;
+            --muted: #6b7380;
+            --canvas-bg: #0a0e1a;
+            --canvas-bg-rgb: 10, 14, 26;
         }
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
+        html, body { height: 100%; }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            letter-spacing: 0.5px;
             display: flex;
             flex-direction: column;
             height: 100vh;
-            margin: 0;
+            transition: background 0.35s ease, color 0.35s ease;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: 'Space Mono', monospace;
-            margin: 0 0 6px;
+        body, .content-wrapper, #bubble-chamber, p, a, .title, .clear {
+            transition: background 0.35s ease, color 0.35s ease;
         }
 
-        a {
-            color: #e1b60e;
-            text-decoration: underline;
-            font-family: 'Space Mono', monospace;
-        }
+        html.night p { color: #9da3ab; }
 
-        p {
-            margin: 0 0 15px;
-        }
-
-        .main-container {
-            display: flex;
-            height: 100%;
-        }
+        .main-container { display: flex; height: 100%; }
 
         .content-wrapper {
             flex: 0 0 400px;
             padding: 30px;
-            background: #fff;
+            background: var(--bg);
             overflow-y: auto;
             position: relative;
+            max-width: none;
         }
 
         #bubble-chamber {
             flex: 1;
             position: relative;
-            background: #fff;
+            background: var(--bg);
             overflow: hidden;
             display: none;
         }
 
         @media(min-width:769px) {
-            #bubble-chamber {
-                display: block;
-            }
-        }
-
-        #bubble-chamber::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 80px;
-            height: 100%;
-            background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
-            pointer-events: none;
-            z-index: 2;
+            #bubble-chamber { display: block; }
         }
 
         #bubble-chamber canvas {
@@ -113,100 +93,76 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .title {
-            font-size: 2.5em;
-        }
-
-        .menu-toggle {
-            display: none;
-            font-size: 32px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: transform .3s;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .nav-links a {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity .3s, transform .3s;
+            transition: opacity 0.15s ease;
         }
 
         .clear {
             position: absolute;
             bottom: 30px;
             left: 30px;
+        }
+
+        html.night .clear { display: none; }
+
+        /* Subtle, lowercase, unobtrusive — bottom-right mirror of .clear. */
+        .night-toggle {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
             background: none;
             border: none;
-            text-decoration: underline;
-            font-family: 'Space Mono', monospace;
+            padding: 0;
+            font-family: 'EB Garamond', serif;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            color: var(--muted);
             cursor: pointer;
+            transition: color 0.2s ease;
+            z-index: 10;
+        }
+
+        .night-toggle:hover { color: var(--fg); }
+
+        @media(min-width:769px) {
+            .night-toggle { display: block; }
         }
 
         @media(max-width:768px) {
-            .menu-toggle {
+            html, body { height: auto; }
+
+            body {
                 display: block;
-                font-family: 'Space Mono', monospace;
-                color: #e1b60e;
+                height: auto;
+                min-height: 100vh;
             }
 
-            .nav-links {
-                flex-direction: column;
-                height: 0;
-                overflow: hidden;
-                transition: height .3s;
+            .main-container {
+                display: block;
+                height: auto;
             }
 
-            .nav-links.show {
-                height: 200px;
+            .content-wrapper {
+                flex: 1 1 auto;
+                width: 100%;
+                max-width: 100%;
+                padding: 24px 22px 90px;
+                overflow: visible;
             }
 
-            .nav-links a {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
+            #bubble-chamber { display: none; }
 
-            .nav-links.show a {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            .title { font-size: 1.8em; }
 
-            .nav-links a:nth-child(1) {
-                transition-delay: .1s;
-            }
+            .clear { display: none; }
 
-            .nav-links a:nth-child(2) {
-                transition-delay: .2s;
-            }
-
-            .nav-links a:nth-child(3) {
-                transition-delay: .3s;
-            }
-
-            .nav-links a:nth-child(4) {
-                transition-delay: .4s;
-            }
-
-            .nav-links a:nth-child(5) {
-                transition-delay: .5s;
-            }
-
-            .menu-toggle.rotated {
-                transform: rotate(45deg);
+            .night-toggle {
+                display: block;
+                position: fixed;
+                bottom: 22px;
+                right: 22px;
+                font-size: 13px;
+                letter-spacing: 0.3px;
             }
         }
     </style>
@@ -215,24 +171,75 @@
 <body>
     <div class="main-container">
         <div class="content-wrapper">
-            <div class="header-container">
-                <h1 class="title">Sudarsh</h1>
-                <button class="menu-toggle">+</button>
-            </div>
+            <h1 class="title">Sudarsh</h1>
             <div class="nav-links">
                 <a href="/about">About</a>
                 <a href="/blog">Blog</a>
-                <a href="/notebook">Notebook</a>
+                <a href="/fragments">Fragments</a>
             </div>
             {{ section.content | safe }}
             <button class="clear">Reset Trails</button>
+            <button class="night-toggle" aria-label="Toggle night mode"></button>
         </div>
         <div id="bubble-chamber"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
     <script>
+        // Theme management — initial class is applied by inline head script to avoid FOUC.
+        const root = document.documentElement;
+        const isNight = () => root.classList.contains('night');
+        const toggleBtn = document.querySelector('.night-toggle');
+        let transitioning = false;
+
+        function applyTheme(night) {
+            if (night) {
+                root.classList.add('night');
+                toggleBtn.textContent = 'sun';
+            } else {
+                root.classList.remove('night');
+                toggleBtn.textContent = 'moon';
+            }
+        }
+
+        applyTheme(isNight());
+
+        toggleBtn.addEventListener('click', () => {
+            if (transitioning) return;
+            transitioning = true;
+
+            const next = !isNight();
+            localStorage.setItem('night-mode', next);
+
+            const canvas = document.querySelector('#bubble-chamber canvas');
+
+            // Phase 1: fade the canvas out while CSS bg stays on the OLD
+            // color. The sidebar and chamber remain in sync (both old) so
+            // no seam is visible at the boundary during the fade.
+            if (canvas) canvas.style.opacity = '0';
+
+            // Phase 2: once the canvas is fully invisible, start the CSS
+            // background transition. With nothing drawn on top of the
+            // chamber, sidebar and chamber bg transition in lockstep.
+            setTimeout(() => {
+                applyTheme(next);
+
+                // Phase 3: after the CSS bg transition completes, swap
+                // scenes and fade the canvas back in over a stable bg.
+                setTimeout(() => {
+                    if (typeof switchScene === 'function') switchScene(next);
+                    requestAnimationFrame(() => {
+                        if (canvas) canvas.style.opacity = '1';
+                        setTimeout(() => { transitioning = false; }, 200);
+                    });
+                }, 380);
+            }, 170);
+        });
+    </script>
+    <script>
+        let switchScene; // exposed to toggle
+
         new p5(p => {
-            /* ---- CONFIG ---- */
+            /* ---- BUBBLE CHAMBER CONFIG ---- */
             const fadeLinear = 2;
             const fadeNonLinear = 120;
             const opacityThreshold = 200;
@@ -243,6 +250,112 @@
 
             const counts = { muon: 400, quark: 300, hadron: 200, axion: 50 };
             let particles = {}, θ;
+
+            /* ---- NIGHT SKY STATE ---- */
+            // San Francisco
+            const OBS_LAT = 37.7749;
+            const OBS_LON = -122.4194;
+            // Named catalogs store [vx, vy, vz, mag] packed in Float32Arrays
+            // (equatorial unit vectors + visual magnitude).
+            let bscVec = null;
+            let bgVec = null;
+            let constellations = null;
+            let shootingStar = null;
+            let nextShootingStarTime = 0;
+            let starCoreSprite = null;
+            let starHaloSprite = null;
+            let starNebulaSprite = null;
+
+            // Camera: look south, a bit above the horizon.
+            // Gnomonic (rectilinear) "crop" of the sky — what a camera sees.
+            const LOOK_ALT_DEG = 42;
+            const LOOK_AZ_DEG = 180;
+            const H_FOV_DEG = 72;
+
+            // Procedural faint stars to fill the background below the BSC
+            // limit (Yale BSC stops near mag 7). These aren't real sky but
+            // give the dense "texture" a long exposure shows.
+            const BG_STAR_COUNT = 24000;
+
+            function packStars(radecList) {
+                const N = radecList.length;
+                const arr = new Float32Array(N * 4);
+                for (let i = 0; i < N; i++) {
+                    const ra = (radecList[i][0] * Math.PI) / 180;
+                    const dec = (radecList[i][1] * Math.PI) / 180;
+                    const cd = Math.cos(dec);
+                    arr[i * 4] = cd * Math.cos(ra);
+                    arr[i * 4 + 1] = cd * Math.sin(ra);
+                    arr[i * 4 + 2] = Math.sin(dec);
+                    arr[i * 4 + 3] = radecList[i][2];
+                }
+                return arr;
+            }
+
+            function mulberry32(seed) {
+                return function () {
+                    let t = (seed += 0x6d2b79f5);
+                    t = Math.imul(t ^ (t >>> 15), t | 1);
+                    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+                    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+                };
+            }
+
+            function generateBgStars(count) {
+                const rng = mulberry32(1729);
+                const arr = new Float32Array(count * 4);
+                for (let i = 0; i < count; i++) {
+                    // Uniform on sphere: dec from arcsin(2u-1), RA uniform
+                    const u = rng() * 2 - 1;
+                    const phi = rng() * 2 * Math.PI;
+                    const cosDec = Math.sqrt(1 - u * u);
+                    arr[i * 4] = cosDec * Math.cos(phi);
+                    arr[i * 4 + 1] = cosDec * Math.sin(phi);
+                    arr[i * 4 + 2] = u;
+                    // Biased toward dim: more stars at faint mags (power-law-ish)
+                    const r = rng();
+                    arr[i * 4 + 3] = 7 + (12 - 7) * (1 - Math.pow(1 - r, 0.45));
+                }
+                return arr;
+            }
+
+            fetch('/js/bsc.json')
+                .then(r => r.json())
+                .then(d => { bscVec = packStars(d); });
+
+            fetch('/js/constellations.json')
+                .then(r => r.json())
+                .then(d => { constellations = d; });
+
+            function julianDate(d) {
+                return d.getTime() / 86400000 + 2440587.5;
+            }
+
+            function localSiderealDeg(date, lonDeg) {
+                const JD = julianDate(date);
+                const D = JD - 2451545.0;
+                const T = D / 36525;
+                let GMST = 280.46061837 + 360.98564736629 * D
+                    + 0.000387933 * T * T - (T * T * T) / 38710000;
+                GMST = ((GMST % 360) + 360) % 360;
+                return ((GMST + lonDeg) % 360 + 360) % 360;
+            }
+
+            // RA/Dec → alt/az for observer. Returns null below horizon.
+            function raDecToAltAz(raDeg, decDeg, lstDeg, latDeg) {
+                const H = ((lstDeg - raDeg) * Math.PI) / 180;
+                const dec = (decDeg * Math.PI) / 180;
+                const lat = (latDeg * Math.PI) / 180;
+                const sinAlt = Math.sin(dec) * Math.sin(lat)
+                    + Math.cos(dec) * Math.cos(lat) * Math.cos(H);
+                if (sinAlt <= 0) return null;
+                const alt = Math.asin(sinAlt);
+                const cosAz = (Math.sin(dec) - Math.sin(alt) * Math.sin(lat))
+                    / (Math.cos(alt) * Math.cos(lat));
+                let az = Math.acos(Math.max(-1, Math.min(1, cosAz)));
+                if (Math.sin(H) > 0) az = 2 * Math.PI - az;
+                return { alt, az };
+            }
 
             class Particle {
                 constructor(P, type) {
@@ -289,23 +402,362 @@
                 }
             }
 
-            p.setup = () => {
-                const container = document.getElementById('bubble-chamber');
-                p.createCanvas(container.clientWidth, p.windowHeight)
-                    .parent('bubble-chamber');
-                p.noFill();
-                for (const t in counts) {
-                    particles[t] = Array.from(
-                        { length: counts[t] },
-                        () => new Particle(p, t)
-                    );
+            function initStars() {
+                nextShootingStarTime = p.millis() + p.random(3000, 8000);
+            }
+
+            // Build a gnomonic camera looking at (lookAlt, lookAz).
+            // Right-handed world frame: x=east, y=north, z=zenith.
+            // Returns {C,R,U,f,W,H} — basis vectors plus focal length in px.
+            function buildCamera(lookAltDeg, lookAzDeg, W, H, hFovDeg) {
+                const a = (lookAltDeg * Math.PI) / 180;
+                const z = (lookAzDeg * Math.PI) / 180;
+                // Camera forward = look direction
+                const Cx = Math.cos(a) * Math.sin(z);
+                const Cy = Math.cos(a) * Math.cos(z);
+                const Cz = Math.sin(a);
+                // Project world-up onto plane perpendicular to C → image up
+                const Zdot = Cz; // (0,0,1)·C
+                let Ux = -Zdot * Cx;
+                let Uy = -Zdot * Cy;
+                let Uz = 1 - Zdot * Cz;
+                const Un = Math.hypot(Ux, Uy, Uz) || 1;
+                Ux /= Un; Uy /= Un; Uz /= Un;
+                // Right = U × C
+                const Rx = Uy * Cz - Uz * Cy;
+                const Ry = Uz * Cx - Ux * Cz;
+                const Rz = Ux * Cy - Uy * Cx;
+                const f = (W / 2) / Math.tan((hFovDeg * Math.PI) / 360);
+                return { Cx, Cy, Cz, Ux, Uy, Uz, Rx, Ry, Rz, f, W, H };
+            }
+
+            // Project alt/az (radians) through camera. Returns null if behind.
+            function projectAltAz(alt, az, cam) {
+                const Sx = Math.cos(alt) * Math.sin(az);
+                const Sy = Math.cos(alt) * Math.cos(az);
+                const Sz = Math.sin(alt);
+                const sc = Sx * cam.Cx + Sy * cam.Cy + Sz * cam.Cz;
+                if (sc <= 0.05) return null;
+                const sr = Sx * cam.Rx + Sy * cam.Ry + Sz * cam.Rz;
+                const su = Sx * cam.Ux + Sy * cam.Uy + Sz * cam.Uz;
+                const x = cam.W / 2 + (sr / sc) * cam.f;
+                const y = cam.H / 2 - (su / sc) * cam.f;
+                return { x, y, sc };
+            }
+
+            // Project by RA/Dec (degrees) at given LST.
+            function projectRaDec(raDeg, decDeg, lstDeg, cam) {
+                const H = ((lstDeg - raDeg) * Math.PI) / 180;
+                const dec = (decDeg * Math.PI) / 180;
+                const lat = (OBS_LAT * Math.PI) / 180;
+                const sinAlt = Math.sin(dec) * Math.sin(lat)
+                    + Math.cos(dec) * Math.cos(lat) * Math.cos(H);
+                if (sinAlt <= 0) return null;
+                const alt = Math.asin(sinAlt);
+                const cosAz = (Math.sin(dec) - sinAlt * Math.sin(lat))
+                    / (Math.cos(alt) * Math.cos(lat));
+                let az = Math.acos(Math.max(-1, Math.min(1, cosAz)));
+                if (Math.sin(H) > 0) az = 2 * Math.PI - az;
+                const pt = projectAltAz(alt, az, cam);
+                if (pt) pt.altDeg = (alt * 180) / Math.PI;
+                return pt;
+            }
+
+            // PSF sprite, computed per-pixel for a smooth falloff
+            // (gradient stops alone give visible banding at low alpha).
+            // Supports a single Gaussian or a two-Gaussian mix — the mix
+            // models a real stellar PSF with a tight seeing-limited core
+            // and a wider scattering wing, and downsamples cleanly.
+            function buildPsfSprite(size, sigma1, sigma2, weight2, r, g, b) {
+                const c = document.createElement('canvas');
+                c.width = c.height = size;
+                const ctx = c.getContext('2d');
+                const img = ctx.createImageData(size, size);
+                const data = img.data;
+                const cx = (size - 1) / 2;
+                const cy = (size - 1) / 2;
+                const s1 = 2 * sigma1 * sigma1;
+                const s2 = 2 * sigma2 * sigma2;
+                const norm = 1 + weight2;
+                for (let y = 0; y < size; y++) {
+                    for (let x = 0; x < size; x++) {
+                        const dx = x - cx, dy = y - cy;
+                        const r2 = dx * dx + dy * dy;
+                        const v = (Math.exp(-r2 / s1)
+                            + (weight2 > 0 ? weight2 * Math.exp(-r2 / s2) : 0)) / norm;
+                        const i = (y * size + x) * 4;
+                        data[i] = r;
+                        data[i + 1] = g;
+                        data[i + 2] = b;
+                        data[i + 3] = Math.round(v * 255);
+                    }
                 }
-                clearTrails();
+                ctx.putImageData(img, 0, 0);
+                return c;
+            }
 
-                setTimeout(() => p.noLoop(), 120_000)
-            };
+            function drawNightSky() {
+                const ctx = p.drawingContext;
+                const W = p.width, H = p.height;
 
-            p.draw = () => {
+                // Deep navy base — matches CSS --canvas-bg (#0a0e1a)
+                p.noStroke();
+                p.fill(10, 14, 26);
+                p.rect(0, 0, W, H);
+
+                if (!bscVec && !constellations && !bgVec) return;
+
+                const lst = localSiderealDeg(new Date(), OBS_LON);
+                const cam = buildCamera(LOOK_ALT_DEG, LOOK_AZ_DEG, W, H, H_FOV_DEG);
+                const t = p.millis() * 0.001;
+
+                // Per-frame rotation: equatorial → observer-local horizon frame.
+                // Used inline for the hot cartesian loops (skip trig per star).
+                const lstRad = (lst * Math.PI) / 180;
+                const latRad = (OBS_LAT * Math.PI) / 180;
+                const st = Math.sin(lstRad), ctH = Math.cos(lstRad);
+                const sp = Math.sin(latRad), cp = Math.cos(latRad);
+                // Local basis in equatorial coords:
+                //   east  = (-sinθ, cosθ, 0)
+                //   north = (-sinφ cosθ, -sinφ sinθ, cosφ)
+                //   up    = ( cosφ cosθ,  cosφ sinθ, sinφ)
+                const eex = -st, eey = ctH;
+                const nex = -sp * ctH, ney = -sp * st, nez = cp;
+                const uex = cp * ctH, uey = cp * st, uez = sp;
+
+                // Background fill — procedural faint stars below BSC limit.
+                // Tiny Gaussian cores with additive blending; this is where
+                // the "thousands of dots" texture comes from.
+                if (bgVec && starCoreSprite) {
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'lighter';
+                    for (let i = 0; i < bgVec.length; i += 4) {
+                        const vx = bgVec[i], vy = bgVec[i + 1], vz = bgVec[i + 2];
+                        const lx = eex * vx + eey * vy;
+                        const ly = nex * vx + ney * vy + nez * vz;
+                        const lz = uex * vx + uey * vy + uez * vz;
+                        if (lz < 0.03) continue;
+
+                        const sc = lx * cam.Cx + ly * cam.Cy + lz * cam.Cz;
+                        if (sc <= 0.25) continue;
+                        const sr = lx * cam.Rx + ly * cam.Ry + lz * cam.Rz;
+                        const su = lx * cam.Ux + ly * cam.Uy + lz * cam.Uz;
+                        const px = W / 2 + (sr / sc) * cam.f;
+                        const py = H / 2 - (su / sc) * cam.f;
+                        if (px < -6 || px > W + 6 || py < -6 || py > H + 6) continue;
+
+                        const mag = bgVec[i + 3];
+                        const ext = Math.min(1, Math.max(0, lz * 6));
+                        const alpha = Math.min(0.55, Math.pow(Math.max(0, 12 - mag) / 5, 1.5) * 0.14) * ext;
+                        if (alpha < 0.012) continue;
+                        const size = 1.8 + (12 - mag) * 0.3;
+                        ctx.globalAlpha = alpha;
+                        ctx.drawImage(starCoreSprite, px - size / 2, py - size / 2, size, size);
+                    }
+                    ctx.globalAlpha = 1;
+                    ctx.restore();
+                }
+
+                // Nebulosity — ultra-wide, ultra-low-alpha haze around the
+                // brightest stars. Additive accumulation in dense regions
+                // gives the sky its sense of depth.
+                if (bscVec && starNebulaSprite) {
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'lighter';
+                    const N = bscVec.length / 4;
+                    for (let i = 0; i < N; i++) {
+                        const j = i * 4;
+                        const mag = bscVec[j + 3];
+                        if (mag >= 4.2) continue;
+                        const vx = bscVec[j], vy = bscVec[j + 1], vz = bscVec[j + 2];
+                        const lx = eex * vx + eey * vy;
+                        const ly = nex * vx + ney * vy + nez * vz;
+                        const lz = uex * vx + uey * vy + uez * vz;
+                        if (lz < 0.02) continue;
+                        const sc = lx * cam.Cx + ly * cam.Cy + lz * cam.Cz;
+                        if (sc <= 0.2) continue;
+                        const sr = lx * cam.Rx + ly * cam.Ry + lz * cam.Rz;
+                        const su = lx * cam.Ux + ly * cam.Uy + lz * cam.Uz;
+                        const px = W / 2 + (sr / sc) * cam.f;
+                        const py = H / 2 - (su / sc) * cam.f;
+                        if (px < -260 || px > W + 260 || py < -260 || py > H + 260) continue;
+
+                        const ext = Math.min(1, Math.max(0, lz * 6));
+                        const bright = Math.pow(Math.max(0, 4.2 - mag), 1.3);
+                        const nebSize = Math.min(320, 50 + bright * 32);
+                        const nebAlpha = Math.min(0.042, 0.003 + bright * 0.010) * ext;
+                        if (nebAlpha < 0.003) continue;
+                        ctx.globalAlpha = nebAlpha;
+                        ctx.drawImage(
+                            starNebulaSprite,
+                            px - nebSize / 2, py - nebSize / 2,
+                            nebSize, nebSize
+                        );
+                    }
+                    ctx.globalAlpha = 1;
+                    ctx.restore();
+                }
+
+                // Constellation lines (dim; drawn between bg stars and BSC)
+                if (constellations) {
+                    ctx.save();
+                    ctx.strokeStyle = 'rgba(120, 145, 200, 0.18)';
+                    ctx.lineWidth = 0.6;
+                    ctx.lineCap = 'round';
+                    for (const c of constellations) {
+                        for (const seg of c.lines) {
+                            let prev = null;
+                            ctx.beginPath();
+                            let drawing = false;
+                            for (const [ra, dec] of seg) {
+                                const pt = projectRaDec(ra, dec, lst, cam);
+                                if (!pt) { prev = null; drawing = false; continue; }
+                                if (!prev) {
+                                    ctx.moveTo(pt.x, pt.y);
+                                    drawing = true;
+                                } else {
+                                    ctx.lineTo(pt.x, pt.y);
+                                }
+                                prev = pt;
+                            }
+                            if (drawing) ctx.stroke();
+                        }
+                    }
+                    ctx.restore();
+                }
+
+                // BSC — real catalog stars with cores, halos, soft bloom.
+                if (bscVec && starCoreSprite) {
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'lighter';
+                    const N = bscVec.length / 4;
+
+                    // Pass 1: wide soft halos — reach down to mag ~5.5
+                    // so many stars contribute glow, not just a few.
+                    for (let i = 0; i < N; i++) {
+                        const j = i * 4;
+                        const mag = bscVec[j + 3];
+                        if (mag >= 5.5) continue;
+                        const vx = bscVec[j], vy = bscVec[j + 1], vz = bscVec[j + 2];
+                        const lx = eex * vx + eey * vy;
+                        const ly = nex * vx + ney * vy + nez * vz;
+                        const lz = uex * vx + uey * vy + uez * vz;
+                        if (lz < 0.02) continue;
+                        const sc = lx * cam.Cx + ly * cam.Cy + lz * cam.Cz;
+                        if (sc <= 0.2) continue;
+                        const sr = lx * cam.Rx + ly * cam.Ry + lz * cam.Rz;
+                        const su = lx * cam.Ux + ly * cam.Uy + lz * cam.Uz;
+                        const px = W / 2 + (sr / sc) * cam.f;
+                        const py = H / 2 - (su / sc) * cam.f;
+                        if (px < -120 || px > W + 120 || py < -120 || py > H + 120) continue;
+
+                        const ext = Math.min(1, Math.max(0, lz * 6));
+                        const bright = Math.pow(Math.max(0, 5.5 - mag), 1.35);
+                        const haloSize = Math.min(140, 3 + bright * 8.5);
+                        const haloAlpha = Math.min(0.21, 0.01 + bright * 0.022) * ext;
+                        if (haloAlpha < 0.006) continue;
+                        ctx.globalAlpha = haloAlpha;
+                        ctx.drawImage(
+                            starHaloSprite,
+                            px - haloSize / 2, py - haloSize / 2,
+                            haloSize, haloSize
+                        );
+                    }
+
+                    // Pass 2: PSF cores for every visible BSC star.
+                    // The double-Gaussian sprite already blends a tight peak
+                    // with a soft shoulder, so even small cores look soft.
+                    for (let i = 0; i < N; i++) {
+                        const j = i * 4;
+                        const vx = bscVec[j], vy = bscVec[j + 1], vz = bscVec[j + 2];
+                        const lx = eex * vx + eey * vy;
+                        const ly = nex * vx + ney * vy + nez * vz;
+                        const lz = uex * vx + uey * vy + uez * vz;
+                        if (lz < 0.02) continue;
+                        const sc = lx * cam.Cx + ly * cam.Cy + lz * cam.Cz;
+                        if (sc <= 0.25) continue;
+                        const sr = lx * cam.Rx + ly * cam.Ry + lz * cam.Rz;
+                        const su = lx * cam.Ux + ly * cam.Uy + lz * cam.Uz;
+                        const px = W / 2 + (sr / sc) * cam.f;
+                        const py = H / 2 - (su / sc) * cam.f;
+                        if (px < -30 || px > W + 30 || py < -30 || py > H + 30) continue;
+
+                        const mag = bscVec[j + 3];
+                        let coreSize = 1.9 + Math.pow(Math.max(0, 7.5 - mag), 1.05) * 0.66;
+                        if (coreSize > 13) coreSize = 13;
+
+                        const ext = Math.min(1, Math.max(0, lz * 6));
+                        const twAmp = 0.05 + 0.13 * (1 - ext);
+                        const tw = 1 - twAmp + twAmp * Math.sin(t * 2.3 + i * 0.731);
+
+                        const alpha = Math.min(1, 0.32 + Math.max(0, 6 - mag) * 0.11) * ext * tw;
+                        if (alpha < 0.02) continue;
+
+                        ctx.globalAlpha = alpha;
+                        ctx.drawImage(
+                            starCoreSprite,
+                            px - coreSize / 2, py - coreSize / 2,
+                            coreSize, coreSize
+                        );
+                    }
+
+                    ctx.globalAlpha = 1;
+                    ctx.restore();
+                }
+
+                // Shooting stars (cosmetic)
+                if (p.millis() > nextShootingStarTime && !shootingStar) {
+                    shootingStar = {
+                        x: p.random(p.width * 0.2, p.width),
+                        y: p.random(0, p.height * 0.4),
+                        vx: p.random(-4, -2),
+                        vy: p.random(2, 4),
+                        life: 1.0,
+                        len: p.random(40, 80)
+                    };
+                }
+
+                if (shootingStar) {
+                    const ss = shootingStar;
+                    const tailX = ss.x - ss.vx * ss.len / 4;
+                    const tailY = ss.y - ss.vy * ss.len / 4;
+
+                    for (let i = 0; i < 8; i++) {
+                        const frac = i / 8;
+                        const px = p.lerp(ss.x, tailX, frac);
+                        const py = p.lerp(ss.y, tailY, frac);
+                        const a = ss.life * (1 - frac) * 200;
+                        p.stroke(255, 255, 240, a);
+                        p.strokeWeight(p.lerp(1.5, 0.3, frac));
+                        p.point(px, py);
+                    }
+                    p.noStroke();
+
+                    ss.x += ss.vx;
+                    ss.y += ss.vy;
+                    ss.life -= 0.015;
+
+                    if (ss.life <= 0 || ss.x < -20 || ss.y > p.height + 20) {
+                        shootingStar = null;
+                        nextShootingStarTime = p.millis() + p.random(4000, 12000);
+                    }
+                }
+
+                // Attribution
+                p.noStroke();
+                p.fill(200, 205, 215, 120);
+                p.textFont('EB Garamond');
+                p.textSize(13);
+                p.textAlign(p.RIGHT, p.BOTTOM);
+                const now = new Date();
+                const sfTime = now.toLocaleString('en-US', {
+                    timeZone: 'America/Los_Angeles',
+                    hour: '2-digit', minute: '2-digit', hour12: false
+                });
+                p.text(`san francisco · ${sfTime} · looking south`, p.width - 30, p.height - 30);
+            }
+
+            function drawBubbleChamber() {
                 p.noStroke();
                 p.fill(255, fadeLinear);
                 p.rect(0, 0, p.width, p.height);
@@ -329,33 +781,88 @@
                     }
                 }
 
-                // Pure black attribution text at same vertical level and margin as the clear button
+                // Attribution
                 p.noStroke();
                 p.fill(0);
-                p.textFont('Space Mono');
+                p.textFont('EB Garamond');
                 p.textSize(13);
                 p.textAlign(p.RIGHT, p.BOTTOM);
                 p.text('a simulation of a bubble chamber', p.width - 30, p.height - 30);
+            }
+
+            p.setup = () => {
+                const container = document.getElementById('bubble-chamber');
+                p.createCanvas(container.clientWidth, p.windowHeight)
+                    .parent('bubble-chamber');
+                p.noFill();
+                // Double-Gaussian PSF core: tight bright peak + softer wide
+                // shoulder so even small draws look like stars, not pixels.
+                // Halo: single very-soft Gaussian (bloom).
+                // Nebula: ultra-wide Gaussian for diffuse atmospheric haze
+                //   around bright stars — builds up additively in dense regions.
+                starCoreSprite = buildPsfSprite(64, 4.0, 14, 0.28, 255, 248, 232);
+                starHaloSprite = buildPsfSprite(128, 22, 22, 0, 255, 238, 208);
+                starNebulaSprite = buildPsfSprite(256, 58, 58, 0, 170, 188, 224);
+                bgVec = generateBgStars(BG_STAR_COUNT);
+                for (const t in counts) {
+                    particles[t] = Array.from(
+                        { length: counts[t] },
+                        () => new Particle(p, t)
+                    );
+                }
+                initStars();
+
+                if (isNight()) {
+                    p.background(10, 14, 26);
+                } else {
+                    clearTrails();
+                }
+
+                setTimeout(() => { if (!isNight()) p.noLoop(); }, 120_000);
+            };
+
+            p.draw = () => {
+                if (isNight()) {
+                    drawNightSky();
+                } else {
+                    drawBubbleChamber();
+                }
             };
 
             p.windowResized = () => {
                 const container = document.getElementById('bubble-chamber');
                 p.resizeCanvas(container.clientWidth, p.windowHeight);
-                clearTrails();
+                if (isNight()) {
+                    initStars();
+                } else {
+                    clearTrails();
+                }
             };
 
             function clearTrails() {
                 p.background(255);
                 for (const t in particles) particles[t].forEach(pt => pt.reset());
             }
+
+            switchScene = (night) => {
+                p.loop(); // restart if stopped
+                if (night) {
+                    initStars();
+                } else {
+                    clearTrails();
+                    setTimeout(() => { if (!isNight()) p.noLoop(); }, 120_000);
+                }
+            };
+
             document.querySelector('.clear')
-                .addEventListener('click', clearTrails);
-        });
-    </script>
-    <script>
-        document.querySelector('.menu-toggle').addEventListener('click', function () {
-            document.querySelector('.nav-links').classList.toggle('show');
-            this.classList.toggle('rotated');
+                .addEventListener('click', () => {
+                    if (isNight()) {
+                        initStars();
+                        shootingStar = null;
+                    } else {
+                        clearTrails();
+                    }
+                });
         });
     </script>
 </body>

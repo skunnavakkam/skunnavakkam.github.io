@@ -1,5 +1,5 @@
 +++
-title="acousto-optics"
+title="Acousto-optics"
 date=2026-01-31
 +++
 

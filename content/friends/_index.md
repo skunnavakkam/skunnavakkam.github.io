@@ -21,4 +21,4 @@ Here are some of the people I'm fortunate to call my friends; this isn't exhaust
 - [Sammy](https://pepsi.pw/)
 - [Aaron](https://special-fx.carrd.co/)
 - [Samuel](https://samuelratnam.xyz/)
-- [Claire](https://clairebookworm.com)
+- [Sujai](https://sujai1.github.io/)

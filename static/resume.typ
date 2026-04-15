@@ -27,10 +27,11 @@
   company: "Cognitogram Labs",
   location: "San Francisco, CA", 
   title: "CTO, Co-Founder",
-  dates: dates-helper(start-date: "Oct 2025", end-date: "Present")
+  dates: dates-helper(start-date: "Nov 2025", end-date: "Present")
 )
-- Built a Fourier Light Field Microscope to image every neuron in the Zebrafish brain at 100 FPS
-- Trained models to autoregressively predict the neural activity and emulate the Zebrafish brain
+- Collected the largest ever dataset of single-neuron activity in the Zebrafish brain at 100 Hz, towards enabling whole brain uploads of fish
+- Designed, built, and trained models to autoregressively predict the neural activity of the larval zebrafish brain
+- Built scenes to test generalization of models to new tasks and to probe the welfare of the simulated fish
 - Raised \$1M from Character VC at 18
 
 #work(
@@ -39,7 +40,7 @@
   title: "Undergraduate Research Intern",
   dates: dates-helper(start-date: "Nov 2024", end-date: "Aug 2025")
 )
-- Built better BCIs by engineering towards 10ms response time ultrasound reporters
+- Engineering towards 10ms response time ultrasound reporters
 - Built a high throughput ultrasound screening platform to scale to 1000s of variants per day
 - Designed custom proteins with RFDiffusion, Alphafold, and ESM3 for 10x faster kinetics
 
@@ -51,7 +52,7 @@
   dates: dates-helper(start-date: "Sep 2023", end-date: "Jun 2025")
 )
 - Lead engineer for internal project to estimate the agentic time horizon of LLMs at much lower cost
-- Co-lead engineer of a state of the art evaluation for Chain-of-Thought Faithfulness of Large Langauge Models
+- Co-lead engineer of a evaluation for Chain-of-Thought Faithfulness of Large Language Models
 - Helped lead teams of contractors red-team LLMs and curate datasets such as #link("metr-evals/daft-math")[DAFT Math] of difficult, free-response questions 
 
 
@@ -70,9 +71,7 @@
   title: "High School Research Intern",
   dates: dates-helper(start-date: "Dec 2022", end-date: "Jun 2024")
 )
-- Scaled 2D ITO fabrication from mm² to multi-cm² sizes
-- Developed new transmission matrix method replacing repeated ellipsometry
-- Created transfer-matrix reverse solver to easily get refractive index information under nonlinear conditions
+- Scaled 2D ITO fabrication from mm² to multi-cm² sizes, developed new transmission matrix method replacing repeated ellipsometry, and created transfer-matrix reverse solver to easily get refractive index information under nonlinear conditions
 
 == Education
 
@@ -82,6 +81,7 @@
   dates: "In progress, on leave",
   degree: "B.S. in Physics & Computer Science"
 )
+- Co-director of Caltech AI Alignement, lead reading groups, research, and invited speakers
 
 
 
@@ -118,7 +118,7 @@
 - Implemented a continuous double auction system for agents
 - Implemented oversight, monitors, and other experimental conditions to test influence on collusion
 - Added logging and metrics with WandB
-- Accepted to ICML 2025 Workshop on Multi-agent Systemsa
+- Accepted to ICML 2025 Workshop on Multi-agent Systems
 
 #link("https://sudarsh.com/blog/em-sim")[
   #project(
@@ -163,16 +163,6 @@
 #project(
   name: "Physics Brawl, top 10 US High School Teams",
   dates: "2024, 2023"
-)
-
-#project(
-    name: "USACO Silver",
-    dates: 2023
-)
-
-#project(
-    name: "AIME Qualifier", 
-    dates: 2023
 )
 
 #project(

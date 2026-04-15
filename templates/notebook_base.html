@@ -17,219 +17,114 @@
 
     <link rel="canonical" href="{{ current_url | safe }}">
 
-    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
 
-    <!-- Recursive for CODE -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO@1,1,0.5&display=swap"
-        rel="stylesheet">
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="/common.css">
 
     <style>
-        @font-face {
-            font-family: 'Sudarshhandwriting';
-            src: url('/Sudarshhandwriting-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-        :root {
-            --paper-bg: #fdfdfd;
-            --ink-color: #2a2b2e;
-            --ink-secondary: #4a4b4e;
-            --highlight: rgba(225, 182, 14, 0.35);
-            --highlight-solid: #e1b60e;
-        }
-
-        /* Reset box sizing */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Sudarshhandwriting', cursive;
-            font-size: 26px;
-            /* Base size */
-            line-height: 1.4;
-            margin: 0;
-
-            /* MATCH BLOG EXACTLY: padding: 30px, max-width: max(60%, 600px) */
             padding: 30px;
-            max-width: max(60%, 600px);
-
-            color: var(--ink-color);
-            background-color: var(--paper-bg);
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-
-            text-align: left;
         }
 
         .content-wrapper {
             max-width: max(60%, 600px);
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: 'Sudarshhandwriting', cursive;
-            font-weight: 500;
-            margin: 0;
-            margin-bottom: 6px;
-            /* Match blog spacing */
-            line-height: 1.2;
-            color: var(--ink-color);
-        }
-
-        /* EXACT MATCH TO BLOG TITLE POSITION */
         .title {
-            font-size: 52px;
-            line-height: 1.0;
-            margin-top: 9px;
-            margin-bottom: 11px;
-            display: block;
-            border-bottom: none;
-            padding-bottom: 0;
-            font-weight: 700;
+            font-style: italic;
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
         }
 
-        p {
-            margin: 0 0 15px 0;
-        }
-
-        /* Messy Highlighter for Links */
-        a {
-            color: var(--ink-color);
-            /* Black text */
-            text-decoration: none;
-            border-bottom: none;
-
-            background-image: linear-gradient(to right,
-                    rgba(225, 182, 14, 0.4),
-                    rgba(225, 182, 14, 0.6) 20%,
-                    rgba(225, 182, 14, 0.5) 80%,
-                    rgba(225, 182, 14, 0.4));
-            background-size: 100% 0.5em;
-            /* Thick stroke */
-            background-position: 0 88%;
-            background-repeat: no-repeat;
-
-            transition: background-size 0.2s, background-color 0.2s;
-            border-radius: 2px 2px 0 0;
-        }
-
-        a:hover {
-            background-size: 100% 100%;
-            /* Fill up on hover */
-            background-color: rgba(225, 182, 14, 0.1);
-            color: var(--ink-color);
-        }
-
-        .nav-links {
+        .top-bar {
             display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            width: 100%;
             align-items: baseline;
-            margin-top: 0;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
 
-        .nav-back {
-            color: var(--ink-color);
-            /* Black text */
-            font-size: 22px;
+        .top-bar .nav-links {
+            margin: 0;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--muted);
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-style: italic;
             text-decoration: none;
-            line-height: 1.0;
-            display: inline-block;
-
-            /* Apply highlighter */
-            background-image: linear-gradient(to right,
-                    rgba(225, 182, 14, 0.4),
-                    rgba(225, 182, 14, 0.6));
-            background-size: 100% 0.4em;
-            background-position: 0 88%;
-            background-repeat: no-repeat;
-            border-bottom: none;
+            border-bottom: 1px dashed var(--muted);
         }
 
-        .nav-back:hover {
-            background-size: 100% 100%;
+        .nav-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
         }
 
-        .blog-post-date {
-            font-size: 20px;
-            color: var(--ink-secondary);
+        hr {
+            border: none;
+            border-top: 1px dashed var(--border-strong);
+            margin: 20px 0;
         }
 
-        .blog-post-description {
-            margin-bottom: 1.5em;
-            font-size: 24px;
+        ul { list-style: none; padding-left: 0; }
+        li {
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--border-strong);
         }
+        li:last-child { border-bottom: none; }
 
-        /* Font toggle */
-        .font-toggle {
+        .wip-stamp {
             position: fixed;
-            top: 16px;
-            right: 16px;
-            font-family: 'Sudarshhandwriting', cursive;
-            font-size: 18px;
-            background: var(--paper-bg);
-            color: var(--ink-color);
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 3px;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.06);
-            z-index: 100;
-            transition: opacity 0.2s;
-        }
-
-        .font-toggle:hover {
+            top: 36px;
+            right: 40px;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px dashed var(--accent);
+            padding: 4px 10px;
+            transform: rotate(4deg);
+            pointer-events: none;
             opacity: 0.7;
         }
 
-        body.normal-font,
-        body.normal-font h1,
-        body.normal-font h2,
-        body.normal-font h3,
-        body.normal-font h4,
-        body.normal-font h5,
-        body.normal-font h6 {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        body.normal-font {
-            font-size: 18px;
-        }
-
-        body.normal-font .font-toggle {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        @media (max-width: 600px) {
+            body { padding: 22px 20px 30px; }
+            .wip-stamp { top: 16px; right: 16px; font-size: 10px; padding: 3px 8px; }
         }
     </style>
 </head>
 
 <body>
-    <button class="font-toggle" onclick="toggleFont()" aria-label="Toggle handwriting font">Aa</button>
-    <script>
-        function toggleFont() {
-            document.body.classList.toggle('normal-font');
-            const isNormal = document.body.classList.contains('normal-font');
-            localStorage.setItem('notebook-normal-font', isNormal);
-        }
-        if (localStorage.getItem('notebook-normal-font') === 'true') {
-            document.body.classList.add('normal-font');
-        }
-    </script>
+    <span class="wip-stamp">work in progress</span>
+
     <div class="content-wrapper">
         <h1 class="title">{{ section.title }}</h1>
 
-        <div class="nav-links">
-            <a href="/" class="nav-back">
-                < back home</a>
+        <div class="top-bar">
+            <div class="nav-links">
+                <a href="/">
+                    < back home</a>
+            </div>
+            <p class="subtitle">half-thoughts, unfinished notes, things i'm still figuring out</p>
         </div>
 
         {{ section.content | safe }}

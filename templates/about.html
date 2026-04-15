@@ -17,87 +17,25 @@
     
     <link rel="canonical" href="{{ config.base_url }}/about">
 
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
     <!-- KaTeX math rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
         onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false}]});"></script>
     <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Space+Mono&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="/common.css">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 30px;
-            box-sizing: border-box;
-            line-height: 1.6;
-            letter-spacing: 0.5px;
-        }
-
-        .content-wrapper {
-            max-width: max(60%, 600px);
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-family: 'Space Mono', monospace;
-            margin-bottom: 6px;
-        }
-
-        .title {
-            margin-top: 0px;
-            font-size: 2.5em;
-        }
-
-        h1 {
-            font-size: 2em;
-        }
-
-        h2 {
-            font-size: 1.7em;
-        }
-
-        h3 {
-            font-size: 1.6em;
-        }
-
-        h4 {
-            font-size: 1.1em;
-        }
-
-        p {
-            margin-bottom: 15px;
-        }
-
-        em {
-            font-style: italic;
-        }
-
-        a {
-            color: #e1b60e;
-            text-decoration: underline;
-            font-family: 'Space Mono', monospace;
-        }
-
-        u {
-            text-decoration: underline;
-        }
-
-        strong {
-            font-weight: bold;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            width: 100%;
-        }
+        body { padding: 30px; }
 
         #art-container {
             position: fixed;
@@ -114,9 +52,11 @@
         }
 
         @media (max-width: 1200px) {
-            #art-container {
-                display: none;
-            }
+            #art-container { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 22px 20px 30px; }
         }
     </style>
 </head>
