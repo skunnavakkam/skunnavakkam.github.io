@@ -40,9 +40,33 @@
         .katex { font-size: 0.9em; }
         .katex-display { font-size: 0.9em; margin: 1em 0; }
 
+        .hero-image {
+            display: block;
+            width: calc(100% + 160px);
+            max-width: calc(100vw - 40px);
+            height: auto;
+            margin: 24px -80px 32px;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .post-body hr {
+            border-top-color: rgba(0, 0, 0, 0.12);
+        }
+
+        html.night .post-body hr {
+            border-top-color: rgba(255, 255, 255, 0.18);
+        }
+
         @media (max-width: 600px) {
             body { padding: 60px 22px 40px; max-width: 100%; }
             .title { font-size: 2.2em; }
+            .hero-image {
+                width: 100%;
+                max-width: 100%;
+                margin: 16px 0 22px;
+                border-radius: 16px;
+            }
         }
     </style>
     <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -138,7 +162,13 @@
         Published {{ page.date | date(format="%B %d, %Y") }}
     </p>
     <hr>
-    {{ page.content | safe}}
+    {% if page.extra.image %}
+    <img class="hero-image" src="{{ page.extra.image }}"
+        alt="{{ page.extra.image_alt | default(value=page.title) }}">
+    {% endif %}
+    <div class="post-body">
+        {{ page.content | safe }}
+    </div>
 </body>
 
 </html>

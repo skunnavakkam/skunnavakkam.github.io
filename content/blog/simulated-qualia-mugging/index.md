@@ -3,6 +3,9 @@ title = "Simulated Qualia Mugging"
 date = 2026-04-15
 draft = false
 description = "How do we grapple with simulated qualia?"
+
+[extra]
+image = "generate.jpg"
 +++
 
 I think that preventing suffering is more important than causing happiness, and
