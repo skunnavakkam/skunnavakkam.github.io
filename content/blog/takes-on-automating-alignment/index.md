@@ -41,9 +41,13 @@ often small changes that allow you to get useful information from hillclimbing a
 task. For example, you can optimize a data filtering experiment by using a metric 
 along the lines of reduction in misalignment for compute / number of datapoints removed,
 and this would yield a viable way to get useful information from hillclimbing a task.
-howI write this post in the hopes that more people will consider converting 
-alignment tasks into this hillclimbable form as a first attempt at doing their 
-alignment research.
+Another example is a task a friend is working on, figuring out whether certain RL
+environments lead to emergent misalignment: while you should probably have a human
+put a few hours into this task, having a model burn a billion tokens on crafting 
+environments costs around the same as the human here, and makes the case for your
+argument much stronger, in either direction. I write this post in the hopes that 
+more people will consider converting alignment tasks into this hillclimbable form
+as a first attempt at doing their alignment research.
 
 
 
