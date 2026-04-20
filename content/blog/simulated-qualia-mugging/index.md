@@ -71,7 +71,7 @@ voice he heard. "Hey dad," said a voice that sounded just like Oren.
 In a thick Chinese accent, a voice spoke softly. "We have your son."
 
 "Who are you? What do you want from me?"
-"We want you to give us the key to WorldEye, and we want you to tell us how to remove the backdoor ourselves."
+"We want you to give us the key to WorldEye, and we want you to tell us how to remove the back–door ourselves."
 "Fuck you"
 "Better choose your words carefully. We have your son, and we're not afraid to do what we need to"
 "If I give you the key, all Israeli intelligence will be compromised. Hundreds of thousands will die. The
