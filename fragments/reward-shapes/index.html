@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why does my reward look like *that*? | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="I’ve been training language models with reinforcement learning recently, and see some
+interesting behavior with my rewards. 
+Let’s set up the problem by saying …">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+
+    <link rel="canonical" href="https://sudarsh.com/fragments/reward-shapes/">
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Why does my reward look like *that*?" />
+    <meta name="twitter:description"
+        content="I’ve been training language models with reinforcement learning recently, and see some
+interesting behavior with my rewards. 
+Let’s set up the problem by saying that I’m running Group Relative Policy O…" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <link rel="stylesheet" href="/common.css">
+
+    <style>
+        body {
+            padding: 70px 30px 60px;
+            max-width: max(60%, 600px);
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 3em;
+            font-style: italic;
+            line-height: 1.1;
+            letter-spacing: -0.015em;
+            margin-bottom: 12px;
+        }
+
+        .meta {
+            font-style: italic;
+            color: var(--muted);
+            margin: 0 0 8px;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-style: italic;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--muted);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        hr {
+            border: none;
+            border-top: 1px dashed var(--border-strong);
+            margin: 22px 0;
+        }
+
+        body > hr:first-of-type {
+            margin-top: 14px;
+        }
+
+        blockquote {
+            border-left: 2px dashed var(--border-strong);
+            background: transparent;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .katex { font-size: 0.95em; }
+        .katex-display .katex { font-size: 1.1em; }
+        .katex-display { margin: 1.2em 0; }
+
+        .wip-stamp {
+            position: fixed;
+            top: 36px;
+            right: 40px;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px dashed var(--accent);
+            padding: 4px 10px;
+            transform: rotate(4deg);
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 60px 22px 40px; max-width: 100%; }
+            .title { font-size: 2.2em; }
+            .wip-stamp { top: 16px; right: 16px; font-size: 10px; padding: 3px 8px; }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ],
+                throwOnError: false,
+                trust: true
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '\u21a9';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <span class="wip-stamp">work in progress</span>
+
+    <h1 class="title">Why does my reward look like *that*?</h1>
+
+    <div class="nav-links">
+        <a href="../">
+            < back to all fragments</a>
+    </div>
+
+    <p class="meta">
+        July 17, 2025
+    </p>
+
+    <hr>
+
+    <p>I’ve been training language models with reinforcement learning recently, and see some
+interesting behavior with my rewards. </p>
+<p>Let’s set up the problem by saying that I’m running Group Relative Policy Optimization (GRPO)
+with two reward functions $\phi$ and $\varphi$, with my final reward $r = 4 \cdot \phi + \varphi$.
+I’m using weights on my rewards because I wanted to encourage $\phi$-like behavior in my model.</p>
+<p>This is what my rewards look like.</p>
+<p><img src="https://sudarsh.com/fragments/reward-shapes/rewards.png" alt="Reward Shapes" /></p>
+<p>The shape here isn’t very important. What you should notice is that $\phi$ climbs while $\varphi$
+goes down. Net reward also goes up, although this isn’t pictured.</p>
+<p>This makes sense if $\phi$ and $\varphi$ rewarded opposite things, but I don’t think this is the case.
+I think $\phi$ and $\varphi$ are orthogonal, and that you can have many different values of $\varphi$ 
+for a given value of $\phi$.</p>
+<p>Instead, I have another explanation here. </p>
+<p>Let $u, v$ be vector directions in activation / weight space which roughly represent $\nabla \phi$ and $\nabla \varphi$ respectively (a direction that maximizes $\phi, \varphi$ respectively). Let the model start off with some
+parameter set $\theta_0$ and represent the model as a function $M$ of $\theta$, with two components $M_u(\theta) = \phi(M(\theta))$ and $M_v(\theta) = \varphi(M(\theta))$. </p>
+<p>I make the load-bearing claim that the KL divergence required to increase $u$ is larger than the KL divergence required to decrease $u$ and so forth for $v$. Namely, for $\theta_{+u}, M_u(\theta_{+u}) &gt; M_u(\theta_0)$ and $\theta_{-u}, M_u(\theta_{-u}) &lt; M_u(\theta_0)$, </p>
+<p>$$
+KL(\theta_{+u} || \theta_0) &gt; KL(\theta_{-u} || \theta_0)
+$$</p>
+<p>This is a strong claim, but I think holds  true. For example, small distributional changes can cause the model to forget a sign when doing math, but making non-trivial gains in math is hard. This leads to the model being less likely to generate things with $+u, +v$ and more likely to generate things with $-u, -v$. Some version of this can be strengthened using Markov’s variance bound.</p>
+<p>Then, look at the reward in the cases $+u, -u, +v, -v$. (table 1)</p>
+<table><thead><tr><th></th><th>+ $\Delta v$</th><th>- $\Delta v$</th></tr></thead><tbody>
+<tr><td>+ $\Delta u$</td><td>+</td><td>+</td></tr>
+<tr><td>- $\Delta u$</td><td>-</td><td>-</td></tr>
+</tbody></table>
+<p>In both cases, where $\Delta u$ is positive, the reward, and thus advantage is positive. However, since $p(\delta u &gt; 0, \delta v leq 0) &gt; p(\delta u &gt; 0, \delta v &gt; 0)$, the model is more likely to optimize on the $+u, -v$ case.</p>
+<p>However, this will not always be true. If $\varphi$ ever gets too low, it becomes very easy to optimize for $\varphi$ and the expectations work out in favor of $\varphi$. Thus, even though the $\varphi$ reward is decreasing, accounting for it in the reward function causes pressure to maintain / not fall too much. </p>
+
+</body>
+
+</html>

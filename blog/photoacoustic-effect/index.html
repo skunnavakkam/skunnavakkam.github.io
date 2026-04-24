@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acousto-optics | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="When you propogate sound through a medium, you may be able to induce nonlinear effects
+on light shining through the medium using sound, such that the input ligh…">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <link rel="canonical" href="https://sudarsh.com/blog/photoacoustic-effect/">
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="/common.css">
+    <style>
+        body {
+            padding: 70px 30px 60px;
+            max-width: max(60%, 600px);
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 3em;
+            line-height: 1.1;
+            letter-spacing: -0.015em;
+            margin-bottom: 12px;
+        }
+
+        .katex { font-size: 0.9em; }
+        .katex-display { font-size: 0.9em; margin: 1em 0; }
+
+        .hero-image {
+            display: block;
+            width: calc(100% + 160px);
+            max-width: calc(100vw - 40px);
+            height: auto;
+            margin: 24px -80px 32px;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .post-body hr {
+            border-top-color: rgba(0, 0, 0, 0.12);
+        }
+
+        html.night .post-body hr {
+            border-top-color: rgba(255, 255, 255, 0.18);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 60px 22px 40px; max-width: 100%; }
+            .title { font-size: 2.2em; }
+            .hero-image {
+                width: 100%;
+                max-width: 100%;
+                margin: 16px 0 22px;
+                border-radius: 16px;
+            }
+        }
+    </style>
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Acousto-optics" />
+    <meta name="twitter:description"
+        content="When you propogate sound through a medium, you may be able to induce nonlinear effects
+on light shining through the medium using sound, such that the input light is shifted in frequency
+by the frequen…" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Acousto-optics</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published January 31, 2026
+    </p>
+    <hr>
+    
+    <div class="post-body">
+        <p>When you propogate sound through a medium, you may be able to induce nonlinear effects
+on light shining through the medium using sound, such that the input light is shifted in frequency
+by the frequency of the sound.</p>
+<p>If we assume that we have an acoustic wave travelling through the medium in the $+ \hat{y}$ direction and have the light propogate in the $+ \hat{x}$ direction, we have the medium contracting and expanding along the $\hat{y}$ direction. However, an increase in the size of a portion of the medium in the $\hat{y}$ direction causes a decrease in the size of the medium in the $\hat{x}$ direction. This causes some portion of the light to be frequency modulated by the stimulation acoustic beam, due to a change in the refractive index of the medium due to the photoelastic effect.</p>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin:1.5em 0;">
+<canvas id="ao-demo" width="500" height="280" style="border:1px solid #ccc;border-radius:4px;background:#fff;max-width:100%;height:auto;"></canvas>
+<canvas id="ao-ft" width="500" height="140" style="border:1px solid #ccc;border-radius:4px;background:#fff;max-width:100%;height:auto;"></canvas>
+</div>
+<script src="/js/ao-demo.js"></script>
+<p>You can see peaks at $f_e \pm f_s$ in the frequency domain plot.</p>
+<p>As far as I can tell, or as of the writing of this blog post, the Wikipedia entry on this topic is either incorrect or incomplete; this isn’t trying to rectify that, but I think it’s worth pointing out.</p>
+<p>What is the photoelastic effect, and why do things have different refractive indices in the first place? </p>
+<p>In free space, the refractive index of light is $1$, by definition. Between two atoms in a medium, the phase velocity of light is travelling at the phase velocity in free space. However, each atom provides a “kick” back to the light, which causes the phase of the light to change, and typically slow down. A few exotic materials have refractive indices less than $1$ in the visible range, and many have refractive indices less than $1$ in the x-ray range. Modelling the refractive index of a material as a function of frequency is fairly involved, and is often broken up into talking about majority behaviors in different domains - for example, there is a domain in which the Drude model, which models electrons as being charges on springs, is a good approximation for the behavior of electrons in a material, and other domains where this breaks down, and other models dominate.</p>
+<div style="display:flex;justify-content:center;margin:1.5em 0;">
+<canvas id="ri-demo" width="500" height="180" style="border:1px solid #ccc;border-radius:4px;background:#fff;max-width:100%;height:auto;"></canvas>
+</div>
+<script src="/js/ri-demo.js"></script>
+<p>Then, if you consider each atom as contributing a phase shift to the overall wave, the light “sees” more atoms per unit time if you compress atoms together in the direction of propogation - this contributes to a decrease in the phase velocity of light, and an increase in the refractive index in that direction; similarly, if you expand atoms apart in the direction of propogation, you get a decrease in the refractive index in that direction.</p>
+<p>You probably could do cool things with this, though I’m not super sure what.</p>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,341 @@
+/* ============================================================
+   Unified site stylesheet.
+   Loaded by every template. Template-specific overrides (home
+   page star field, fragments handwriting, split-column art
+   layouts) live inline in their respective templates.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+    --bg: #ffffff;
+    --fg: #333333;
+    --muted: #6b6b6b;
+    --accent: #b79600;
+    --border: #030303;
+    --border-strong: #dddddd;
+    --code-bg: #f4f4f4;
+    --inline-code-fg: #9c7912;
+    --blockquote-bg: #f9f9f9;
+}
+
+html.night {
+    --bg: #0e1117;
+    --fg: #c9cdd3;
+    --muted: #808895;
+    --accent: #9db4ff;
+    --border: #2a2f3a;
+    --border-strong: #2a2f3a;
+    --code-bg: #161a22;
+    --inline-code-fg: #9db4ff;
+    --blockquote-bg: #161a22;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'EB Garamond', serif;
+    font-size: 19px;
+    line-height: 1.55;
+    letter-spacing: 0;
+    color: var(--fg);
+    background: var(--bg);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+    margin: 0 0 6px;
+    color: var(--fg);
+}
+
+.title {
+    font-size: 2em;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.7em; }
+h3 { font-size: 1.4em; }
+h4 { font-size: 1.15em; }
+h5 { font-size: 1em; }
+h6 { font-size: 0.95em; }
+
+p {
+    margin: 0 0 15px;
+    color: var(--fg);
+}
+
+em { font-style: italic; }
+strong { font-weight: 600; }
+u { text-decoration: underline; }
+
+a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+}
+
+img {
+    display: block;
+    margin: 20px auto;
+    max-width: min(800px, 100% - 40px);
+    padding: 20px;
+}
+
+/* --- code ------------------------------------------------- */
+
+code,
+kbd,
+samp {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.82em;
+}
+
+pre {
+    background: var(--code-bg);
+    border-radius: 4px;
+    padding: 15px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.82em;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: var(--fg);
+    margin: 20px 0;
+}
+
+pre code {
+    font-size: 1em;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+}
+
+p code,
+li code,
+td code {
+    background: var(--code-bg);
+    color: var(--inline-code-fg);
+    padding: 1px 5px;
+    border-radius: 2px;
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* --- math ------------------------------------------------- */
+
+.katex { font-size: 1em; }
+.katex-display { font-size: 1em; margin: 1em 0; }
+
+/* --- layout ----------------------------------------------- */
+
+.content-wrapper {
+    max-width: max(60%, 600px);
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.nav-links a {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity .3s, transform .3s;
+}
+
+.clear {
+    font-family: 'EB Garamond', serif;
+    background: transparent;
+    border: none;
+    bottom: 30px;
+    left: 30px;
+    position: absolute;
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--fg);
+}
+
+/* --- blog post listings ----------------------------------- */
+
+.blog-post {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+}
+
+.blog-post:last-child {
+    border-bottom: none;
+}
+
+.blog-post-meta,
+.blog-post-date,
+.meta {
+    font-size: 0.9em;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.blog-post-description {
+    margin-bottom: 1.5em;
+}
+
+/* --- blockquote ------------------------------------------- */
+
+blockquote {
+    margin: 20px 0;
+    padding: 10px 20px;
+    background: var(--blockquote-bg);
+    border-left: 3px solid var(--border-strong);
+    font-style: italic;
+    color: var(--muted);
+}
+
+/* --- tables ----------------------------------------------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+}
+
+thead {
+    background: var(--code-bg);
+}
+
+th {
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border-strong);
+}
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* --- footnotes -------------------------------------------- */
+
+.footnotes {
+    margin-top: 36px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 0.9em;
+}
+
+.footnotes ol {
+    padding-left: 20px;
+}
+
+.footnotes li {
+    margin-bottom: 10px;
+}
+
+.footnote-definition {
+    margin-bottom: 10px;
+}
+
+.footnote-definition p {
+    display: inline;
+}
+
+.footnotes-separator {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0 18px 0;
+}
+
+.footnote-reference,
+.footnote-ref {
+    font-size: 0.8em;
+    vertical-align: super;
+}
+
+.footnote-reference a,
+.footnote-ref a,
+.footnote-backref {
+    text-decoration: none;
+}
+
+/* --- lists ------------------------------------------------ */
+
+ul, ol {
+    margin: 0 0 1.5em 0;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* --- mobile ----------------------------------------------- */
+
+@media screen and (max-width: 600px) {
+    body { font-size: 18px; }
+    .title { font-size: 1.7em; }
+    h1 { font-size: 1.7em; }
+    h2 { font-size: 1.45em; }
+    h3 { font-size: 1.25em; }
+
+    .content-wrapper {
+        max-width: 100%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        font-size: 0.95em;
+    }
+
+    img {
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    pre {
+        padding: 12px;
+        font-size: 0.78em;
+    }
+
+    blockquote {
+        margin: 16px 0;
+        padding: 8px 14px;
+    }
+}

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragments | Sudarsh Kunnavakkam</title>
+    <meta name="description" content="Research and thoughts on machine learning, mathematics, and technology.">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Fragments | Sudarsh Kunnavakkam">
+    <meta property="og:description" content="Research and thoughts on machine learning, mathematics, and technology.">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="canonical" href="https://sudarsh.com/fragments/">
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="/common.css">
+
+    <style>
+        body {
+            padding: 30px;
+        }
+
+        .content-wrapper {
+            max-width: max(60%, 600px);
+        }
+
+        .title {
+            font-style: italic;
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar .nav-links {
+            margin: 0;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--muted);
+            margin: 0;
+            font-size: 0.95em;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-style: italic;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--muted);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        hr {
+            border: none;
+            border-top: 1px dashed var(--border-strong);
+            margin: 20px 0;
+        }
+
+        ul { list-style: none; padding-left: 0; }
+        li {
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--border-strong);
+        }
+        li:last-child { border-bottom: none; }
+
+        .wip-stamp {
+            position: fixed;
+            top: 36px;
+            right: 40px;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px dashed var(--accent);
+            padding: 4px 10px;
+            transform: rotate(4deg);
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 22px 20px 30px; }
+            .wip-stamp { top: 16px; right: 16px; font-size: 10px; padding: 3px 8px; }
+        }
+    </style>
+</head>
+
+<body>
+    <span class="wip-stamp">work in progress</span>
+
+    <div class="content-wrapper">
+        <h1 class="title">Fragments</h1>
+
+        <div class="top-bar">
+            <div class="nav-links">
+                <a href="/">
+                    < back home</a>
+            </div>
+            <p class="subtitle">half-thoughts, unfinished notes, things i'm still figuring out</p>
+        </div>
+
+        <p>A lower barrier to entry place for me to put things, where I don’t worry so much about polish.</p>
+
+
+        
+
+<div class="blog-section">
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/webring-topology/">More Interesting Webrings</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                February 02, 2026
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            can we make webrings more than circles?
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/reinforce-brain-connections/">REINFORCEing A Brain</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                September 19, 2025
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/grpo-speculative-decoding/">Speculative Decoding for GRPO</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                August 08, 2025
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            Using speculative decoding to try speeding up GRPO
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/reward-shapes/">Why does my reward look like *that*?</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                July 17, 2025
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/backpropogate-circuits/">Backpropogate Circuits</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                May 16, 2025
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            Flowing gradients through the conductance matrix to optimize circuits of linear elements
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/soft-token-adversarial-attack/">Soft Token Adversarial Attack</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                April 20, 2025
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/side-channel-communication/">Using Power Draw as a Side Channel for Communication</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                April 07, 2025
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            A sketch of how models may be able to change their weights to communicate through power draw resulting from increased bitflips
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/gradient-inversion/">Gradient Inversion Attack</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                March 24, 2025
+            </span>
+        </h3>
+        
+        <div class="blog-post-description">
+            A replication of the paper Deep Leakage from Gradients to reverse-engineer the training data from the gradients of a neural network in training.
+        </div>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/spectral-graph-theory/">Eigenvectors of the Graph Laplacian hold Spectral Information</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                October 06, 2024
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+    
+    <div class="blog-post" style="margin-bottom: 40px;">
+        <h3 style="margin: 0; margin-bottom: 6px;">
+            <a href="https://sudarsh.com/fragments/dna-fixed-length/">DNA as fixed length codings</a>
+            <span class="blog-post-date" style="margin-left: 10px;">
+                September 10, 2024
+            </span>
+        </h3>
+        
+    </div>
+    
+    
+</div>
+
+    </div>
+</body>
+
+</html>
