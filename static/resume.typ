@@ -29,20 +29,9 @@
   title: "CTO, Co-Founder",
   dates: dates-helper(start-date: "Nov 2025", end-date: "Present")
 )
-- Collected the largest ever dataset of single-neuron activity in the Zebrafish brain at 100 Hz, towards enabling whole brain uploads of fish
-- Designed, built, and trained models to autoregressively predict the neural activity of the larval zebrafish brain
-- Built scenes to test generalization of models to new tasks and to probe the welfare of the simulated fish
-- Raised \$1M from Character VC at 18
-
-#work(
-  company: "ShapiroLab at Caltech",
-  location: "Pasadena, CA",
-  title: "Undergraduate Research Intern",
-  dates: dates-helper(start-date: "Nov 2024", end-date: "Aug 2025")
-)
-- Engineering towards 10ms response time ultrasound reporters
-- Built a high throughput ultrasound screening platform to scale to 1000s of variants per day
-- Designed custom proteins with RFDiffusion, Alphafold, and ESM3 for 10x faster kinetics
+- Co-founded venture-backed neuroscience startup pursuing whole-brain emulation; raised \$1M pre-seed from Character Capital at 18.
+- Built an imaging facility from the ground up to image the whole brain of the zebrafish at 10,000 slices per second in 3 months
+- Designed and trained autoregressive models of larval zebrafish neural activity toward whole-brain emulation.
 
 
 #work(
@@ -51,9 +40,18 @@
   title: "Research Assistant",
   dates: dates-helper(start-date: "Sep 2023", end-date: "Jun 2025")
 )
-- Lead engineer for internal project to estimate the agentic time horizon of LLMs at much lower cost
-- Co-lead engineer of a evaluation for Chain-of-Thought Faithfulness of Large Language Models
-- Helped lead teams of contractors red-team LLMs and curate datasets such as #link("metr-evals/daft-math")[DAFT Math] of difficult, free-response questions 
+- Lead engineer for internal project to estimate the agentic time horizon of LLMs at much lower cost, through distilling failure points in agentic transcripts
+- Co-lead engineer of a evaluation for Chain-of-Thought Faithfulness of Large Language Models, finding that Chain of Thought is informative about LLM cognition as long as the cognition is complex enough that it can't be performed in a single forward pass
+- Helped lead teams of contractors red-team LLMs and curate datasets such as #link("https://huggingface.co/datasets/metr-evals/daft-math")[DAFT Math] of difficult, free-response questions 
+
+
+#work(
+  company: "ShapiroLab at Caltech",
+  location: "Pasadena, CA",
+  title: "Undergraduate Research Intern",
+  dates: dates-helper(start-date: "Nov 2024", end-date: "Aug 2025")
+)
+- Built a high-throughput ultrasound screening platform; designed custom proteins with RFDiffusion, AlphaFold, and ESM3 for faster ultrasound reporter kinetics.
 
 
 #work(
@@ -64,15 +62,6 @@
 )
 - Implemented a _continuous double auction_ agent arena as a model environment for LLM collusion, accepted to _ICML 2025_
 
- 
-#work(
-  company: "Lee Nano-Optics Lab at UC Irvine",
-  location: "Irvine, CA",
-  title: "High School Research Intern",
-  dates: dates-helper(start-date: "Dec 2022", end-date: "Jun 2024")
-)
-- Scaled 2D ITO fabrication from mm² to multi-cm² sizes, developed new transmission matrix method replacing repeated ellipsometry, and created transfer-matrix reverse solver to easily get refractive index information under nonlinear conditions
-
 == Education
 
 #edu(
@@ -81,20 +70,26 @@
   dates: "In progress, on leave",
   degree: "B.S. in Physics & Computer Science"
 )
-- Co-director of Caltech AI Alignement, lead reading groups, research, and invited speakers
+- Co-director of Caltech AI Alignment, lead reading groups, research, and invited speakers; scaled from 10 to 100+ attendees at events
 
+
+
+== Writing & Other Work
+
++ #link("https://sudarsh.com/blog/simulated-qualia-mugging/")[Simulated Qualia Mugging]
++ #link("https://sudarsh.com/blog/takes-on-automating-alignment/")[Takes on Automating Alignment]
++ #link("https://sudarsh.com/blog/how-to-slowdown/")[How Should We Implement an AI Pause?]
++ #link("https://sudarsh.com/blog/degenerate-attention-heads/")[Redundant Attention Heads in Large Language Models For In Context Learning]
 
 
 
 == Selected Publications
 
-+ A. Deng\*, S. Von Arx\*, B. Snodin, #underline[S. Kunnavakkam], T. Lanham, "CoT May Be Highly Informative Despite "Unfaithfulness"" by _METR_
++ A. Deng\*, S. Von Arx\*, B. Snodin, #underline[S. Kunnavakkam], T. Lanham, "CoT May Be Highly Informative Despite "Unfaithfulness"" by _METR_, Aug 2025
 
-+ K. Agarwal, V. Teo, J. Vaquez, #underline[S. Kunnavakkam], V. Srikanth, A. Liu, "Evaluating LLM Agent Collusion in Double Auctions" at _ICML 2025 Workshop on Multi-Agent Systems in the Era of Foundation Models _, Vancouver, Canada, July 2025.
++ K. Agarwal, V. Teo, J. Vazquez, #underline[S. Kunnavakkam], V. Srikanth, A. Liu, "Evaluating LLM Agent Collusion in Double Auctions" at _ICML 2025 Workshop on Multi-Agent Systems in the Era of Foundation Models _, Vancouver, Canada, July 2025.
 
 + C. J. Effarah\*, T. Chen\*, #underline[S. Kunnavakkam]\*, C. M. Gonzalez, H. W. Lee, "Liquid Metal Printed 2D ITO for Nanophotonic Applications," in _California-US Government Workshop on 2D Materials_, Irvine, California, USA, Sep 2023
-
-
 
 
 == Projects
@@ -107,8 +102,6 @@
 ]
 - Co-lead engineer on METR research report on chain-of-thought (CoT) faithfulness (Aug 2025), extending Anthropic’s seminal evaluation to three frontier models and publishing findings for the wider safety community
 
-
-
 #link("https://github.com/andyjliu/llm-agent-collusion")[
   #project(
     name: "LLM Agent Collusion Arena",
@@ -119,27 +112,6 @@
 - Implemented oversight, monitors, and other experimental conditions to test influence on collusion
 - Added logging and metrics with WandB
 - Accepted to ICML 2025 Workshop on Multi-agent Systems
-
-#link("https://sudarsh.com/blog/em-sim")[
-  #project(
-    name: "EM Simulator",
-    dates: 2025,
-  )
-]
-- Reverse mode differentiable FDFD simulators in Jax for inverse design
-- Forward and backward diffusion models trained with DDPM and Physics-inspired reward functions \
-  to approximate steady state solutions
-- Implemented fast FDTD for transient events + implemented Fourier Neural Operators for speedup
-
-#link("https://sudarsh.com/blog/backpropogate-circuits/")[
-#project(
-  name: "Circuit Simulator",
-  dates: 2025,
-)]
-- Reverse-mode autodiff for RLC network optimization
-- Gradient-based optimization for component selection
-- Works in time domain, as well as just to do component selection
-- Implemented custom `spsolver` that is differentiable in JaX
 
 #project(
   name: "Scanning Tunneling Microscope",
@@ -158,11 +130,6 @@
 #project(
   name: "Non-trivial Fellow",
   dates: 2024,
-)
-
-#project(
-  name: "Physics Brawl, top 10 US High School Teams",
-  dates: "2024, 2023"
 )
 
 #project(
