@@ -6,13 +6,11 @@ draft=false
 +++
 
 Compute verification might be a very significant part of coordination with respect
-to intelligent AI systems. In short timelines, the kind espoused by a frontier lab 
+to intelligent AI systems. In short timelines (<2030), the kind espoused by a frontier lab 
 leader, I'm suspicious of die-level verification hardware being tractable. If this 
 is the case, we should then focus on auxilary verification methods, such as post-hoc
 modifications to chips or robust software verification methods. In any case, we 
 should act now if we want this to happen.
-
-## The Bear Case
 
 I'm going to be treating Nvidia as the only GPU manufacturer for the sake of simplicity,
 but at least in my conversations with semiconductor companies they all operate on similar
@@ -30,8 +28,6 @@ the earliest we could ship a verified chip would be with Feynman chips in 2028 i
 Nvidia could accomodate changes right now. Die-level verification is at least a
 few years away.
 
-## The Bull Case
-
 Can we verify compute at higher levels, and how long do modifications at different 
 levels take? My estimates from my own experience and from conversations with semiconductor companies:
 
@@ -47,17 +43,20 @@ levels take? My estimates from my own experience and from conversations with sem
 We might be able to have board changes for Feynman chips and software changes for _most_ Rubin 
 chips [^1]!
 
-I think these changes are quite promising. One proposal of a board-level change is an additional MCU 
+These changes are quite promising. One proposal of a board-level change is an additional MCU 
 / the existing hardware that hashes the weights that are sent to the die, 
 and keeping a dictionary of hashes. If there are a huge number of different weights 
 that are sent to the die, this implies weight updates. If there are only a few thousand
 different sets of weights, this implies no weight updates ([Shavit 2023](https://arxiv.org/pdf/2303.11341)).
-I realize this isn't a perfect solution, but it's something.
+Although this is imperfect, it shows that we may be able to find board / firmware level
+modifications that allow for compute verification
 
-More importantly, if we want compute verification to happen, it needs to happen real soon.
-The window to modify the Firmware for Rubin chips is closing, and the same is likely true
-for board level changes on Feynman chips.
+For compute verification to happen on short timelines, it cannot be done at the die level.
+Instead, board or firmware level changes are more tractable on short timelines. More importantly,
+such changes need to happen now if compute verification is to happen for Rubin chips, since
+the chips are shipping soon.
 
 
 [^1]: You may not be able to roll this change out for the earliest chips, but tapeouts
-happen over the course of years, and you can always push the change later.
+happen over the course of years, and you can always push the change at a later portion
+in the production cycle. It still reduces the number of chips that are un-verified.
