@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | Dinners</title>
+    <meta name="description"
+        content="{{ page.description | default(value=page.content | striptags | truncate(length=160)) }}">
+    <meta name="author" content="{{ config.extra.author }}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ page.title }} | Dinners">
+    <meta property="og:description"
+        content="{{ page.description | default(value=page.content | striptags | truncate(length=160)) }}">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="canonical" href="{{ page.permalink | safe }}">
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+    <style>
+        @font-face {
+            font-family: "Sudarsh Hand";
+            src: url("/Sudarshhandwriting-Regular.ttf") format("truetype");
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        :root {
+            --paper: #f7dde2;
+            --ink: #43332f;
+            --ink-soft: #9a857f;
+            --coral: #d9697a;
+            --sage: #88a06a;
+        }
+
+        html.night {
+            --paper: #1e1618;
+            --ink: #f0e3df;
+            --ink-soft: #b29b96;
+            --coral: #e8859a;
+            --sage: #b3c595;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { margin: 0; }
+
+        body {
+            min-height: 100vh;
+            font-family: "Sudarsh Hand", "Segoe Script", cursive;
+            color: var(--ink);
+            background-color: var(--paper);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 72px 24px 88px;
+        }
+
+        .top-nav { position: absolute; top: 22px; left: 28px; }
+        .top-nav a {
+            font-size: 1.4rem;
+            color: var(--ink-soft);
+            text-decoration: none;
+        }
+        .top-nav a:hover { color: var(--coral); }
+
+        .note { width: 100%; max-width: 480px; }
+
+        .kicker {
+            font-size: 1.5rem;
+            color: var(--coral);
+            margin: 0 0 2px;
+        }
+
+        .title {
+            font-weight: 400;
+            font-size: clamp(3rem, 11vw, 4.2rem);
+            line-height: 0.92;
+            margin: 0;
+        }
+
+        .underline {
+            display: block;
+            width: 190px;
+            height: 12px;
+            margin: 6px 0 14px;
+            color: var(--coral);
+        }
+
+        .meta {
+            font-size: 1.45rem;
+            color: var(--ink-soft);
+            margin: 0 0 28px;
+        }
+        .meta span + span::before { content: " · "; color: var(--sage); }
+
+        .menu-body {
+            font-size: clamp(1.55rem, 4.6vw, 1.8rem);
+            line-height: 1.22;
+        }
+        .menu-body > *:first-child { margin-top: 0; }
+        .menu-body p { margin: 0 0 0.7rem; }
+
+        .menu-body h2, .menu-body h3 {
+            font-weight: 400;
+            line-height: 1;
+            color: var(--ink);
+            margin: 1.2em 0 0.3em;
+        }
+        .menu-body h2 { font-size: 2.1rem; }
+        .menu-body h3 { font-size: 1.8rem; }
+
+        .menu-body a {
+            color: var(--coral);
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+        .menu-body a:hover { color: var(--ink); text-decoration-color: var(--coral); }
+
+        .menu-body ul { list-style: none; padding: 0; margin: 0.4em 0 1em; }
+        .menu-body ul li {
+            position: relative;
+            padding: 4px 0 4px 26px;
+        }
+        .menu-body ul li::before {
+            content: "\2014";
+            position: absolute; left: 0; top: 4px;
+            color: var(--sage);
+        }
+        .menu-body ol { padding-left: 1.4em; margin: 0.4em 0 1em; }
+        .menu-body ol li { padding: 2px 0; }
+
+        .menu-body blockquote {
+            margin: 1em 0;
+            padding-left: 18px;
+            border-left: 3px solid var(--coral);
+            color: var(--ink-soft);
+        }
+
+        .menu-body img {
+            display: block; width: 100%; height: auto;
+            margin: 1.2em 0;
+            border-radius: 6px;
+        }
+
+        .menu-body hr {
+            border: 0;
+            border-top: 2px dotted var(--ink-soft);
+            opacity: 0.5;
+            width: 60%;
+            margin: 1.4em 0;
+        }
+
+        @media (max-width: 520px) {
+            .menu-body { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="top-nav"><a href="../">&larr; all dinners</a></nav>
+
+    <article class="note">
+        {% if page.date %}
+        <p class="kicker">{{ page.date | date(format="%A") }} supper,</p>
+        {% endif %}
+        <h1 class="title">{{ page.title }}</h1>
+        <svg class="underline" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 7 Q40 2 78 6 T150 6 Q176 8 197 4" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+        </svg>
+        <p class="meta">
+            {% if page.date %}<span>{{ page.date | date(format="%B %-d, %Y") }}</span>{% endif %}
+            {% if page.extra.location %}<span>{{ page.extra.location }}</span>{% endif %}
+            {% if page.extra.seats %}<span>{{ page.extra.seats }} at the table</span>{% endif %}
+        </p>
+
+        <div class="menu-body">
+            {{ page.content | safe }}
+        </div>
+    </article>
+</body>
+
+</html>

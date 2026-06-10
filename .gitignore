@@ -2,3 +2,4 @@ content/.obisidan/*
 .venv/
 __pycache__/
 .claude/
+public/
