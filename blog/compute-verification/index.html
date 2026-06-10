@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Should Think More Critically About Compute Verification | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="Figuring out how to verify compute on short AI timelines">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <link rel="canonical" href="https://sudarsh.com/blog/compute-verification/">
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="/common.css">
+    <style>
+        body {
+            padding: 70px 30px 60px;
+            max-width: max(60%, 600px);
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 3em;
+            line-height: 1.1;
+            letter-spacing: -0.015em;
+            margin-bottom: 12px;
+        }
+
+        .katex { font-size: 0.9em; }
+        .katex-display { font-size: 0.9em; margin: 1em 0; }
+
+        .hero-image {
+            display: block;
+            width: calc(100% + 160px);
+            max-width: calc(100vw - 40px);
+            height: auto;
+            margin: 24px -80px 32px;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .post-body hr {
+            border-top-color: rgba(0, 0, 0, 0.12);
+        }
+
+        html.night .post-body hr {
+            border-top-color: rgba(255, 255, 255, 0.18);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 60px 22px 40px; max-width: 100%; }
+            .title { font-size: 2.2em; }
+            .hero-image {
+                width: 100%;
+                max-width: 100%;
+                margin: 16px 0 22px;
+                border-radius: 16px;
+            }
+        }
+    </style>
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="We Should Think More Critically About Compute Verification" />
+    <meta name="twitter:description"
+        content="Figuring out how to verify compute on short AI timelines" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">We Should Think More Critically About Compute Verification</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published June 01, 2026
+    </p>
+    <hr>
+    
+    <div class="post-body">
+        <p>Compute verification might be a very significant part of coordination with respect
+to intelligent AI systems. In short timelines (&lt;2030), the kind espoused by a frontier lab 
+leader, I’m suspicious of die-level verification hardware being tractable. If this 
+is the case, we should then focus on auxilary verification methods, such as post-hoc
+modifications to chips or robust software verification methods. In any case, we 
+should act now if we want this to happen.</p>
+<p>I’m going to be treating Nvidia as the only GPU manufacturer for the sake of simplicity,
+but at least in my conversations with semiconductor companies they all operate on similar
+manufacturing timelines (because they’re all TSMC!), so this should be representative.</p>
+<p>Nvidia currently ships <em>Blackwell</em> architecture GPUs, sometimes paired with the <em>Grace</em>
+CPU, which are B200s, GB200s, and GB300s. Later this year, <em>Rubin</em> GPUs will be released,
+paired with <em>Vera</em> CPUs. There was around a year between the release of Blackwell chips and
+the first models trained on Blackwell chips, so we could expect similar for Rubin chips. I’d
+expect that this gap is slightly shorter for Rubin chips. The generation after Rubin is
+<em>Feynman</em>, expected to be released at some point in 2028. </p>
+<p>If we needed hardware verification at Die level, and we had the know-how to do so <em>now</em>, 
+the earliest we could ship a verified chip would be with Feynman chips in 2028 if
+Nvidia could accomodate changes right now. Die-level verification is at least a
+few years away.</p>
+<p>Can we verify compute at higher levels, and how long do modifications at different 
+levels take? My estimates from my own experience and from conversations with semiconductor companies:</p>
+<ul>
+<li><strong>Die-level changes</strong>: <strong>&gt;2</strong> years</li>
+<li><strong>Board Level changes</strong>: depends on what sorts of modifications you’re making.
+you could feasibly add an MCU to a board with a few months, but for example changing memory
+configurations depends heavily on the supply of memory, which is very constrained
+and inflexible</li>
+<li><strong>Software/Firmware changes</strong>: can be done in a few weeks, and realistically is <strong>1-2</strong> months.
+However, an advantage of these changes is that you can do them at ~any point in your production
+cycle, whereas die and board level changes need to be made earlier in the design process.</li>
+</ul>
+<p>We might be able to have board changes for Feynman chips and software changes for <em>most</em> Rubin 
+chips <sup class="footnote-reference"><a href="#1">1</a></sup>!</p>
+<p>These changes are quite promising. One proposal of a board-level change is an additional MCU 
+/ the existing hardware that hashes the weights that are sent to the die, 
+and keeping a dictionary of hashes. If there are a huge number of different weights 
+that are sent to the die, this implies weight updates. If there are only a few thousand
+different sets of weights, this implies no weight updates (<a href="https://arxiv.org/pdf/2303.11341">Shavit 2023</a>).
+Although this is imperfect, it shows that we may be able to find board / firmware level
+modifications that allow for compute verification</p>
+<p>For compute verification to happen on short timelines, it cannot be done at the die level.
+Instead, board or firmware level changes are more tractable on short timelines. More importantly,
+such changes need to happen now if compute verification is to happen for Rubin chips, since
+the chips are shipping soon.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>You may not be able to roll this change out for the earliest chips, but tapeouts
+happen over the course of years, and you can always push the change at a later portion
+in the production cycle. It still reduces the number of chips that are un-verified.</p>
+</div>
+
+    </div>
+</body>
+
+</html>

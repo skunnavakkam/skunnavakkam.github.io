@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takes on Automating Alignment Research | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="Recently, AI Models have become good at long horizon tasks. In addition, they seem
+especially good at the types of long horizon tasks that allow for a quick and…">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <link rel="canonical" href="https://sudarsh.com/blog/takes-on-automating-alignment/">
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="/common.css">
+    <style>
+        body {
+            padding: 70px 30px 60px;
+            max-width: max(60%, 600px);
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 3em;
+            line-height: 1.1;
+            letter-spacing: -0.015em;
+            margin-bottom: 12px;
+        }
+
+        .katex { font-size: 0.9em; }
+        .katex-display { font-size: 0.9em; margin: 1em 0; }
+
+        .hero-image {
+            display: block;
+            width: calc(100% + 160px);
+            max-width: calc(100vw - 40px);
+            height: auto;
+            margin: 24px -80px 32px;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .post-body hr {
+            border-top-color: rgba(0, 0, 0, 0.12);
+        }
+
+        html.night .post-body hr {
+            border-top-color: rgba(255, 255, 255, 0.18);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 60px 22px 40px; max-width: 100%; }
+            .title { font-size: 2.2em; }
+            .hero-image {
+                width: 100%;
+                max-width: 100%;
+                margin: 16px 0 22px;
+                border-radius: 16px;
+            }
+        }
+    </style>
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Takes on Automating Alignment Research" />
+    <meta name="twitter:description"
+        content="Recently, AI Models have become good at long horizon tasks. In addition, they seem
+especially good at the types of long horizon tasks that allow for a quick and short
+feedback loop. For example, on Mi…" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Takes on Automating Alignment Research</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published April 19, 2026
+    </p>
+    <hr>
+    
+    <div class="post-body">
+        <p>Recently, AI Models have become good at long horizon tasks. In addition, they seem
+especially good at the types of long horizon tasks that allow for a quick and short
+feedback loop. For example, on <a href="https://epoch.ai/blog/mirrorcode-preliminary-results">MirrorCode</a>,
+models were able to generate tens of thousands of lines of code, a task that would
+have taken a human several days to complete. This was possible because of
+the number of tests provided to the model, such that the model was able to write
+code that would pass many tests.</p>
+<p>In no way is this discrediting the capabilities of the models, but instead showing
+that they excel on tasks that allow for the models to see when they’re making progress.</p>
+<p>For more evidence, Anthropic published <a href="https://alignment.anthropic.com/2026/automated-w2s-researcher/?curius=2910">Automated Weak-to-Strong Researcher</a>, which had models hill-climb an alignment
+task in an autoresearch loop, outperforming human researchers (though I think that,
+if humans had run the same number of experiments, they could have outperformed the 
+model, the model in the autoresearch loop could run more experiments).</p>
+<p>Altogether, this presents the case that models are good at long horizon tasks that
+are attached to some metric when being asked to push that metric to some extrema.</p>
+<p>I think the right framing for automating alignment research is to find tasks that
+a) are either directly alignment tasks that you’d like to improve or b) find tasks
+that when improved will lead to better alignment indirectly. Anthropic did the former,
+but there are likely many tasks where the latter is also possible.</p>
+<p>You could do this quite feasibly across many fields of alignment;
+controls, monitorability, weak-to-strong generalization, and so on. This
+leads to forms of reward-hacking really easily, and this encourages reward hacking if 
+you do not do your environment design carefully. However, you could keep your validation
+set in a place the model couldn’t access, add honeypots, and so on as a way to detect
+or prevent reward hacking.</p>
+<p>I think people are probably underestimating the amount of work that automated
+alignment research can do because this capability is quite new, and there are 
+often small changes that allow you to get useful information from hillclimbing a 
+task. For example, you can optimize a data filtering experiment by using a metric 
+along the lines of reduction in misalignment for compute / number of datapoints removed,
+and this would yield a viable way to get useful information from hillclimbing a task.
+Another example is a task a friend is working on, figuring out whether certain RL
+environments lead to emergent misalignment: while you should probably have a human
+put a few hours into this task, having a model burn a billion tokens on crafting 
+environments costs around the same as the human here, and makes the case for your
+argument much stronger, in either direction. I write this post in the hopes that 
+more people will consider converting alignment tasks into this hillclimbable form
+as a first attempt at doing their alignment research.</p>
+
+    </div>
+</body>
+
+</html>

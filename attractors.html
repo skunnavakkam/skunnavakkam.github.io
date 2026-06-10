@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Analog Attractors CRT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f7f6f2;
+            --panel: #ffffff;
+            --text: #111111;
+            --muted: #4f4f4f;
+            --accent: #0d3b66;
+            --accent2: #ef8354;
+            --good: #007f5f;
+            --border: #111111;
+            --grid: rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Roboto, ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 16px;
+            padding: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 980px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .crt-wrap {
+            background: var(--panel);
+            border-radius: 0;
+            position: relative;
+            padding: 16px;
+            border: 2px solid var(--border);
+            box-shadow: none;
+        }
+
+        .crt {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            display: block;
+            border-radius: 0;
+            background: #f4f4f4;
+            border: 2px solid var(--border);
+            box-shadow: none;
+            image-rendering: pixelated;
+        }
+
+        .scanlines {
+            pointer-events: none;
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            top: 16px;
+            bottom: 16px;
+            border-radius: 0;
+            background:
+                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.04) 0px, rgba(0, 0, 0, 0.04) 1px, transparent 1px, transparent 3px);
+            mix-blend-mode: multiply;
+        }
+
+        .graticule {
+            pointer-events: none;
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            top: 16px;
+            bottom: 16px;
+            border-radius: 0;
+            background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: calc(100%/8) calc(100%/6);
+        }
+
+        .panel {
+            background: var(--panel);
+            border-radius: 0;
+            padding: 12px;
+            border: 2px solid var(--border);
+            box-shadow: none;
+        }
+
+        .panel h2 {
+            font-family: "Space Mono", monospace;
+            font-size: 13px;
+            margin: 0 0 8px 0;
+            color: var(--text);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 4px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .control {
+            display: grid;
+            grid-template-columns: 100px 1fr 60px;
+            gap: 8px;
+            align-items: center;
+            padding: 6px 8px;
+            border-radius: 0;
+            background: transparent;
+            border: 2px solid var(--border);
+            margin-bottom: 6px;
+        }
+
+        .control label {
+            font-family: "Space Mono", monospace;
+            color: var(--text);
+            font-size: 12px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        /* Right-side readout box */
+        .control span:last-child {
+            justify-self: end;
+            min-width: 52px;
+            text-align: right;
+            padding: 2px 6px;
+            background: #fff;
+            border: 2px solid var(--border);
+            line-height: 18px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        select,
+        button,
+        input[type="number"] {
+            background: #ffffff;
+            color: var(--text);
+            border: 2px solid var(--border);
+            border-radius: 0;
+            padding: 6px 8px;
+            font-size: 13px;
+        }
+
+        button.primary {
+            background: #ffffff;
+        }
+
+        button.good {
+            background: #ffffff;
+            color: var(--good);
+        }
+
+        .small {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .kpi {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border-radius: 0;
+            background: transparent;
+            border: 2px solid var(--border);
+            margin-bottom: 10px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .badgelike {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 0;
+            background: #ffffff;
+            border: 2px solid var(--border);
+            color: var(--text);
+            font-size: 12px;
+        }
+
+        .footer {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* Retro brutalist sliders */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 24px;
+            background: transparent;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 8px;
+            background: #000;
+            border: 2px solid var(--border);
+            border-radius: 0;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -8px;
+            width: 20px;
+            height: 24px;
+            background: #fff;
+            border: 2px solid var(--border);
+            border-radius: 0;
+        }
+
+        input[type="range"]::-moz-range-track {
+            height: 8px;
+            background: #000;
+            border: 2px solid var(--border);
+            border-radius: 0;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 24px;
+            background: #fff;
+            border: 2px solid var(--border);
+            border-radius: 0;
+        }
+    </style>
+    <style></style>
+</head>
+
+<body>
+    <div class="layout">
+        <div class="crt-wrap">
+            <canvas id="crt" class="crt"></canvas>
+            <div class="graticule"></div>
+            <div class="scanlines"></div>
+        </div>
+        <div class="panel">
+            <h2>Attractors Vector CRT</h2>
+
+            <div class="kpi">
+                <div>Mode: <span id="modeLabel" class="badgelike">Lorenz</span></div>
+                <div>FPS: <span id="fps">0</span></div>
+            </div>
+
+            <div class="row full">
+                <div class="control">
+                    <label for="attractor">Attractor</label>
+                    <select id="attractor">
+                        <option value="lorenz">Lorenz</option>
+                        <option value="rossler">Rössler</option>
+                        <option value="chua">Chua</option>
+                    </select>
+                    <button id="reset" title="Reset state" class="primary">Reset</button>
+                </div>
+            </div>
+            <div id="params-common">
+                <h2>Parameters</h2>
+                <div class="control"><label>P1</label><input id="p1" type="range" min="0.1" max="30" step="0.1"
+                        value="10"><span id="p1V">10.0</span></div>
+                <div class="control"><label>P2</label><input id="p2" type="range" min="0.1" max="50" step="0.1"
+                        value="28"><span id="p2V">28.0</span></div>
+                <div class="control"><label>P3</label><input id="p3" type="range" min="0.2" max="10" step="0.01"
+                        value="2.6667"><span id="p3V">2.67</span></div>
+                <div class="control"><label>Time</label><input id="time" type="range" min="0.1" max="5" step="0.05"
+                        value="1.0"><span id="timeV">1.00</span></div>
+            </div>
+
+            <h2>Analog Inputs</h2>
+            <div class="control"><label>A → dx</label><input id="inA" type="range" min="-1" max="1" step="0.001"
+                    value="0"><span id="inAV">0.000</span></div>
+            <div class="control"><label>B → dy</label><input id="inB" type="range" min="-1" max="1" step="0.001"
+                    value="0"><span id="inBV">0.000</span></div>
+            <div class="control"><label>C → dz</label><input id="inC" type="range" min="-1" max="1" step="0.001"
+                    value="0"><span id="inCV">0.000</span></div>
+            <div class="control"><label>Inj. Gain</label><input id="injGain" type="range" min="0" max="5" step="0.01"
+                    value="1.0"><span id="injGainV">1.00</span></div>
+
+            <h2>Output & Display</h2>
+            <div class="control"><label>X scale</label><input id="xScale" type="range" min="0.2" max="2.0" step="0.01"
+                    value="1.0"><span id="xScaleV">1.00</span></div>
+            <div class="control"><label>Y scale</label><input id="yScale" type="range" min="0.2" max="2.0" step="0.01"
+                    value="1.0"><span id="yScaleV">1.00</span></div>
+            <div class="control"><label>Persistence</label><input id="fade" type="range" min="0.92" max="0.999"
+                    step="0.001" value="0.965"><span id="fadeV">0.965</span></div>
+            <div class="control"><label>Brightness</label><input id="bright" type="range" min="0.1" max="2.0"
+                    step="0.01" value="1.0"><span id="brightV">1.00</span></div>
+            <div class="control"><label>Stroke</label><input id="stroke" type="range" min="0.5" max="3" step="0.1"
+                    value="1.2"><span id="strokeV">1.2</span></div>
+            <div class="control"><label>Color</label><select id="color">
+                    <option value="aqua">aqua</option>
+                    <option value="green">green</option>
+                    <option value="magenta">magenta</option>
+                    <option value="amber">amber</option>
+                    <option value="white">white</option>
+                </select><span class="small">phosphor</span></div>
+            <div class="row">
+                <button id="toggle" class="good">Start</button>
+                <button id="export" class="primary">Export PNG</button>
+            </div>
+
+            <div class="footer">Tip: A, B, C sliders act like DC inputs to the ODEs (dx, dy, dz). Adjust P1–P3 and Time
+                to explore each attractor.</div>
+        </div>
+    </div>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+        const canvas = $("crt");
+        const ctx = canvas.getContext("2d", { alpha: false });
+        const modeLabel = $("modeLabel");
+        const fpsLabel = $("fps");
+
+        const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+        let running = false;
+        let frameHandle = null;
+        let lastT = performance.now();
+        let fpsAccum = 0, fpsCount = 0, lastFpsT = performance.now();
+
+        // State
+        let state = { x: 0.01, y: 0.01, z: 0.01 };
+        let lastXY = null;
+        let attractor = "lorenz";
+
+        // Common parameters driven by knobs
+        const common = { p1: 10, p2: 28, p3: 8 / 3, time: 1.0 };
+
+        // Analog injections
+        const inputs = { a: 0.0, b: 0.0, c: 0.0, gain: 1.0 };
+
+        // Drawing config
+        const display = {
+            xScale: 1.0,
+            yScale: 1.0,
+            fade: 0.965,
+            brightness: 1.0,
+            stroke: 1.2,
+            color: "aqua",
+        };
+
+        // Auto scale tracker
+        const tracker = { minX: 1e9, maxX: -1e9, minY: 1e9, maxY: -1e9 };
+        function track(x, y) {
+            if (x < tracker.minX) tracker.minX = x;
+            if (x > tracker.maxX) tracker.maxX = x;
+            if (y < tracker.minY) tracker.minY = y;
+            if (y > tracker.maxY) tracker.maxY = y;
+        }
+
+        function resize() {
+            const rect = canvas.getBoundingClientRect();
+            const w = Math.max(320, Math.floor(rect.width));
+            const h = Math.max(240, Math.floor(rect.height));
+            canvas.width = Math.floor(w * DPR);
+            canvas.height = Math.floor(h * DPR);
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            // Clear with slight tint
+            ctx.fillStyle = "#f4f4f4";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            lastXY = null;
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        function phosphorColor() {
+            const b = Math.max(0.2, Math.min(2.0, display.brightness));
+            switch (display.color) {
+                case "green": return `rgba(0, 128, 0, ${0.9 * b})`;
+                case "magenta": return `rgba(180, 0, 140, ${0.9 * b})`;
+                case "amber": return `rgba(205, 120, 0, ${0.9 * b})`;
+                case "white": return `rgba(0, 0, 0, ${0.9 * b})`;
+                default: return `rgba(0, 80, 160, ${0.9 * b})`;
+            }
+        }
+
+        function fadeFrame() {
+            // Exponential persistence
+            const alpha = 1 - display.fade;
+            ctx.globalCompositeOperation = "source-over";
+            ctx.fillStyle = `rgba(244,244,244,${alpha})`;
+            const w = canvas.width / DPR;
+            const h = canvas.height / DPR;
+            ctx.fillRect(0, 0, w, h);
+        }
+
+        function drawSegment(x0, y0, x1, y1, speed) {
+            const w = canvas.width / DPR;
+            const h = canvas.height / DPR;
+            // Fit to 80% of screen with auto-scale, then apply X/Y trims
+            const widthWorld = (tracker.maxX - tracker.minX) || 1;
+            const heightWorld = (tracker.maxY - tracker.minY) || 1;
+            const pad = 0.1; // 10% margin each side
+            const scaleX = (1 - 2 * pad) * w / widthWorld * display.xScale;
+            const scaleY = (1 - 2 * pad) * h / heightWorld * display.yScale;
+            const sx = Math.min(scaleX, scaleY);
+            const sy = sx; // keep shapes proportional, aspect controlled by x/y trims
+            const cx = (tracker.minX + tracker.maxX) * 0.5;
+            const cy = (tracker.minY + tracker.maxY) * 0.5;
+            const X0 = (x0 - cx) * sx + w * 0.5;
+            const Y0 = (y0 - cy) * sy + h * 0.5;
+            const X1 = (x1 - cx) * sx + w * 0.5;
+            const Y1 = (y1 - cy) * sy + h * 0.5;
+
+            // Slight velocity-based intensity variation
+            const intensity = Math.min(1.0, 0.6 + 0.4 * Math.tanh(0.15 * speed));
+            ctx.strokeStyle = phosphorColor();
+            ctx.globalCompositeOperation = "source-over";
+            ctx.lineWidth = display.stroke;
+            ctx.beginPath();
+            ctx.moveTo(X0, Y0);
+            ctx.lineTo(X1, Y1);
+            ctx.stroke();
+
+            // Subtle glow
+            ctx.globalAlpha = 0.08 * intensity;
+            ctx.lineWidth = display.stroke * 3.0;
+            ctx.beginPath();
+            ctx.moveTo(X0, Y0);
+            ctx.lineTo(X1, Y1);
+            ctx.stroke();
+            ctx.globalAlpha = 1.0;
+            ctx.globalCompositeOperation = "source-over";
+        }
+
+        // ODEs
+        function derivs(attractorName, s, p) {
+            let dx = 0, dy = 0, dz = 0;
+            if (attractorName === "lorenz") {
+                dx = p.p1 * (s.y - s.x);               // p1 -> sigma
+                dy = s.x * (p.p2 - s.z) - s.y;          // p2 -> rho
+                dz = s.x * s.y - p.p3 * s.z;            // p3 -> beta
+            } else if (attractorName === "rossler") {
+                dx = -s.y - s.z;
+                dy = s.x + p.p1 * s.y;                  // p1 -> a
+                dz = p.p2 + s.z * (s.x - p.p3);          // p2 -> b, p3 -> c
+            } else if (attractorName === "chua") {
+                // h(x) piecewise-linear nonlinearity
+                const alpha = p.p1;                      // p1 -> alpha
+                const betaC = p.p2;                      // p2 -> beta
+                const slope = p.p3;                      // p3 -> inner slope magnitude
+                const bp = 1.0;
+                // piecewise: slopes m0, m1 with single knob controlling inner slope; fix outer slope = -1.143
+                const m0 = -1.143, m1 = -Math.abs(slope);
+                const absPlus = Math.abs(s.x + bp);
+                const absMinus = Math.abs(s.x - bp);
+                const hx = m1 * s.x + 0.5 * (m0 - m1) * (absPlus - absMinus);
+                dx = alpha * (s.y - s.x - hx);
+                dy = s.x - s.y + s.z;
+                dz = - betaC * s.y;
+            }
+            // Analog injections (as DC inputs to derivatives)
+            dx += inputs.gain * inputs.a;
+            dy += inputs.gain * inputs.b;
+            dz += inputs.gain * inputs.c;
+            return { dx, dy, dz };
+        }
+
+        // RK4 integrator
+        function stepRK4(dt) {
+            const p = { ...common };
+            const s = state;
+            const k1 = derivs(attractor, s, p);
+            const s2 = { x: s.x + 0.5 * dt * k1.dx, y: s.y + 0.5 * dt * k1.dy, z: s.z + 0.5 * dt * k1.dz };
+            const k2 = derivs(attractor, s2, p);
+            const s3 = { x: s.x + 0.5 * dt * k2.dx, y: s.y + 0.5 * dt * k2.dy, z: s.z + 0.5 * dt * k2.dz };
+            const k3 = derivs(attractor, s3, p);
+            const s4 = { x: s.x + dt * k3.dx, y: s.y + dt * k3.dy, z: s.z + dt * k3.dz };
+            const k4 = derivs(attractor, s4, p);
+            s.x += dt * (k1.dx + 2 * k2.dx + 2 * k3.dx + k4.dx) / 6;
+            s.y += dt * (k1.dy + 2 * k2.dy + 2 * k3.dy + k4.dy) / 6;
+            s.z += dt * (k1.dz + 2 * k2.dz + 2 * k3.dz + k4.dz) / 6;
+            return s;
+        }
+
+        function baseParams() { return { ...common }; }
+
+        function updateLabels() {
+            $("p1V").textContent = (+$("p1").value).toFixed(1);
+            $("p2V").textContent = (+$("p2").value).toFixed(1);
+            $("p3V").textContent = (+$("p3").value).toFixed(2);
+            $("timeV").textContent = (+$("time").value).toFixed(2);
+            $("inAV").textContent = (+$("inA").value).toFixed(3);
+            $("inBV").textContent = (+$("inB").value).toFixed(3);
+            $("inCV").textContent = (+$("inC").value).toFixed(3);
+            $("injGainV").textContent = (+$("injGain").value).toFixed(2);
+            $("xScaleV").textContent = (+$("xScale").value).toFixed(2);
+            $("yScaleV").textContent = (+$("yScale").value).toFixed(2);
+            $("fadeV").textContent = (+$("fade").value).toFixed(3);
+            $("brightV").textContent = (+$("bright").value).toFixed(2);
+            $("strokeV").textContent = (+$("stroke").value).toFixed(1);
+        }
+
+        function hookUI() {
+            $("attractor").addEventListener("change", () => {
+                attractor = $("attractor").value;
+                modeLabel.textContent = attractor.charAt(0).toUpperCase() + attractor.slice(1);
+                if (attractor === 'lorenz') { $("p1").value = 10.0; $("p2").value = 28.0; $("p3").value = 2.6667; }
+                else if (attractor === 'rossler') { $("p1").value = 0.2; $("p2").value = 0.2; $("p3").value = 5.7; }
+                else { $("p1").value = 9.0; $("p2").value = 14.286; $("p3").value = 0.714; }
+                syncFromUI();
+                resetState(true);
+            });
+
+            $("reset").addEventListener("click", () => resetState(true));
+            $("toggle").addEventListener("click", () => {
+                running = !running;
+                $("toggle").textContent = running ? "Stop" : "Start";
+                if (running) animate();
+            });
+            $("export").addEventListener("click", () => {
+                const link = document.createElement("a");
+                link.download = `attractor_${attractor}.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+
+            $("color").addEventListener("change", () => { display.color = $("color").value; });
+
+            const ids = ["p1", "p2", "p3", "time", "inA", "inB", "inC", "injGain", "xScale", "yScale", "fade", "bright", "stroke"];
+            function syncFromUI() {
+                updateLabels();
+                common.p1 = +$("p1").value; common.p2 = +$("p2").value; common.p3 = +$("p3").value; common.time = +$("time").value;
+                inputs.a = +$("inA").value; inputs.b = +$("inB").value; inputs.c = +$("inC").value; inputs.gain = +$("injGain").value;
+                display.xScale = +$("xScale").value; display.yScale = +$("yScale").value; display.fade = +$("fade").value; display.brightness = +$("bright").value; display.stroke = +$("stroke").value;
+            }
+            ids.forEach(id => { const el = $(id); el.addEventListener('input', syncFromUI); el.addEventListener('change', syncFromUI); });
+            syncFromUI();
+        }
+
+        function resetState(hard) {
+            state.x = 0.01 + (Math.random() - 0.5) * 0.02;
+            state.y = 0.01 + (Math.random() - 0.5) * 0.02;
+            state.z = 0.01 + (Math.random() - 0.5) * 0.02;
+            lastXY = null;
+            tracker.minX = tracker.minY = 1e9;
+            tracker.maxX = tracker.maxY = -1e9;
+            // Clear drawing
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            ctx.fillStyle = "#f4f4f4";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function animate(now) {
+            if (!running) return;
+            frameHandle = requestAnimationFrame(animate);
+            const t = performance.now();
+            let dtReal = (t - lastT) / 1000; // seconds
+            lastT = t;
+            dtReal = Math.min(0.05, dtReal); // clamp big frame stalls
+
+            // Desired simulation steps per frame
+            const base = baseParams();
+            const timeScale = base.time;
+            const simRate = 1000; // Hz target internal RK4 steps/sec
+            const steps = Math.max(1, Math.round(simRate * dtReal * timeScale));
+            const dt = (timeScale * dtReal) / steps;
+
+            // Fade first for persistence on light background
+            fadeFrame();
+
+            // Apply LFOs on-the-fly using base+LFO (non-destructive)
+            for (let i = 0; i < steps; i++) {
+                const prevX = state.x;
+                const prevY = state.y;
+                const prevZ = state.z;
+                stepRK4(dt);
+                track(state.x, state.y);
+                const speed = Math.hypot(state.x - prevX, state.y - prevY, state.z - prevZ) / dt;
+                if (lastXY) {
+                    drawSegment(lastXY.x, lastXY.y, state.x, state.y, speed);
+                }
+                lastXY = { x: state.x, y: state.y };
+            }
+
+            // FPS meter
+            fpsAccum++;
+            const dtFps = t - lastFpsT;
+            if (dtFps >= 500) {
+                const fps = Math.round(1000 * fpsAccum / dtFps);
+                fpsLabel.textContent = String(fps);
+                fpsAccum = 0; lastFpsT = t;
+            }
+        }
+
+        // Init
+        hookUI();
+        // Ensure initial mode defaults applied to sliders
+        $("attractor").dispatchEvent(new Event('change'));
+        resetState(true);
+        running = true;
+        $("toggle").textContent = "Stop";
+        animate();
+    </script>
+</body>
+
+</html>

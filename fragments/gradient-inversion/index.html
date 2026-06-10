@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Inversion Attack | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="A replication of the paper Deep Leakage from Gradients to reverse-engineer the training data from the gradients of a neural network in training.">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+
+    <link rel="canonical" href="https://sudarsh.com/fragments/gradient-inversion/">
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Gradient Inversion Attack" />
+    <meta name="twitter:description"
+        content="A replication of the paper Deep Leakage from Gradients to reverse-engineer the training data from the gradients of a neural network in training." />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <link rel="stylesheet" href="/common.css">
+
+    <style>
+        body {
+            padding: 70px 30px 60px;
+            max-width: max(60%, 600px);
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 3em;
+            font-style: italic;
+            line-height: 1.1;
+            letter-spacing: -0.015em;
+            margin-bottom: 12px;
+        }
+
+        .meta {
+            font-style: italic;
+            color: var(--muted);
+            margin: 0 0 8px;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-style: italic;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--muted);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        hr {
+            border: none;
+            border-top: 1px dashed var(--border-strong);
+            margin: 22px 0;
+        }
+
+        body > hr:first-of-type {
+            margin-top: 14px;
+        }
+
+        blockquote {
+            border-left: 2px dashed var(--border-strong);
+            background: transparent;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .katex { font-size: 0.95em; }
+        .katex-display .katex { font-size: 1.1em; }
+        .katex-display { margin: 1.2em 0; }
+
+        .wip-stamp {
+            position: fixed;
+            top: 36px;
+            right: 40px;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px dashed var(--accent);
+            padding: 4px 10px;
+            transform: rotate(4deg);
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 60px 22px 40px; max-width: 100%; }
+            .title { font-size: 2.2em; }
+            .wip-stamp { top: 16px; right: 16px; font-size: 10px; padding: 3px 8px; }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ],
+                throwOnError: false,
+                trust: true
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '\u21a9';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <span class="wip-stamp">work in progress</span>
+
+    <h1 class="title">Gradient Inversion Attack</h1>
+
+    <div class="nav-links">
+        <a href="../">
+            < back to all fragments</a>
+    </div>
+
+    <p class="meta">
+        March 24, 2025
+    </p>
+
+    <hr>
+
+    <p>This is a replication of the paper <a href="https://arxiv.org/abs/1906.08935">Deep Leakage from Gradients</a>.</p>
+<p>The gist of the paper is that it is possible to reverse-engineer the training data from the gradients of a neural network in training. </p>
+<p>Given some machine learning model $f(w, x)$, and some ground truth training data $(x, y)$, we can use the gradients of the model to reconstruct the training data.</p>
+<p>To do this, we initialize a random image $x_i$, and a random label $y_i$. </p>
+<p>We then are given the gradient of the weights of the model, $\nabla W$</p>
+<p>We can then run inference on the new training data to get the gradients of the new weights, $\nabla W_i$</p>
+<p>We then compute a new loss function $L = ||W_i - W||^2$</p>
+<p>We then find $\frac{\partial L}{\partial x_i}$ and $\frac{\partial L}{\partial y_i}$ to update our image and labels.</p>
+<p>For this, we only care about the image, and it works beautifully!</p>
+<p>Reference image:
+<img src="https://sudarsh.com/fragments/gradient-inversion/image.png" alt="Reference image" /></p>
+<p>Reconstructed image:
+<img src="https://sudarsh.com/fragments/gradient-inversion/reconstructed.png" alt="Reconstructed image" /></p>
+<p>It seems like the 3x3 tiling here is due to the convolutional layers in the model. </p>
+
+</body>
+
+</html>
