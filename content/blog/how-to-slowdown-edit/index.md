@@ -145,9 +145,9 @@ I'd like to see a few things happen.
    progress of safety research b) how it compares to capabilities progress and c)
    scaling laws for safety progress, like we do with compute-capabilities scaling
    laws.
-2. **Guaranteed, slow resumes**: To prevent the indefinite pause of AGI development,
-   we should bake in a date to resume AGI development, and a plan to have this resume
-   be slow
+2. **Guaranteed, slow resumes**: When we decide it's an opportune time to resume AGI development,
+   we should go slow; we can slowly scale up training models, training successively more capable models,
+   and monitoring our alignment strictly. We can then 
 3. **Resumeable Pauses**: We should give ourselves freedom to make a mistake and resume
    a pause; it's important to do so in a way that isn't abusable, but it probably
    reduces the risk of unpausing too early since you can pause again, and thus 
@@ -158,13 +158,13 @@ I'd like to see a few things happen.
 
 The actual pause, then, would look like the following:
 1. **Labs Keep Inference Compute**: Models are good for the world - labs should serve them
-2. **Labs Are Allowed Some Finetuning**: Labs should be allowed to finetune models
-   and instead are limited to some number of training runs per time interval, at 
-   some compute intensity
+2. **We should enforce no-training through verification**: Labs shouldn't be able to own training compute
 3. **Labs Should Dedicate Much of Current Training Compute to Safety**: Enforcing this
    is probably difficult, but OpenAI's past superalignment efforts are a good
    inspiration, dedicating 20% of organization compute to safety research with the
-   rest used on inference
+   rest used on inference. Some alignment and finetuning efforts need training, and this can be done
+   in sandboxes with transparency to auditors, either through ZKPs or through third party auditors with access to
+   all code and data in the sandbox.
 
 
 [^1]: Their entire proposal can be found [here](https://pauseai.info/proposal), but I don't think the rest of the proposal addresses the concerns that I pose. I am not trying to strawman their proposal, and if you 
