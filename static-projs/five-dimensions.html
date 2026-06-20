@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>4D Hypersphere Slicer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body>
+    <div id="container"></div>
+    <input type="range" id="timeSlider" min="0" max="100" value="50" style="width: 80%;">
+    <div id="timeValue"></div>
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            width: 100%;
+            height: 90vh;
+        }
+
+        #timeSlider {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #timeValue {
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+        }
+    </style>
+
+    <script>
+        let scene, camera, renderer;
+        let geometry, material, mesh;
+        const timeSlider = document.getElementById('timeSlider');
+        const timeValue = document.getElementById('timeValue');
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('container').appendChild(renderer.domElement);
+
+            // Create a sphere with high segment count for smooth deformation
+            geometry = new THREE.SphereGeometry(1, 64, 64);
+            material = new THREE.MeshNormalMaterial({ wireframe: true });
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            camera.position.z = 4;
+
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        function updateGeometry(time) {
+            const positions = geometry.attributes.position;
+            const normalizedTime = time / 100; // Convert slider value to 0-1 range
+            const w = (normalizedTime - 0.5) * 2; // Map to range -1 to 1
+
+            // Radius of the 4D hypersphere
+            const radius4D = 2;
+
+            for (let i = 0; i < positions.count; i++) {
+                const vector = new THREE.Vector3();
+                vector.fromBufferAttribute(positions, i);
+
+                // Normalize to get direction
+                vector.normalize();
+
+                // Calculate the 3D slice of the 4D hypersphere
+                // Using stereographic projection formula
+                const factor = radius4D * Math.sqrt(1 - w * w); // Scale based on Pythagorean theorem in 4D
+
+                // Scale the 3D coordinates based on the 4D projection
+                vector.multiplyScalar(factor);
+
+                positions.setXYZ(i, vector.x, vector.y, vector.z);
+            }
+
+            positions.needsUpdate = true;
+            geometry.computeVertexNormals();
+            timeValue.textContent = `W coordinate: ${w.toFixed(2)}`;
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.render(scene, camera);
+        }
+
+        // Initialize everything
+        init();
+        renderer.render(scene, camera);
+
+        // Handle slider changes
+        timeSlider.addEventListener('input', (e) => {
+            updateGeometry(parseFloat(e.target.value));
+        });
+
+        // Initial geometry update
+        updateGeometry(50);
+    </script>
+</body>
+
+</html>

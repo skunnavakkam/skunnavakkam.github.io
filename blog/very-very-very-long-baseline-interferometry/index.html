@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Very Very Very Long Baseline Interferometry | Sudarsh Kunnavakkam</title>
+    <meta name="description"
+        content="Give me radio telescopes and a baseline long enough to place it, and I shall image the universe">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <link rel="canonical" href="https://sudarsh.com/blog/very-very-very-long-baseline-interferometry/">
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="/common.css">
+    <style>
+        body {
+            padding: 70px 30px 60px;
+            max-width: max(60%, 600px);
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 3em;
+            line-height: 1.1;
+            letter-spacing: -0.015em;
+            margin-bottom: 12px;
+        }
+
+        .katex { font-size: 0.9em; }
+        .katex-display { font-size: 0.9em; margin: 1em 0; }
+
+        .hero-image {
+            display: block;
+            width: calc(100% + 160px);
+            max-width: calc(100vw - 40px);
+            height: auto;
+            margin: 24px -80px 32px;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .post-body hr {
+            border-top-color: rgba(0, 0, 0, 0.12);
+        }
+
+        html.night .post-body hr {
+            border-top-color: rgba(255, 255, 255, 0.18);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 60px 22px 40px; max-width: 100%; }
+            .title { font-size: 2.2em; }
+            .hero-image {
+                width: 100%;
+                max-width: 100%;
+                margin: 16px 0 22px;
+                border-radius: 16px;
+            }
+        }
+    </style>
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+        integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Very Very Very Long Baseline Interferometry" />
+    <meta name="twitter:description"
+        content="Give me radio telescopes and a baseline long enough to place it, and I shall image the universe" />
+    <meta name="twitter:url" content="https://sudarsh.com" />
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+
+            const referenceNodes = document.getElementsByClassName('footnote-reference');
+            const referenceLinks = referenceNodes.length
+                ? Array.from(referenceNodes).map((node) => node.querySelector('a')).filter(Boolean)
+                : Array.from(document.querySelectorAll('sup a[href^="#fn"]'));
+
+            for (const link of referenceLinks) {
+                const href = link.getAttribute('href');
+                if (!href || !href.startsWith('#')) continue;
+                const id = href.slice(1);
+                if (!link.getAttribute('id')) {
+                    link.setAttribute('id', `${id}_ref`);
+                }
+            }
+
+            const definitionNodes = document.getElementsByClassName('footnote-definition');
+            const definitionItems = definitionNodes.length
+                ? Array.from(definitionNodes)
+                : Array.from(document.querySelectorAll('.footnotes li[id]'));
+
+            for (const footnote of definitionItems) {
+                const id = footnote.getAttribute('id');
+                if (!id || footnote.querySelector('.footnote-backref')) continue;
+                const backReference = document.createElement('a');
+                backReference.className = 'footnote-backref';
+                backReference.setAttribute('href', `#${id}_ref`);
+                backReference.textContent = '↩';
+                footnote.append(backReference);
+            }
+
+            const definitionBlocks = document.querySelectorAll('.footnote-definition');
+            for (const definition of definitionBlocks) {
+                const label = definition.querySelector('.footnote-definition-label');
+                const paragraph = definition.querySelector('p');
+                if (!label || !paragraph) continue;
+                if (!paragraph.contains(label)) {
+                    paragraph.prepend(label, ' ');
+                }
+            }
+
+            const existingSeparator = document.querySelector('.footnotes-separator');
+            if (!existingSeparator) {
+                const footnotesContainer = document.querySelector('.footnotes');
+                const firstDefinition = document.querySelector('.footnote-definition');
+                const insertTarget = footnotesContainer || firstDefinition;
+                if (insertTarget) {
+                    const separator = document.createElement('hr');
+                    separator.className = 'footnotes-separator';
+                    insertTarget.parentNode.insertBefore(separator, insertTarget);
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1 class="title">Very Very Very Long Baseline Interferometry</h1>
+    <div class="nav-links">
+        <a href="../">
+            < back to all posts</a>
+    </div>
+    <p class="meta">
+        Published June 19, 2026
+    </p>
+    <hr>
+    
+    <div class="post-body">
+        <p>In 2019, the Event Horizon Telescope (EHT) released the first image of a black hole.s</p>
+<p>M87 is a galaxy 53 million light-years away. It’s mostly featureless, appearing
+as a blob of light when viewed through a telescope. At the center of the galaxy 
+is a supermassive black hole. Being a black hole, you can only see the ring of light
+caused by particles orbiting into the black hole. This disk spans 42 microarcseconds.</p>
+<p>42 microarcseconds is a very, very small angle. This would be roughly equivilant
+to seeing a sulphur atom at a distance of a meter or seeing three quarters on the moon. 
+This is incredibly small, and it’s a miracle of human engineering that we were able to 
+image it.</p>
+<p>Around the world, we had a constellation of radio telescopes, each with a position precise 
+to a few millimeters, with synced frequencies, imaging around 230 GHz with a wavelength o 1.3
+millimeters. </p>
+<p>The resolution of a telescope in radians is about </p>
+<p>$$
+1.22 \lambda / D
+$$</p>
+<p>where $\lambda$ is the wavelength of the radio waves and $D$ is the diameter of the telescope.
+We don’t really have control over the wavelength we image at - there are only a few frequencies
+that don’t get attenuated or scattered. This clearly tells us that we have to increase
+the diameter of the telescope. </p>
+<p>Why is there this inverse relationship between the resolution and the diameter of the telescope?
+Consider what it means for the angular resolution to be small - this means that you can detect
+subtle changes in the waves emitted across distance. To do this, you can make the phase
+difference between two points close together to be large. Since this phase difference 
+depends on the difference in the distance between the point and different points on the
+observer, having two far away observers helps you get high resolution.</p>
+<p>This infact means that you don’t <em>really</em> need a single large telescope, and instead
+you can have a bunch of small telescopes, and then combine the signals from each of them
+with very precise timing and position information to get near same resolution as a single 
+large telescope. This is what Very Large Baseline Interferometry (VLBI) is! You measure the
+phase and amplitude of radio waves with very precise timing and position information
+across points on the earth and satellites to get high resolution images.</p>
+<p>Can we go further? How can we scale our baseline by large amounts? The largest distance
+that we have easily accessible to us is the distance between the earth and the sun, 
+times two. This is 2 AU, or about 300 million kilometers. If we get anything near this, you 
+might be able to do nanoarcsecond resolutions.</p>
+<p>Let’s not get ahead of ourselves though. There are two key things about VLBI -</p>
+
+    </div>
+</body>
+
+</html>

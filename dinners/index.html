@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinners | Sudarsh Kunnavakkam</title>
+    <meta name="description" content="I cook for myself every Sunday, and I'd love to have people join.">
+    <meta name="author" content="Sudarsh Kunnavakkam">
+    <meta name="keywords" content="machine learning, AI safety, language models, nanophotonics, Caltech, research">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Dinners | Sudarsh Kunnavakkam">
+    <meta property="og:description" content="I cook for myself every Sunday, and I'd love to have people join.">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="canonical" href="https:&#x2F;&#x2F;sudarsh.com/dinners">
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <script data-goatcounter="https://skunnavakkam.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+    <style>
+        @font-face {
+            font-family: "Sudarsh Hand";
+            src: url("/Sudarshhandwriting-Regular.ttf") format("truetype");
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        :root {
+            --paper: #f7dde2;
+            --ink: #43332f;
+            --ink-soft: #9a857f;
+            --coral: #d9697a;
+            --sage: #88a06a;
+            --line: rgba(67, 51, 47, 0.16);
+        }
+
+        html.night {
+            --paper: #1e1618;
+            --ink: #f0e3df;
+            --ink-soft: #b29b96;
+            --coral: #e8859a;
+            --sage: #b3c595;
+            --line: rgba(240, 227, 223, 0.16);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        html.has-past {
+            scroll-snap-type: y mandatory;
+        }
+
+        /* no past dinners -> single screen, never scrolls */
+        html:not(.has-past),
+        html:not(.has-past) body {
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Sudarsh Hand", "Segoe Script", cursive;
+            color: var(--ink);
+            background-color: var(--paper);
+            overscroll-behavior-y: none;
+        }
+
+        .screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 84px 24px 96px;
+            position: relative;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.05;
+            color: var(--ink-soft);
+            text-decoration: none;
+        }
+
+        .scroll-hint:hover {
+            color: var(--coral);
+        }
+
+        .scroll-hint .arrow {
+            display: block;
+            font-size: 1.5rem;
+            margin-top: 2px;
+        }
+
+        .past-screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 84px 24px 96px;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .top-nav {
+            position: absolute;
+            top: 22px;
+            left: 28px;
+            z-index: 10;
+        }
+
+        .top-nav a {
+            font-size: 1.4rem;
+            color: var(--ink-soft);
+            text-decoration: none;
+        }
+
+        .top-nav a:hover {
+            color: var(--coral);
+        }
+
+        .note {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .title {
+            font-weight: 400;
+            font-size: clamp(4.4rem, 18vw, 6rem);
+            line-height: 0.86;
+            margin: 0;
+        }
+
+        .underline {
+            display: block;
+            width: 210px;
+            height: 12px;
+            margin: 4px 0 22px;
+            color: var(--coral);
+        }
+
+        .note-body {
+            font-size: clamp(1.6rem, 4.8vw, 1.85rem);
+            line-height: 1.22;
+        }
+
+        .note-body p {
+            margin: 0 0 0.7rem;
+        }
+
+        .note-body a {
+            color: var(--coral);
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 3px;
+        }
+
+        .note-body a:hover {
+            color: var(--ink);
+            text-decoration-color: var(--coral);
+        }
+
+        .signoff {
+            margin-top: 1.2rem;
+            font-size: 1.9rem;
+            color: var(--ink-soft);
+        }
+
+        /* past sundays — clickable menu cards */
+        .past {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .past-head {
+            font-size: 1.7rem;
+            color: var(--ink-soft);
+            margin: 0 0 0.6rem;
+        }
+
+        .past ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .past li {
+            margin-bottom: 9px;
+        }
+
+        .menu-card {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 9px 16px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--ink);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .menu-card:hover {
+            border-color: var(--coral);
+            transform: translateX(3px);
+        }
+
+        .m-title {
+            flex: 1;
+            font-size: 1.55rem;
+            line-height: 1.05;
+        }
+
+        .m-date {
+            flex: none;
+            font-size: 1.05rem;
+            color: var(--sage);
+        }
+
+        .m-arrow {
+            flex: none;
+            font-size: 1.3rem;
+            color: var(--coral);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .menu-card:hover .m-arrow {
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .note-body {
+                font-size: 1.55rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="top-nav"><a href="/">&larr; home</a></nav>
+
+    <section class="screen">
+        <main class="note">
+            <h1 class="title">Dinners</h1>
+            <svg class="underline" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path d="M3 7 Q40 2 78 6 T150 6 Q176 8 197 4" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" />
+            </svg>
+
+            <div class="note-body">
+                <p>I cook for myself every Sunday, and I’d love to have people join.</p>
+<p><a href="mailto:me@sudarsh.com?subject=Add%20Me%20To%20Dinner%20List">Send me an email to be added to my dinner email list</a></p>
+<p>I’ll let you know what I’m making a day or two before the dinner, and you can let me know if you’re coming so I can make enough food.</p>
+
+            </div>
+
+            <p class="signoff">&mdash; Sudarsh</p>
+
+        </main>
+
+        
+    </section>
+
+    
+</body>
+
+</html>
