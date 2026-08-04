@@ -1,7 +1,6 @@
 +++
 title="About"
 template="about.html"
-page_title="About"
 +++
 
 Hi! I'm Sudarsh, and I'm a Sophomore on leave from a physics degree at Caltech with the hopes of building magical models of brains. You can contact me at `kvsudarsh786 at gmail dot com`, `sudarshk216` on signal, or `sudarshk_` on x.

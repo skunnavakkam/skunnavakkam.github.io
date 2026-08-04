@@ -54,6 +54,7 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            font-size: 20.5px;
             transition: background 0.35s ease, color 0.35s ease;
         }
 
@@ -63,23 +64,30 @@
 
         html.night p { color: #9da3ab; }
 
-        .main-container { display: flex; height: 100%; }
+        .main-container { position: relative; height: 100%; }
 
         .content-wrapper {
-            flex: 0 0 400px;
-            padding: 30px;
-            background: var(--bg);
+            width: 400px;
+            padding: 120px 30px 30px 30px;
+            margin-left: 110px;
+            background: transparent;
             overflow-y: auto;
             position: relative;
             max-width: none;
+            z-index: 2;
+            height: 100%;
         }
 
         #bubble-chamber {
-            flex: 1;
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: var(--bg);
             overflow: hidden;
             display: none;
+            z-index: 0;
         }
 
         @media(min-width:769px) {
@@ -97,9 +105,18 @@
         }
 
         .clear {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
+            position: fixed;
+            bottom: 120px;
+            left: 140px;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: 'Crimson Pro', serif;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            color: var(--fg);
+            cursor: pointer;
+            z-index: 10;
         }
 
         html.night .clear { display: none; }
@@ -107,25 +124,103 @@
         /* Subtle, lowercase, unobtrusive — bottom-right mirror of .clear. */
         .night-toggle {
             display: none;
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
+            position: fixed;
+            top: 120px;
+            right: 140px;
             background: none;
             border: none;
             padding: 0;
-            font-family: 'EB Garamond', serif;
-            font-size: 12px;
-            letter-spacing: 0.5px;
-            color: var(--muted);
+            font-size: 26px;
+            color: var(--fg);
             cursor: pointer;
-            transition: color 0.2s ease;
+            transition: opacity 0.3s ease;
             z-index: 10;
+            opacity: 0.8;
+            line-height: 1;
         }
 
-        .night-toggle:hover { color: var(--fg); }
+        .night-toggle:hover { opacity: 1; }
 
         @media(min-width:769px) {
             .night-toggle { display: block; }
+        }
+
+        /* Hover hints — detail overlay on the right panel */
+        .hint {
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+            text-decoration-color: var(--muted);
+            cursor: default;
+        }
+
+        #hint-overlay {
+            position: fixed;
+            right: 8vw;
+            top: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        #hint-overlay.visible { opacity: 1; }
+
+        #hint-overlay .hint-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: var(--muted);
+            text-align: left;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+
+        html.night #hint-overlay .hint-text {
+            color: #808895;
+        }
+
+        .corner-flourish {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 280px;
+            height: auto;
+            z-index: 3;
+            pointer-events: none;
+            display: none;
+        }
+
+        @media(min-width:769px) {
+            .corner-flourish { display: block; }
+        }
+
+        html.night .corner-flourish {
+            filter: invert(1);
+            opacity: 0.7;
+        }
+
+        .corner-flourish-br {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 280px;
+            height: auto;
+            z-index: 3;
+            pointer-events: none;
+            display: none;
+            transform: rotate(180deg);
+        }
+
+        @media(min-width:769px) {
+            .corner-flourish-br { display: block; }
+        }
+
+        html.night .corner-flourish-br {
+            filter: invert(1);
+            opacity: 0.7;
         }
 
         @media(max-width:768px) {
@@ -146,7 +241,8 @@
                 flex: 1 1 auto;
                 width: 100%;
                 max-width: 100%;
-                padding: 24px 22px 90px;
+                padding: 44px 22px 90px 22px;
+                margin-left: 0;
                 overflow: visible;
             }
 
@@ -159,29 +255,27 @@
             .night-toggle {
                 display: block;
                 position: fixed;
-                bottom: 22px;
-                right: 22px;
-                font-size: 13px;
-                letter-spacing: 0.3px;
+                top: 16px;
+                right: 16px;
+                bottom: auto;
+                font-size: 22px;
             }
         }
     </style>
 </head>
 
 <body>
+    <img class="corner-flourish" src="/corner-flourish.svg" alt="" />
+    <img class="corner-flourish-br" src="/corner-flourish.svg" alt="" />
+    <button class="clear">Reset Trails</button>
+    <button class="night-toggle" aria-label="Toggle night mode"></button>
     <div class="main-container">
         <div class="content-wrapper">
-            <h1 class="title">Sudarsh</h1>
-            <div class="nav-links">
-                <a href="/about">About</a>
-                <a href="/blog">Blog</a>
-                <a href="/fragments">Fragments</a>
-            </div>
             {{ section.content | safe }}
-            <button class="clear">Reset Trails</button>
-            <button class="night-toggle" aria-label="Toggle night mode"></button>
         </div>
-        <div id="bubble-chamber"></div>
+        <div id="bubble-chamber">
+            <div id="hint-overlay"><span class="hint-text"></span></div>
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
     <script>
@@ -191,13 +285,15 @@
         const toggleBtn = document.querySelector('.night-toggle');
         let transitioning = false;
 
+        const sunSvg = '<svg viewBox="0 0 100 100" width="28" height="28" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="13" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M50,37C60,28 40,16 52,6"/><path d="M50,37C60,28 40,16 52,6" transform="rotate(45,50,50)"/><path d="M50,37C60,28 40,16 52,6" transform="rotate(90,50,50)"/><path d="M50,37C60,28 40,16 52,6" transform="rotate(135,50,50)"/><path d="M50,37C60,28 40,16 52,6" transform="rotate(180,50,50)"/><path d="M50,37C60,28 40,16 52,6" transform="rotate(225,50,50)"/><path d="M50,37C60,28 40,16 52,6" transform="rotate(270,50,50)"/><path d="M50,37C60,28 40,16 52,6" transform="rotate(315,50,50)"/></g></svg>';
+
         function applyTheme(night) {
             if (night) {
                 root.classList.add('night');
-                toggleBtn.textContent = 'sun';
+                toggleBtn.innerHTML = sunSvg;
             } else {
                 root.classList.remove('night');
-                toggleBtn.textContent = 'moon';
+                toggleBtn.textContent = '☽';
             }
         }
 
@@ -745,16 +841,16 @@
 
                 // Attribution
                 p.noStroke();
-                p.fill(200, 205, 215, 120);
-                p.textFont('EB Garamond');
-                p.textSize(13);
+                p.fill(200, 205, 215, 220);
+                p.textFont('Crimson Pro');
+                p.textSize(18);
                 p.textAlign(p.RIGHT, p.BOTTOM);
                 const now = new Date();
                 const sfTime = now.toLocaleString('en-US', {
                     timeZone: 'America/Los_Angeles',
                     hour: '2-digit', minute: '2-digit', hour12: false
                 });
-                p.text(`san francisco · ${sfTime} · looking south`, p.width - 30, p.height - 30);
+                p.text(`san francisco · ${sfTime} · looking south`, p.width - 140, p.height - 120);
             }
 
             function drawBubbleChamber() {
@@ -784,15 +880,14 @@
                 // Attribution
                 p.noStroke();
                 p.fill(0);
-                p.textFont('EB Garamond');
-                p.textSize(13);
+                p.textFont('Crimson Pro');
+                p.textSize(18);
                 p.textAlign(p.RIGHT, p.BOTTOM);
-                p.text('a simulation of a bubble chamber', p.width - 30, p.height - 30);
+                p.text('a simulation of a bubble chamber', p.width - 140, p.height - 120);
             }
 
             p.setup = () => {
-                const container = document.getElementById('bubble-chamber');
-                p.createCanvas(container.clientWidth, p.windowHeight)
+                p.createCanvas(p.windowWidth, p.windowHeight)
                     .parent('bubble-chamber');
                 p.noFill();
                 // Double-Gaussian PSF core: tight bright peak + softer wide
@@ -830,8 +925,7 @@
             };
 
             p.windowResized = () => {
-                const container = document.getElementById('bubble-chamber');
-                p.resizeCanvas(container.clientWidth, p.windowHeight);
+                p.resizeCanvas(p.windowWidth, p.windowHeight);
                 if (isNight()) {
                     initStars();
                 } else {
@@ -863,6 +957,20 @@
                         clearTrails();
                     }
                 });
+        });
+    </script>
+    <script>
+        const hintOverlay = document.getElementById('hint-overlay');
+        const hintText = hintOverlay.querySelector('.hint-text');
+
+        document.querySelectorAll('.hint').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                hintText.textContent = el.dataset.hint;
+                hintOverlay.classList.add('visible');
+            });
+            el.addEventListener('mouseleave', () => {
+                hintOverlay.classList.remove('visible');
+            });
         });
     </script>
 </body>

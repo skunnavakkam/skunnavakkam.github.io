@@ -8,7 +8,7 @@ compile_sass = false
 build_search_index = true
 
 title = "Sudarsh Kunnavakkam"
-description = "Research and thoughts on machine learning, mathematics, and technology."
+description = "I'm Sudarsh! I think about physics and brains and alignment and my friends."
 
 # SEO Configuration
 taxonomies = [
@@ -19,10 +19,11 @@ taxonomies = [
 [markdown]
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
-highlight_code = true
-highlight_theme = "OneHalfLight"
 smart_punctuation = true
-footnotes = true
+
+[markdown.highlighting]
+theme = "one-light"
+bottom_footnotes = true
 
 [extra]
 # Put all your custom variables here
@@ -35,6 +36,6 @@ github = "skunnavakkam"
 linkedin = "sudarshan-gopal-kunnavakkam"
 
 # Additional SEO metadata
-keywords = "machine learning, AI safety, language models, nanophotonics, Caltech, research"
+keywords = "sudarsh, physics, brains, bci, ultrasound, lasers, zebrafish, friends, ai, alignment"
 og_image = "/static/profile.jpg"  # You'll need to add a profile image
 twitter_card = "summary_large_image"
