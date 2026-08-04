@@ -10,6 +10,41 @@
     .blog-post-description {
         margin-bottom: 5px;
     }
+
+    /* Each entry gets the same arrowhead the ornamental lists use, hung in
+       a gutter so the titles stay flush with the rest of the page text. */
+    .blog-section {
+        padding-left: 44px;
+    }
+
+    .blog-post {
+        position: relative;
+    }
+
+    .blog-post::before {
+        content: "";
+        position: absolute;
+        left: -42px;
+        top: 0.3em;
+        width: 31px;
+        height: 26px;
+        background: url('/bullet-flourish.svg') no-repeat center / contain;
+    }
+
+    html.night .blog-post::before {
+        filter: invert(1);
+        opacity: 0.85;
+    }
+
+    @media screen and (max-width: 600px) {
+        .blog-section { padding-left: 34px; }
+
+        .blog-post::before {
+            left: -34px;
+            width: 25px;
+            height: 21px;
+        }
+    }
 </style>
 
 <div class="blog-section">

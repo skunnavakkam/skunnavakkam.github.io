@@ -305,6 +305,50 @@ li {
     margin-bottom: 8px;
 }
 
+/* --- ornamental lists ------------------------------------- */
+
+/* Opt-in engraved arrowhead markers. The glyph is line work with white
+   interiors, so it is painted as a background image and inverted in night
+   mode -- the same treatment .corner-flourish gets on the home page. A
+   mask would flatten it, since a mask reads white as opaque. */
+
+.ornament-list ul {
+    list-style: none;
+    padding-left: 34px;
+}
+
+.ornament-list ul ul {
+    padding-left: 28px;
+}
+
+.ornament-list ul > li {
+    position: relative;
+}
+
+.ornament-list ul > li::before {
+    content: "";
+    position: absolute;
+    left: -32px;
+    top: 0.3em;
+    width: 26px;
+    height: 22px;
+    background: url('/bullet-flourish.svg') no-repeat center / contain;
+}
+
+html.night .ornament-list ul > li::before {
+    filter: invert(1);
+    opacity: 0.85;
+}
+
+/* Nested levels get a smaller, dimmer arrowhead so hierarchy still reads. */
+.ornament-list ul ul > li::before {
+    width: 20px;
+    height: 17px;
+    left: -25px;
+    top: 0.38em;
+    opacity: 0.7;
+}
+
 /* --- mobile ----------------------------------------------- */
 
 @media screen and (max-width: 600px) {
