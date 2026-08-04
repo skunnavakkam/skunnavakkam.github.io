@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>page not found</title>
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('night-mode') === 'true') {
+                    document.documentElement.classList.add('night');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="stylesheet" href="/common.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            transition: background 0.35s ease, color 0.35s ease;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .title-404 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: clamp(6rem, 20vw, 14rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--fg);
+            line-height: 1;
+            margin: 0;
+        }
+
+        .separator {
+            display: block;
+            margin: 24px auto;
+            color: var(--muted);
+            font-size: 28px;
+            letter-spacing: 0.6em;
+            user-select: none;
+        }
+
+        .subtitle {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            letter-spacing: 0.25em;
+            color: var(--muted);
+            margin: 0 0 32px;
+        }
+
+        .back-link a {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--muted);
+            text-decoration: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 4px;
+            letter-spacing: 0.15em;
+            transition: color 0.2s ease, text-decoration-color 0.2s ease;
+        }
+
+        .back-link a:hover {
+            color: var(--fg);
+            text-decoration-color: var(--fg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="title-404">404</p>
+        <span class="separator">&#x2726; &#x2726; &#x2726;</span>
+        <p class="subtitle">page not found</p>
+        <div class="back-link">
+            <a href="/">back home</a>
+        </div>
+    </div>
+</body>
+
+</html>
